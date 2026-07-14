@@ -17,6 +17,7 @@ import React, {
 
 import { translate } from "@docusaurus/Translate";
 import clsx from "clsx";
+import { ChevronsUpDown } from "lucide-react";
 
 import { useSchemaExpansion } from "./context";
 
@@ -32,21 +33,7 @@ export {
 const ALL_VALUE = Number.POSITIVE_INFINITY;
 
 const ExpandIcon: React.FC = () => (
-  <svg
-    aria-hidden="true"
-    focusable="false"
-    width="14"
-    height="14"
-    viewBox="0 0 16 16"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.6"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="4 6 8 2 12 6" />
-    <polyline points="4 10 8 14 12 10" />
-  </svg>
+  <ChevronsUpDown aria-hidden="true" size={14} strokeWidth={1.6} />
 );
 
 const SchemaExpansionControl: React.FC = () => {

@@ -14,6 +14,7 @@ import CopyButton from "@theme/ApiExplorer/ApiCodeBlock/CopyButton";
 import ExitButton from "@theme/ApiExplorer/ApiCodeBlock/ExitButton";
 import Line from "@theme/ApiExplorer/ApiCodeBlock/Line";
 import clsx from "clsx";
+import { Check, Maximize2 } from "lucide-react";
 import { Highlight, Language } from "prism-react-renderer";
 import Modal from "react-modal";
 
@@ -77,18 +78,8 @@ export default function ExpandButton({
           className="openapi-explorer__code-block-expand-btn-icons"
           aria-hidden="true"
         >
-          <svg
-            className="openapi-explorer__code-block-expand-btn-icon"
-            viewBox="0 0 448 512"
-          >
-            <path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z" />
-          </svg>
-          <svg
-            className="openapi-explorer__code-block-expand-btn-icon--success"
-            viewBox="0 0 24 24"
-          >
-            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-          </svg>
+          <Maximize2 className="openapi-explorer__code-block-expand-btn-icon" />
+          <Check className="openapi-explorer__code-block-expand-btn-icon--success" />
         </span>
       </button>
       <Modal
