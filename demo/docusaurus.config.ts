@@ -63,10 +63,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      logo: {
-        alt: "OpenAPI Docs",
-        src: "img/docusaurus-openapi-docs-logo.svg",
-      },
+      title: "OpenAPI Docs",
       items: [
         {
           type: "doc",

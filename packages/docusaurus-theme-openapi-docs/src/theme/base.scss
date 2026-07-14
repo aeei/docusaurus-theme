@@ -443,6 +443,31 @@ body {
   }
 
   .navbar__inner {
+    padding-right: 2.75rem;
+  }
+
+  .navbar__brand,
+  .theme-navbar-icon-link,
+  [class*="colorModeToggle"] {
+    display: none !important;
+  }
+
+  [class*="navbarSearchContainer"] {
+    right: auto;
+    left: 3rem;
+  }
+
+  .DocSearch.DocSearch-Button {
+    width: 2.25rem;
+    padding: 0;
+  }
+
+  .DocSearch-Button-Placeholder,
+  .DocSearch-Button-Keys {
+    display: none;
+  }
+
+  .navbar__inner {
     padding-inline: 0.25rem;
   }
 
