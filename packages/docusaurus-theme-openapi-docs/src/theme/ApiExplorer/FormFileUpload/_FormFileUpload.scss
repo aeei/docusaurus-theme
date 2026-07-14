@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px dashed var(--openapi-monaco-border-color);
-  background-color: var(--openapi-input-background);
+  border: 2px dashed var(--border);
+  background-color: var(--background);
 
   width: 100%;
   border-radius: 4px;
@@ -14,10 +14,7 @@
   &:hover {
     border: 2px dashed var(--ifm-color-primary);
     background:
-      linear-gradient(
-        var(--openapi-dropzone-hover-shim),
-        var(--openapi-dropzone-hover-shim)
-      ),
+      linear-gradient(var(--accent), var(--accent)),
       linear-gradient(var(--ifm-color-primary), var(--ifm-color-primary));
 
     .openapi-explorer__dropzone-content {
@@ -31,8 +28,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px dashed var(--openapi-monaco-border-color);
-  background-color: var(--openapi-input-background);
+  border: 2px dashed var(--border);
+  background-color: var(--background);
   width: 100%;
   border-radius: 4px;
   padding: var(--ifm-pre-padding);
@@ -40,10 +37,7 @@
   border: 2px dashed var(--ifm-color-primary);
 
   background:
-    linear-gradient(
-      var(--openapi-dropzone-hover-shim),
-      var(--openapi-dropzone-hover-shim)
-    ),
+    linear-gradient(var(--accent), var(--accent)),
     linear-gradient(var(--ifm-color-primary), var(--ifm-color-primary));
 
   .openapi-explorer__dropzone-content {
@@ -70,5 +64,5 @@
   justify-content: center;
   flex-wrap: wrap;
   margin: var(--ifm-pre-padding) 0;
-  color: var(--openapi-dropzone-color);
+  color: var(--primary);
 }

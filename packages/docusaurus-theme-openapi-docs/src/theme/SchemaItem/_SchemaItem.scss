@@ -11,7 +11,7 @@
   position: relative;
   margin: 0 !important;
   padding: 5px 0 5px 1rem;
-  border-left: thin solid var(--openapi-tree-line-color) !important;
+  border-left: thin solid var(--border) !important;
 
   // Horizontal line styling for schema properties
   &::before {
@@ -23,7 +23,7 @@
     height: 0.5rem;
     /* vertical position of line */
     vertical-align: top;
-    border-bottom: thin solid var(--openapi-tree-line-color);
+    border-bottom: thin solid var(--border);
     content: "";
     display: inline-block;
   }
@@ -40,7 +40,7 @@
   font-size: 10.5px;
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--openapi-required);
+  color: var(--destructive);
   margin-left: 1%;
   background-color: transparent;
 }
@@ -51,7 +51,7 @@
   font-size: 10.5px;
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--openapi-deprecated);
+  color: var(--muted-foreground);
   margin-left: 1%;
   background-color: transparent;
 }
@@ -62,7 +62,7 @@
   font-size: 10.5px;
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--openapi-nullable);
+  color: var(--muted-foreground);
   margin-left: 1%;
   background-color: transparent;
 }

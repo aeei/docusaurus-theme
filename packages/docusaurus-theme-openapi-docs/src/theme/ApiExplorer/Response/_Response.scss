@@ -1,10 +1,10 @@
 .openapi-explorer__response-container {
   background-color: var(--ifm-pre-background);
-  border-radius: var(--openapi-card-border-radius);
-  border: 1px solid var(--openapi-explorer-border-color);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   box-shadow:
-    0 2px 3px hsla(222, 8%, 43%, 0.1),
-    0 8px 16px -10px hsla(222, 8%, 43%, 0.2);
+    0 2px 3px color-mix(in oklab, var(--foreground) 10%, transparent),
+    0 8px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
   color: var(--ifm-pre-color);
   line-height: var(--ifm-pre-line-height);
   margin-bottom: var(--ifm-spacing-vertical);
@@ -14,9 +14,9 @@
 
   &:hover {
     box-shadow:
-      0 0 0 2px rgba(38, 53, 61, 0.15),
-      0 2px 3px hsla(222, 8%, 43%, 0.15),
-      0 16px 16px -10px hsla(222, 8%, 43%, 0.2);
+      0 0 0 2px color-mix(in oklab, var(--foreground) 15%, transparent),
+      0 2px 3px color-mix(in oklab, var(--foreground) 15%, transparent),
+      0 16px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
   }
 
   .openapi-explorer__code-block code {
@@ -27,7 +27,7 @@
 .openapi-explorer__response-title-container {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--openapi-explorer-border-color);
+  border-bottom: 1px solid var(--border);
   margin: 0;
   padding: 0.75rem var(--ifm-pre-padding);
   text-transform: uppercase;
@@ -107,7 +107,7 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 5px solid #dfc;
+  border: 5px solid var(--primary);
   border-radius: 50%;
   animation: openapi-response__lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1)
     infinite;

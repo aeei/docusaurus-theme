@@ -1,11 +1,11 @@
 /* Intentionally has zero specificity, so that to be able to override
 the background in custom CSS file due bug https://github.com/facebook/docusaurus/issues/3678 */
 :where(:root) {
-  --docusaurus-highlighted-code-line-bg: rgb(72 77 91);
+  --docusaurus-highlighted-code-line-bg: var(--muted);
 }
 
 :where([data-theme="dark"]) {
-  --docusaurus-highlighted-code-line-bg: rgb(100 100 100);
+  --docusaurus-highlighted-code-line-bg: var(--muted);
 }
 
 .openapi-explorer__code-block-code-line {
