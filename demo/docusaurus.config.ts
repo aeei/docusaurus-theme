@@ -41,7 +41,7 @@ const config: Config = {
         },
         blog: false,
         theme: {
-          customCss: ["./src/css/custom.css"],
+          customCss: ["./src/css/custom.css", "./src/css/tokens.css"],
         },
         gtag: {
           trackingID: "GTM-THVM29S",
@@ -93,7 +93,6 @@ const config: Config = {
             },
           ],
         },
-        { type: "custom-PalettePicker", position: "right" },
         {
           href: "https://medium.com/palo-alto-networks-developer-blog",
           position: "right",
@@ -387,22 +386,6 @@ const config: Config = {
         } satisfies Plugin.PluginOptions,
       },
     ],
-    // FOUC prevention: restore saved palette before React hydrates
-    function paletteScript() {
-      return {
-        name: "palette-fouc-script",
-        injectHtmlTags() {
-          return {
-            headTags: [
-              {
-                tagName: "script",
-                innerHTML: `try{var p=localStorage.getItem('openapi-demo-palette');if(p){var l=document.createElement('link');l.id='openapi-palette-link';l.rel='stylesheet';l.href='/themes/'+p+'.css';document.head.appendChild(l);}}catch(e){}`,
-              },
-            ],
-          };
-        },
-      };
-    },
   ],
   themes: ["docusaurus-theme-openapi-docs"],
   stylesheets: [
