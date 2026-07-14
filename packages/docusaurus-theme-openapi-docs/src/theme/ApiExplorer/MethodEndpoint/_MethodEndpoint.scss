@@ -1,18 +1,24 @@
 .openapi__method-endpoint {
   display: flex;
-  align-items: center;
+  width: 100%;
   max-width: 100%;
-  width: fit-content;
-  padding: 0.65rem;
-  border: 1px solid var(--ifm-toc-border-color);
+  align-items: center;
+  overflow: hidden;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
 }
 
 .openapi__method-endpoint-path {
+  min-width: 0;
   margin-bottom: 0;
   margin-left: 0.5rem;
-  font-size: 12px;
-  font-weight: normal;
+  overflow-x: auto;
+  white-space: nowrap;
   font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .openapi__divider {
