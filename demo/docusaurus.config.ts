@@ -96,13 +96,13 @@ const config: Config = {
         {
           href: "https://medium.com/palo-alto-networks-developer-blog",
           position: "right",
-          className: "header-medium-link",
+          className: "theme-navbar-rss-link",
           "aria-label": "Palo Alto Networks Developer Blog",
         },
         {
           href: "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs",
           position: "right",
-          className: "header-github-link",
+          className: "theme-navbar-github-link",
           "aria-label": "GitHub repository",
         },
       ],
@@ -388,12 +388,6 @@ const config: Config = {
     ],
   ],
   themes: ["docusaurus-theme-openapi-docs"],
-  stylesheets: [
-    {
-      href: "https://use.fontawesome.com/releases/v5.11.0/css/all.css",
-      type: "text/css",
-    },
-  ],
 };
 
 export default async function createConfig() {
