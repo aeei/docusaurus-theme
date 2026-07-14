@@ -1,87 +1,10 @@
 /**
  * Structural CSS for the docusaurus-openapi-docs demo site.
  *
- * This file contains layout, component behavior, animations, and utilities.
- * It is intentionally free of hard-coded colors and fonts — those live in
- * a theme file loaded alongside this one via docusaurus.config.ts:
- *
- *   customCss: ["./src/css/custom.css", "./src/css/themes/panw.css"]
- *
- * To try a different palette, swap the theme file. The following CSS
- * variables must be defined by the active theme:
- *
- *   --theme-primary-rgb          RGB triplet of primary color (for animations)
- *   --theme-border-radius-sm/md  Border radius tokens
- *   --site-primary-hue-saturation  Hue+saturation for the announcement bar
- *
- * Structure inspired by @gleanwork/docusaurus-theme-glean.
+ * This file contains demo-only OpenAPI method labels, code-tab behavior, and
+ * layout utilities. The reusable theme consumes the semantic shadcn token
+ * contract defined in tokens.css.
  */
-
-/* ============================================================
- * Typography
- * ============================================================ */
-
-.markdown h1,
-article h1,
-.main-wrapper h1 {
-  letter-spacing: 0.025em;
-  font-weight: var(--ifm-heading-font-weight);
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-  color: var(--ifm-heading-color);
-}
-
-.markdown h2,
-article h2,
-.markdown h3,
-article h3 {
-  font-weight: var(--ifm-font-weight-semibold);
-}
-
-.markdown strong,
-article strong,
-.markdown b,
-article b {
-  font-weight: var(--ifm-font-weight-semibold);
-}
-
-.font-mono {
-  font-family: var(--font-mono);
-  font-variant-ligatures: none;
-}
-
-.table-of-contents {
-  font-size: 0.95rem;
-}
-
-html {
-  scroll-padding-top: 50px;
-}
-
-/* ============================================================
- * Links
- * ============================================================ */
-
-a:any-link:hover {
-  text-decoration: none;
-}
-
-article p a,
-article ul a,
-article li a,
-.markdown p a,
-.theme-doc-markdown p a {
-  text-decoration: underline 1px var(--ifm-color-primary);
-  transition: color 0.2s ease;
-}
-
-article p a:hover,
-article ul a:hover,
-article li a:hover,
-.markdown p a:hover,
-.theme-doc-markdown p a:hover {
-  text-decoration: underline 2px var(--ifm-color-primary);
-}
 
 /* ============================================================
  * Sidebar Method labels — Default (pill style)
@@ -286,71 +209,6 @@ article li a:hover,
 }
 
 /* ============================================================
- * Admonitions
- * ============================================================ */
-
-.alert {
-  border: none;
-  border-radius: var(--theme-border-radius-md, 8px);
-}
-
-/* ============================================================
- * Announcement bar
- * ============================================================ */
-
-div[class^="announcementBar_"] {
-  --site-announcement-bar-stripe-color1: hsl(
-    var(--site-primary-hue-saturation) 85%
-  );
-  --site-announcement-bar-stripe-color2: hsl(
-    var(--site-primary-hue-saturation) 95%
-  );
-  background: repeating-linear-gradient(
-    35deg,
-    var(--site-announcement-bar-stripe-color1),
-    var(--site-announcement-bar-stripe-color1) 20px,
-    var(--site-announcement-bar-stripe-color2) 10px,
-    var(--site-announcement-bar-stripe-color2) 40px
-  );
-  font-weight: bold;
-}
-
-/* ============================================================
- * Schema parameter highlight animation
- *
- * Color driven by --theme-primary-rgb (defined in the theme file).
- * ============================================================ */
-
-[id]:target {
-  animation: highlight-flash 2s ease-out;
-  background-color: rgba(var(--theme-primary-rgb, 0, 76, 157), 0.08);
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: -2px -4px;
-}
-
-@keyframes highlight-flash {
-  0% {
-    background-color: rgba(var(--theme-primary-rgb, 0, 76, 157), 0.25);
-    box-shadow: 0 0 0 3px rgba(var(--theme-primary-rgb, 0, 76, 157), 0.25);
-  }
-  50% {
-    background-color: rgba(var(--theme-primary-rgb, 0, 76, 157), 0.15);
-    box-shadow: 0 0 0 2px rgba(var(--theme-primary-rgb, 0, 76, 157), 0.15);
-  }
-  100% {
-    background-color: rgba(var(--theme-primary-rgb, 0, 76, 157), 0.08);
-    box-shadow: none;
-  }
-}
-
-.openapi-markdown__details [id]:target,
-.openapi-schema__list-item [id]:target {
-  animation: highlight-flash 2s ease-out;
-  background-color: rgba(var(--theme-primary-rgb, 0, 76, 157), 0.08) !important;
-}
-
-/* ============================================================
  * Code tab scrollbar
  * ============================================================ */
 
@@ -372,12 +230,12 @@ div[class^="announcementBar_"] {
 
 .tabs-container [role="tabpanel"] pre::-webkit-scrollbar-track {
   background: var(--ifm-color-emphasis-200);
-  border-radius: var(--theme-border-radius-sm, 4px);
+  border-radius: var(--radius);
 }
 
 .tabs-container [role="tabpanel"] pre::-webkit-scrollbar-thumb {
   background: var(--ifm-color-emphasis-400);
-  border-radius: var(--theme-border-radius-sm, 4px);
+  border-radius: var(--radius);
 }
 
 .tabs-container [role="tabpanel"] pre::-webkit-scrollbar-thumb:hover {

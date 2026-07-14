@@ -266,10 +266,6 @@ const config: Config = {
       appId: "J0EABTYI1A",
       indexName: "docusaurus-openapi",
     },
-    announcementBar: {
-      id: "announcementBar_2",
-      content: "v5.0.0 is now available! Requires Docusaurus 3.10.0+",
-    },
     api: {
       schemaExpansion: {
         enabled: true,
