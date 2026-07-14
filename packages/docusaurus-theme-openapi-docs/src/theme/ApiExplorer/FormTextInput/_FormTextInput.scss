@@ -1,11 +1,11 @@
 .openapi-explorer__form-item-input {
   margin-top: calc(var(--ifm-pre-padding) / 2);
-  background-color: var(--openapi-input-background);
+  background-color: var(--background);
   border: 1px solid transparent;
   outline: none;
   width: 100%;
   color: var(--ifm-pre-color);
-  padding: var(--openapi-explorer-padding-input);
+  padding: 0.5rem;
   border-radius: 4px;
 
   &:hover {
@@ -18,14 +18,14 @@
   }
 
   &.error {
-    border: 1px solid var(--openapi-required);
+    border: 1px solid var(--destructive);
   }
 }
 
 .openapi-explorer__input-error {
-  font-size: var(--openapi-explorer-font-size-input);
-  color: var(--openapi-required);
-  padding-top: var(--openapi-explorer-padding-input);
+  font-size: 0.75rem;
+  color: var(--destructive);
+  padding-top: 0.5rem;
 
   &::before {
     display: inline;

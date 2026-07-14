@@ -27,17 +27,17 @@
 
   &.success.active {
     background-color: var(--ifm-color-success);
-    color: var(--ifm-color-white);
+    color: var(--primary-foreground);
   }
 
   &.danger.active {
     background-color: var(--ifm-color-danger);
-    color: var(--ifm-color-white);
+    color: var(--primary-foreground);
   }
 
   &.info.active {
     background-color: var(--ifm-color-info);
-    color: var(--ifm-color-white);
+    color: var(--primary-foreground);
   }
 
   &.active,
