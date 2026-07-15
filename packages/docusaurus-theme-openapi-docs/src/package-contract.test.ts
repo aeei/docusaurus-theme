@@ -8,4 +8,5 @@ it("uses the public shadcn theme package identity", () => {
 
   expect(packageJson.name).toBe("docusaurus-theme-shadcn-docs");
   expect(packageJson.dependencies["lucide-react"]).toBeDefined();
+  expect(packageJson.dependencies["@base-ui/react"]).toBeDefined();
 });

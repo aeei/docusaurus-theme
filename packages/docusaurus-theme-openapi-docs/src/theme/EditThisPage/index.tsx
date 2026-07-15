@@ -11,9 +11,9 @@ export default function EditThisPage({ editUrl }: Props): ReactNode {
   return (
     <Button
       asChild
-      variant="ghost"
+      variant="link"
       size="sm"
-      className="no-underline hover:no-underline"
+      className="h-auto p-0! underline underline-offset-4"
     >
       <Link to={editUrl}>
         <Pencil aria-hidden="true" />

@@ -15,7 +15,7 @@ export default function Tag({
     <Badge
       asChild
       variant="outline"
-      className="gap-1 hover:bg-accent hover:text-accent-foreground"
+      className="gap-1 no-underline hover:bg-accent hover:text-accent-foreground hover:no-underline"
     >
       <Link rel="tag" href={permalink} title={description}>
         <span>{label}</span>

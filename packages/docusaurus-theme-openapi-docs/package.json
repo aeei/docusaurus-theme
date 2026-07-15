@@ -15,11 +15,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs.git",
+    "url": "https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme.git",
     "directory": "packages/docusaurus-theme-openapi-docs"
   },
   "bugs": {
-    "url": "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/issues"
+    "url": "https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme/issues"
   },
   "types": "src/theme-openapi.d.ts",
   "main": "lib/index.js",
@@ -51,6 +51,7 @@
     "tailwindcss": "^4.3.2"
   },
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
     "@hookform/error-message": "^2.0.1",
     "@reduxjs/toolkit": "^2.8.2",
     "allof-merge": "^0.6.6",

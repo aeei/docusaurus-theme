@@ -1,14 +1,13 @@
 import React, { type ReactNode } from "react";
 
-import { ChevronDown } from "lucide-react";
+import DropdownNavbarItemMobile from "@theme/NavbarItem/DropdownNavbarItem/Mobile";
 
-import { Button } from "@theme/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@theme/components/ui/dropdown-menu";
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuTrigger,
+} from "@theme/components/ui/navigation-menu";
 
 type DropdownItem = {
   label?: ReactNode;
@@ -33,52 +32,54 @@ function DesktopDropdownNavbarItem({
   label,
   children,
   className,
-  position,
 }: Props): ReactNode {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className={["theme-navbar-nav-link", className]
-            .filter(Boolean)
-            .join(" ")}
-          aria-label={typeof label === "string" ? label : undefined}
-        >
-          {children ?? label}
-          <ChevronDown aria-hidden="true" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align={position === "right" ? "end" : "start"}
-        className="z-[1002] min-w-56"
+    <NavigationMenuItem>
+      <NavigationMenuTrigger
+        className={["theme-navbar-nav-link", className]
+          .filter(Boolean)
+          .join(" ")}
+        aria-label={typeof label === "string" ? label : undefined}
       >
+        {children ?? label}
+      </NavigationMenuTrigger>
+      <NavigationMenuContent className="min-w-48 p-1">
         {items.map((item, index) => {
           const href = item.to ?? item.href ?? "#";
           const external = item.target === "_blank";
 
           return (
-            <DropdownMenuItem key={index} asChild>
-              <a
-                href={href}
-                target={item.target}
-                rel={external ? "noreferrer" : undefined}
-              >
-                {item.label}
-              </a>
-            </DropdownMenuItem>
+            <NavigationMenuLink
+              key={index}
+              className="px-2 py-1.5"
+              render={
+                <a
+                  href={href}
+                  target={item.target}
+                  rel={external ? "noreferrer" : undefined}
+                />
+              }
+            >
+              {item.label}
+            </NavigationMenuLink>
           );
         })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
   );
 }
 
 export default function DropdownNavbarItem({
-  mobile: _mobile = false,
+  mobile = false,
   ...props
 }: Props): ReactNode {
+  if (mobile) {
+    return (
+      <DropdownNavbarItemMobile
+        {...(props as React.ComponentProps<typeof DropdownNavbarItemMobile>)}
+      />
+    );
+  }
+
   return <DesktopDropdownNavbarItem {...props} />;
 }

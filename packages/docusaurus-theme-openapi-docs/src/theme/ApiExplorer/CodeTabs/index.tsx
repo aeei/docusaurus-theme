@@ -11,6 +11,7 @@ import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
 import { Code2, Terminal } from "lucide-react";
 
+import { Tabs, TabsList, TabsTrigger } from "@theme/components/ui/tabs";
 import { useScrollPositionBlocker } from "@theme/utils/scrollUtils";
 import {
   sanitizeTabsChildren,
@@ -46,155 +47,114 @@ function TabList({
   selectValue,
   tabValues,
 }: CodeTabsProps & ReturnType<typeof useTabsContextValue>) {
-  const tabRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const tabsScrollContainerRef = useRef<any>(null);
+  const tabRefs = useRef(new Map<string, HTMLButtonElement>());
+  const tabsScrollContainerRef = useRef<HTMLDivElement>(null);
   const { blockElementScrollPositionUntilNextRender } =
     useScrollPositionBlocker();
 
   useEffect(() => {
-    const activeTab = tabRefs.current.find(
-      (tab) => tab?.getAttribute("aria-selected") === "true"
-    );
+    const activeTab = tabRefs.current.get(selectedValue);
+    const container = tabsScrollContainerRef.current;
+    if (!activeTab || !container) return;
 
-    if (activeTab && tabsScrollContainerRef.current) {
-      const container = tabsScrollContainerRef.current;
-      const containerRect = container.getBoundingClientRect();
-      const activeTabRect = activeTab.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const activeTabRect = activeTab.getBoundingClientRect();
+    const glowOffset = 3;
+    const scrollOffset =
+      activeTabRect.left -
+      containerRect.left +
+      container.scrollLeft -
+      glowOffset;
 
-      // Calculate the distance to scroll to align active tab to the left
-      const glowOffset = 3;
-      const scrollOffset =
-        activeTabRect.left -
-        containerRect.left +
-        container.scrollLeft -
-        glowOffset;
-
-      // Check if the active tab is not already at the left position
-
-      if (Math.abs(scrollOffset - container.scrollLeft) > 4) {
-        // Adjust the scroll of the container
-        container.scrollLeft = scrollOffset;
-      }
+    if (Math.abs(scrollOffset - container.scrollLeft) > 4) {
+      container.scrollLeft = scrollOffset;
     }
-  }, []);
+  }, [selectedValue]);
 
-  const handleTabChange = (
-    event:
-      | React.FocusEvent<HTMLLIElement>
-      | React.MouseEvent<HTMLLIElement>
-      | React.KeyboardEvent<HTMLLIElement>
-  ) => {
-    const newTab = event.currentTarget;
-    const newTabIndex = tabRefs.current.indexOf(newTab);
-    const newTabValue = tabValues[newTabIndex]!.value;
+  const handleValueChange = (newTabValue: string) => {
+    const newTab = tabRefs.current.get(newTabValue);
+    if (newTab) blockElementScrollPositionUntilNextRender(newTab);
 
-    if (newTabValue !== selectedValue) {
-      blockElementScrollPositionUntilNextRender(newTab);
-      selectValue(newTabValue);
+    if (newTabValue !== selectedValue) selectValue(newTabValue);
+
+    if (!action) return;
+
+    let newLanguage: Language;
+    if (currentLanguage && includeVariant) {
+      newLanguage = languageSet.filter(
+        (lang: Language) => lang.language === currentLanguage.language
+      )[0];
+      newLanguage.variant = newTabValue;
+      action.setSelectedVariant(newTabValue.toLowerCase());
+    } else if (currentLanguage && includeSample) {
+      newLanguage = languageSet.filter(
+        (lang: Language) => lang.language === currentLanguage.language
+      )[0];
+      newLanguage.sample = newTabValue;
+      action.setSelectedSample(newTabValue);
+    } else {
+      newLanguage = languageSet.filter(
+        (lang: Language) => lang.language === newTabValue
+      )[0];
+      action.setSelectedVariant(newLanguage.variants[0].toLowerCase());
+      action.setSelectedSample(newLanguage.sample);
     }
-
-    if (action) {
-      let newLanguage: Language;
-      if (currentLanguage && includeVariant) {
-        newLanguage = languageSet.filter(
-          (lang: Language) => lang.language === currentLanguage.language
-        )[0];
-        newLanguage.variant = newTabValue;
-        action.setSelectedVariant(newTabValue.toLowerCase());
-      } else if (currentLanguage && includeSample) {
-        newLanguage = languageSet.filter(
-          (lang: Language) => lang.language === currentLanguage.language
-        )[0];
-        newLanguage.sample = newTabValue;
-        action.setSelectedSample(newTabValue);
-      } else {
-        newLanguage = languageSet.filter(
-          (lang: Language) => lang.language === newTabValue
-        )[0];
-        action.setSelectedVariant(newLanguage.variants[0].toLowerCase());
-        action.setSelectedSample(newLanguage.sample);
-      }
-      action.setLanguage(newLanguage);
-    }
-  };
-
-  const handleKeydown = (event: React.KeyboardEvent<HTMLLIElement>) => {
-    let focusElement: HTMLLIElement | null = null;
-
-    switch (event.key) {
-      case "Enter": {
-        handleTabChange(event);
-        break;
-      }
-      case "ArrowRight": {
-        const nextTab = tabRefs.current.indexOf(event.currentTarget) + 1;
-        focusElement = tabRefs.current[nextTab] ?? tabRefs.current[0]!;
-        break;
-      }
-      case "ArrowLeft": {
-        const prevTab = tabRefs.current.indexOf(event.currentTarget) - 1;
-        focusElement =
-          tabRefs.current[prevTab] ??
-          tabRefs.current[tabRefs.current.length - 1]!;
-        break;
-      }
-      default:
-        break;
-    }
-
-    focusElement?.focus();
+    action.setLanguage(newLanguage);
   };
 
   return (
-    <ul
-      role="tablist"
-      aria-orientation="horizontal"
+    <Tabs
+      value={selectedValue}
+      onValueChange={handleValueChange}
       className={clsx(
-        "tabs",
-        "openapi-tabs__code-list-container",
-        {
-          "tabs--block": block,
-        },
+        "tabs-container openapi-tabs__code-container gap-0",
         className
       )}
-      ref={tabsScrollContainerRef}
     >
-      {tabValues.map(({ value, label, attributes }) => {
-        const itemClassName = attributes?.className as string | undefined;
-        const Icon = itemClassName?.includes("--shell") ? Terminal : Code2;
+      <div
+        ref={tabsScrollContainerRef}
+        data-slot="tabs-scroller"
+        className="max-w-full overflow-x-auto border-b border-border [scrollbar-width:none]"
+      >
+        <TabsList
+          variant="line"
+          className={clsx(
+            "openapi-tabs__code-list-container h-auto! min-w-max justify-start",
+            block && "tabs--block w-full min-w-full"
+          )}
+        >
+          {tabValues.map(({ value, label, attributes }) => {
+            const itemClassName = attributes?.className as string | undefined;
+            const Icon = itemClassName?.includes("--shell") ? Terminal : Code2;
 
-        return (
-          <li
-            // TODO extract TabListItem
-            role="tab"
-            tabIndex={selectedValue === value ? 0 : -1}
-            aria-selected={selectedValue === value}
-            key={value}
-            ref={(tabControl) => {
-              if (tabControl) {
-                tabRefs.current.push(tabControl);
-              }
-            }}
-            onKeyDown={handleKeydown}
-            onClick={handleTabChange}
-            {...attributes}
-            className={clsx(
-              "tabs__item",
-              "openapi-tabs__code-item",
-              attributes?.className as string,
-              {
-                active: selectedValue === value,
-              }
-            )}
-          >
-            {itemClassName && (
-              <Icon aria-hidden="true" className="openapi-tabs__code-icon" />
-            )}
-            <span>{label ?? value}</span>
-          </li>
-        );
-      })}
-    </ul>
+            return (
+              <TabsTrigger
+                key={value}
+                {...attributes}
+                ref={(tabControl) => {
+                  if (tabControl) tabRefs.current.set(value, tabControl);
+                  else tabRefs.current.delete(value);
+                }}
+                value={value}
+                className={clsx(
+                  "openapi-tabs__code-item",
+                  itemClassName,
+                  selectedValue === value && "active"
+                )}
+              >
+                {itemClassName && (
+                  <Icon
+                    aria-hidden="true"
+                    className="openapi-tabs__code-icon"
+                  />
+                )}
+                <span>{label ?? value}</span>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+      </div>
+    </Tabs>
   );
 }
 
@@ -211,10 +171,7 @@ function TabContent({
     const selectedTabItem = childTabs.find(
       (tabItem) => tabItem.props.value === selectedValue
     );
-    if (!selectedTabItem) {
-      // fail-safe or fail-fast? not sure what's best here
-      return null;
-    }
+    if (!selectedTabItem) return null;
     return cloneElement(selectedTabItem, { className: "margin-top--md" });
   }
   return (
@@ -224,19 +181,11 @@ function TabContent({
 
 function TabsComponent(props: CodeTabsProps & Props): React.JSX.Element {
   const tabs = useTabsContextValue(props);
-  const { className } = props;
 
   return (
     <TabsProvider value={tabs}>
-      <div
-        className={clsx(
-          "tabs-container openapi-tabs__code-container",
-          className
-        )}
-      >
-        <TabList {...props} {...tabs} />
-        <TabContent {...props} {...tabs} />
-      </div>
+      <TabList {...props} {...tabs} />
+      <TabContent {...props} {...tabs} />
     </TabsProvider>
   );
 }
@@ -246,12 +195,7 @@ export default function CodeTabs(
 ): React.JSX.Element {
   const isBrowser = useIsBrowser();
   return (
-    <TabsComponent
-      // Remount tabs after hydration
-      // Temporary fix for https://github.com/facebook/docusaurus/issues/5653
-      key={String(isBrowser)}
-      {...props}
-    >
+    <TabsComponent key={String(isBrowser)} {...props}>
       {sanitizeTabsChildren(props.children)}
     </TabsComponent>
   );

@@ -11,6 +11,7 @@ import React, { useId } from "react";
 import { translate } from "@docusaurus/Translate";
 import { ErrorMessage } from "@hookform/error-message";
 import FormLabel from "@theme/ApiExplorer/FormLabel";
+import { Input } from "@theme/components/ui/input";
 import clsx from "clsx";
 import { CircleAlert } from "lucide-react";
 import { useFormContext } from "react-hook-form";
@@ -55,7 +56,7 @@ function FormTextInput({
         <FormLabel htmlFor={id} label={label} type={type} required={required} />
       )}
       {paramName ? (
-        <input
+        <Input
           {...register(paramName, {
             required: isRequired
               ? translate({
@@ -76,7 +77,7 @@ function FormTextInput({
           autoComplete="off"
         />
       ) : (
-        <input
+        <Input
           id={label ? id : undefined}
           className="openapi-explorer__form-item-input"
           type={password ? "password" : "text"}

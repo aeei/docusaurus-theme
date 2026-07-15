@@ -18,6 +18,20 @@ export interface Props {
   context?: "endpoint" | "callback";
 }
 
+function SoftWrapUrl({ value }: { value: string }) {
+  return value.split("/").map((part, index) => (
+    <React.Fragment key={`${index}-${part}`}>
+      {index > 0 && (
+        <>
+          /
+          <wbr />
+        </>
+      )}
+      {part}
+    </React.Fragment>
+  ));
+}
+
 function MethodEndpoint({ method, path, context }: Props) {
   // During SSR, render without Redux store access to avoid "Cannot read properties
   // of null (reading 'store')" errors caused by useSelector running outside a Provider.
@@ -27,9 +41,9 @@ function MethodEndpoint({ method, path, context }: Props) {
         <pre className="openapi__method-endpoint">
           <MethodBadge method={method} />{" "}
           {method !== "event" && (
-            <h2 className="openapi__method-endpoint-path">
-              {`${path.replace(/{([a-z0-9-_]+)}/gi, ":$1")}`}
-            </h2>
+            <code className="openapi__method-endpoint-path">
+              <SoftWrapUrl value={path.replace(/{([a-z0-9-_]+)}/gi, ":$1")} />
+            </code>
           )}
         </pre>
         <div className="openapi__divider" />
@@ -60,10 +74,11 @@ function MethodEndpoint({ method, path, context }: Props) {
       <BrowserOnly>
         {() => {
           if (serverUrlWithVariables.length) {
-            return serverUrlWithVariables;
+            return <SoftWrapUrl value={serverUrlWithVariables} />;
           } else if (serverValue && serverValue.url) {
-            return serverValue.url;
+            return <SoftWrapUrl value={serverValue.url} />;
           }
+          return null;
         }}
       </BrowserOnly>
     );
@@ -74,10 +89,10 @@ function MethodEndpoint({ method, path, context }: Props) {
       <pre className="openapi__method-endpoint">
         <MethodBadge method={method} />{" "}
         {method !== "event" && (
-          <h2 className="openapi__method-endpoint-path">
+          <code className="openapi__method-endpoint-path">
             {renderServerUrl()}
-            {`${path.replace(/{([a-z0-9-_]+)}/gi, ":$1")}`}
-          </h2>
+            <SoftWrapUrl value={path.replace(/{([a-z0-9-_]+)}/gi, ":$1")} />
+          </code>
         )}
       </pre>
       <div className="openapi__divider" />

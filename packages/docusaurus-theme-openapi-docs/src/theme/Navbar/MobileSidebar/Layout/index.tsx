@@ -33,6 +33,10 @@ export default function NavbarMobileSidebarLayout({
         showCloseButton={false}
         className="theme-mobile-sheet"
         aria-label="Navigation menu"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          document.querySelector<HTMLButtonElement>(".navbar__toggle")?.focus();
+        }}
       >
         {header}
         <div className="theme-mobile-sheet__menus">

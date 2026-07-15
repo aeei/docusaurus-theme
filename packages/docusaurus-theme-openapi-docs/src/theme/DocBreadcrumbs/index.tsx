@@ -37,17 +37,19 @@ export default function DocBreadcrumbs(): ReactNode {
           {homePageRoute && (
             <>
               <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link
-                    href="/"
-                    aria-label={translate({
-                      id: "theme.docs.breadcrumbs.home",
-                      message: "Home page",
-                      description: "Home breadcrumb label",
-                    })}
-                  >
-                    <Home size={14} />
-                  </Link>
+                <BreadcrumbLink
+                  render={
+                    <Link
+                      href="/"
+                      aria-label={translate({
+                        id: "theme.docs.breadcrumbs.home",
+                        message: "Home page",
+                        description: "Home breadcrumb label",
+                      })}
+                    />
+                  }
+                >
+                  <Home size={14} />
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -66,8 +68,8 @@ export default function DocBreadcrumbs(): ReactNode {
                   {isLast || !href ? (
                     <BreadcrumbPage>{item.label}</BreadcrumbPage>
                   ) : (
-                    <BreadcrumbLink asChild>
-                      <Link href={href}>{item.label}</Link>
+                    <BreadcrumbLink render={<Link href={href} />}>
+                      {item.label}
                     </BreadcrumbLink>
                   )}
                 </BreadcrumbItem>

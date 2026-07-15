@@ -8,8 +8,10 @@
 import React from "react";
 
 import { translate } from "@docusaurus/Translate";
-import clsx from "clsx";
 import { WrapText } from "lucide-react";
+
+import { Button } from "@theme/components/ui/button";
+import { cn } from "@theme/lib/utils";
 
 export interface Props {
   readonly className?: string;
@@ -29,21 +31,16 @@ export default function WordWrapButton({
       "The title attribute for toggle word wrapping button of code block lines",
   });
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="icon-sm"
       onClick={onClick}
-      className={clsx(
-        "clean-btn",
-        className,
-        isEnabled && "openapi-explorer__code-block-word-wrap-btn--enabled"
-      )}
+      className={cn(className, isEnabled && "bg-accent text-accent-foreground")}
       aria-label={title}
       title={title}
     >
-      <WrapText
-        className="openapi-explorer__code-block-word-wrap-btn-icon"
-        aria-hidden="true"
-      />
-    </button>
+      <WrapText aria-hidden="true" />
+    </Button>
   );
 }
