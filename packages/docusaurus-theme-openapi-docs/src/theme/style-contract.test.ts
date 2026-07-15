@@ -11,6 +11,17 @@ function listStyles(directory: string): string[] {
   });
 }
 
+it("does not render nested borders around the DocSearch escape key", () => {
+  const docSearchStyles = fs.readFileSync(
+    path.join(__dirname, "adapters", "_docsearch.scss"),
+    "utf8"
+  );
+
+  expect(docSearchStyles).not.toMatch(
+    /\.DocSearch-Commands-Key,\s*\.DocSearch-Escape-Key/
+  );
+});
+
 it("keeps OpenAPI styles within the public semantic token contract", () => {
   const stylesheet = listStyles(__dirname)
     .filter((file) => path.basename(file) !== "shadcn.css")
