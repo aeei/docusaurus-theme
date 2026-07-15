@@ -14,7 +14,7 @@ import buildPostmanRequest from "@theme/ApiExplorer/buildPostmanRequest";
 import CodeTabs from "@theme/ApiExplorer/CodeTabs";
 import { useResolvedEncoding } from "@theme/ApiExplorer/EncodingSelection/useResolvedEncoding";
 import { useTypedSelector } from "@theme/ApiItem/hooks";
-import type { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
+import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
 import cloneDeep from "lodash/cloneDeep";
 import codegen from "postman-code-generators";
 import * as sdk from "postman-collection";

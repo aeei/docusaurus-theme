@@ -17,7 +17,7 @@ import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
 import clsx from "clsx";
 import type { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
-import type { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
+import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
 
 import { clearResponse, clearCode, clearHeaders } from "./slice";
 

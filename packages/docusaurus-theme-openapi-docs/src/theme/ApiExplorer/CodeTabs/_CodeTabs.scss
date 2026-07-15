@@ -7,7 +7,7 @@
 
 [data-theme="dark"] {
   --bash-background-color: lightgrey;
-  --bash-border-radius: 20px;
+  --bash-border-radius: var(--radius);
 }
 
 .openapi-tabs__code-container {
@@ -16,19 +16,13 @@
   &:not(.openapi-tabs__code-container-inner) {
     padding: 1rem;
     background-color: var(--ifm-pre-background);
-    border-radius: var(--ifm-global-radius);
+    border-radius: var(--radius);
     border: 1px solid var(--border);
-    box-shadow:
-      0 2px 3px color-mix(in oklab, var(--foreground) 10%, transparent),
-      0 8px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+    box-shadow: none;
     transition: 300ms;
 
     &:hover {
-      box-shadow:
-        0 0 0 2px color-mix(in oklab, var(--foreground) 15%, transparent),
-        0 2px 3px color-mix(in oklab, var(--foreground) 15%, transparent),
-        0 16px 16px -10px
-          color-mix(in oklab, var(--foreground) 20%, transparent);
+      box-shadow: none;
     }
   }
 
@@ -114,17 +108,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--python {
   color: var(--ifm-color-success);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -132,17 +117,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--go {
   color: var(--ifm-color-info);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original-wordmark.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -150,17 +126,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--dart {
   color: var(--ifm-color-info);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/dart/dart-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -168,17 +135,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--javascript {
   color: var(--ifm-color-warning);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -186,19 +144,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--curl {
   color: var(--ifm-color-danger);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-plain.svg")
-      no-repeat;
-    margin-block: auto;
-    background-color: var(--bash-background-color);
-    border-radius: var(--bash-border-radius);
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring, var(--ring));
+    box-shadow: none;
     border-color: var(--ifm-color-danger);
   }
 }
@@ -206,17 +153,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--ruby {
   color: var(--ifm-color-danger);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-plain.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -224,17 +162,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--csharp {
   color: var(--ifm-color-gray-500);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -242,17 +171,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--r {
   color: var(--ifm-color-gray-500);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/r/r-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -260,17 +180,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--swift {
   color: var(--ifm-color-danger);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/swift/swift-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -278,17 +189,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--c {
   color: var(--ifm-color-info);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -296,17 +198,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--objective-c {
   color: var(--ifm-color-info);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/objectivec/objectivec-plain.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -314,17 +207,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--ocaml {
   color: var(--ifm-color-warning);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/ocaml/ocaml-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -332,17 +216,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--nodejs {
   color: var(--ifm-color-success);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -350,17 +225,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--php {
   color: var(--ifm-color-gray-500);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -368,17 +234,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--kotlin {
   color: var(--ifm-color-gray-500);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -386,17 +243,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--rust {
   color: var(--ifm-color-gray-500);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -404,17 +252,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--java {
   color: var(--ifm-color-warning);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -422,17 +261,8 @@ body[class="ReactModal__Body--open"] {
 .openapi-tabs__code-item--powershell {
   color: var(--ifm-color-info);
 
-  &::after {
-    content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/windows8/windows8-original.svg")
-      no-repeat;
-    margin-block: auto;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -444,20 +274,8 @@ body[class="ReactModal__Body--open"] {
   justify-content: center;
   position: relative;
 
-  &::after {
-    content: "";
-    display: inline-block;
-    width: 32px; /* Explicitly setting width to 32 pixels */
-    height: 32px; /* Explicitly setting height to 32 pixels */
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDIyTDggMTZMMTIgMTBNMjAgMjJMMjQgMTZMIDIwIDEwIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; /* Center the SVG */
-    margin-top: 0.5rem;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -469,20 +287,8 @@ body[class="ReactModal__Body--open"] {
   justify-content: center;
   position: relative;
 
-  &::after {
-    content: "";
-    display: inline-block;
-    width: 32px; /* Explicitly setting width to 32 pixels */
-    height: 32px; /* Explicitly setting height to 32 pixels */
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDIyTDggMTZMMTIgMTBNMjAgMjJMMjQgMTZMIDIwIDEwIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; /* Center the SVG */
-    margin-top: 0.5rem;
-  }
-
   &.active {
-    box-shadow: 0 0 0 3px var(--ring);
+    box-shadow: none;
     border-color: var(--border);
   }
 }
@@ -499,4 +305,10 @@ body[class="ReactModal__Body--open"] {
 
 .openapi-modal--open {
   background-color: var(--popover) !important;
+}
+
+.openapi-tabs__code-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
 }

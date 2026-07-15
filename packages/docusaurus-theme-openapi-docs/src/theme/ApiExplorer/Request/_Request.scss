@@ -2,9 +2,7 @@
   background-color: var(--ifm-pre-background);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  box-shadow:
-    0 2px 3px color-mix(in oklab, var(--foreground) 10%, transparent),
-    0 8px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+  box-shadow: none;
   color: var(--ifm-pre-color);
   line-height: var(--ifm-pre-line-height);
   margin-bottom: var(--ifm-spacing-vertical);
@@ -20,10 +18,7 @@
   }
 
   &:hover {
-    box-shadow:
-      0 0 0 2px color-mix(in oklab, var(--foreground) 15%, transparent),
-      0 2px 3px color-mix(in oklab, var(--foreground) 15%, transparent),
-      0 16px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+    box-shadow: none;
   }
 
   .required {
@@ -105,7 +100,7 @@
 
 .openapi-explorer__request-btn {
   border: none;
-  border-radius: var(--ifm-global-radius);
+  border-radius: var(--radius);
   padding: 0.5rem 1rem;
   margin-top: 1rem;
   background-color: var(--primary);
@@ -124,7 +119,7 @@
 
 .openapi-security__summary-container {
   background: var(--ifm-pre-background);
-  border-radius: var(--ifm-pre-border-radius);
+  border-radius: var(--radius);
 }
 
 // Prevent auto zoom on mobile iOS devices when focusing on input elmenents

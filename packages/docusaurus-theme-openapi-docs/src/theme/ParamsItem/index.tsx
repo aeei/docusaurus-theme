@@ -10,6 +10,7 @@ import React from "react";
 import { translate } from "@docusaurus/Translate";
 import { Example } from "@theme/Example";
 import Markdown from "@theme/Markdown";
+import { ValueBadge } from "@theme/components/value-badge";
 /* eslint-disable import/no-extraneous-dependencies*/
 import clsx from "clsx";
 
@@ -60,7 +61,7 @@ ${enumDescriptions
   return "";
 };
 
-function ParamsItem({ param, ...rest }: Props) {
+function ParamsItem({ param }: Props) {
   const { description, name, required, deprecated, enumDescriptions } = param;
 
   let schema = param.schema;
@@ -162,7 +163,7 @@ function ParamsItem({ param, ...rest }: Props) {
               })}{" "}
             </strong>
             <span>
-              <code>{defaultValue}</code>
+              <ValueBadge>{defaultValue}</ValueBadge>
             </span>
           </div>
         );
@@ -176,7 +177,7 @@ function ParamsItem({ param, ...rest }: Props) {
             })}{" "}
           </strong>
           <span>
-            <code>{JSON.stringify(defaultValue)}</code>
+            <ValueBadge>{JSON.stringify(defaultValue)}</ValueBadge>
           </span>
         </div>
       );

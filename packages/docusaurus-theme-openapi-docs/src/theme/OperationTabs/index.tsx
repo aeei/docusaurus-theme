@@ -16,6 +16,8 @@ import React, {
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
 
+import { TabScrollButton } from "@theme/components/tab-scroll-button";
+
 import { useScrollPositionBlocker } from "@theme/utils/scrollUtils";
 import {
   sanitizeTabsChildren,
@@ -112,10 +114,7 @@ function TabList({
     <div className="tabs__container">
       <div className="openapi-tabs__operation-container">
         {showTabArrows && (
-          <button
-            className={clsx("openapi-tabs__arrow", "left")}
-            onClick={handleLeftClick}
-          />
+          <TabScrollButton direction="left" onClick={handleLeftClick} />
         )}
         <ul
           ref={tabItemListContainerRef}
@@ -160,10 +159,7 @@ function TabList({
           })}
         </ul>
         {showTabArrows && (
-          <button
-            className={clsx("openapi-tabs__arrow", "right")}
-            onClick={handleRightClick}
-          />
+          <TabScrollButton direction="right" onClick={handleRightClick} />
         )}
       </div>
     </div>

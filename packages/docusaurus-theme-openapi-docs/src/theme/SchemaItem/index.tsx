@@ -10,6 +10,7 @@ import React, { ReactNode } from "react";
 import { translate } from "@docusaurus/Translate";
 import { Example } from "@theme/Example";
 import Markdown from "@theme/Markdown";
+import { ValueBadge } from "@theme/components/value-badge";
 import clsx from "clsx";
 
 import { getQualifierMessage } from "../../markdown/schema";
@@ -161,7 +162,7 @@ export default function SchemaItem(props: Props) {
               })}{" "}
             </strong>
             <span>
-              <code>{defaultValue}</code>
+              <ValueBadge>{defaultValue}</ValueBadge>
             </span>
           </div>
         );
@@ -175,7 +176,7 @@ export default function SchemaItem(props: Props) {
             })}{" "}
           </strong>
           <span>
-            <code>{JSON.stringify(defaultValue)}</code>
+            <ValueBadge>{JSON.stringify(defaultValue)}</ValueBadge>
           </span>
         </div>
       );
@@ -195,7 +196,7 @@ export default function SchemaItem(props: Props) {
               })}{" "}
             </strong>
             <span>
-              <code>{constValue}</code>
+              <ValueBadge>{constValue}</ValueBadge>
             </span>
           </div>
         );
@@ -209,7 +210,7 @@ export default function SchemaItem(props: Props) {
             })}{" "}
           </strong>
           <span>
-            <code>{JSON.stringify(constValue)}</code>
+            <ValueBadge>{JSON.stringify(constValue)}</ValueBadge>
           </span>
         </div>
       );

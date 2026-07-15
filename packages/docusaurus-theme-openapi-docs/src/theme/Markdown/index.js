@@ -9,6 +9,15 @@ import React from "react";
 
 import Admonition from "@theme/Admonition";
 import CodeBlock from "@theme/CodeBlock";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@theme/components/ui/table";
+import { Badge } from "@theme/components/ui/badge";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -147,6 +156,12 @@ function Markdown({ children }) {
       remarkPlugins={[remarkGfm, remarkAdmonition]}
       components={{
         pre: (props) => <div {...props} />,
+        table: ({ node, ...props }) => <Table {...props} />,
+        thead: ({ node, ...props }) => <TableHeader {...props} />,
+        tbody: ({ node, ...props }) => <TableBody {...props} />,
+        tr: ({ node, ...props }) => <TableRow {...props} />,
+        th: ({ node, ...props }) => <TableHead {...props} />,
+        td: ({ node, ...props }) => <TableCell {...props} />,
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
           return match ? (
@@ -154,9 +169,15 @@ function Markdown({ children }) {
               {children}
             </CodeBlock>
           ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
+            <Badge
+              asChild
+              variant="outline"
+              className="rounded-[var(--radius-sm)] !px-1.5 !py-0 font-mono !text-[0.75em] font-normal !leading-5"
+            >
+              <code className={className} {...props}>
+                {children}
+              </code>
+            </Badge>
           );
         },
         admonition: ({ node, ...props }) => {

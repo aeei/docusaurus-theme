@@ -11,6 +11,8 @@ import { translate } from "@docusaurus/Translate";
 import clsx from "clsx";
 import { Check, Copy } from "lucide-react";
 
+import { Button } from "@theme/components/ui/button";
+
 interface CopyButtonProps {
   code: string;
   className?: string;
@@ -46,8 +48,10 @@ export default function CopyButton({
   useEffect(() => () => window.clearTimeout(copyTimeout.current), []);
 
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
+      size="icon-sm"
       aria-label={
         isCopied
           ? translate({
@@ -67,7 +71,6 @@ export default function CopyButton({
         description: "The copy button label on code blocks",
       })}
       className={clsx(
-        "clean-btn",
         className,
         "openapi-explorer__code-block-copy-btn",
         isCopied && "openapi-explorer__code-block-copy-btn--copied"
@@ -81,6 +84,6 @@ export default function CopyButton({
         <Copy className="openapi-explorer__code-block-copy-btn-icon" />
         <Check className="openapi-explorer__code-block-copy-btn-icon--success" />
       </span>
-    </button>
+    </Button>
   );
 }

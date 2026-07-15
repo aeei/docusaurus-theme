@@ -13,6 +13,7 @@ import { useTypedDispatch } from "@theme/ApiItem/hooks";
 import { ClosingArrayBracket, OpeningArrayBracket } from "@theme/ArrayBrackets";
 import Details from "@theme/Details";
 import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import { Badge } from "@theme/components/ui/badge";
 import Markdown from "@theme/Markdown";
 import {
   findPropertyDeep,
@@ -172,9 +173,12 @@ const AnyOneOf: React.FC<SchemaProps> = ({
 
   return (
     <>
-      <span className="badge badge--info" style={{ marginBottom: "1rem" }}>
+      <Badge
+        variant="outline"
+        className="mb-4 border-info/30 bg-info/10 text-info"
+      >
         {type}
-      </span>
+      </Badge>
       <SchemaTabs
         groupId={`schema-${uniqueId}`}
         lazy

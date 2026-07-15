@@ -2,9 +2,7 @@
   background-color: var(--ifm-pre-background);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  box-shadow:
-    0 2px 3px color-mix(in oklab, var(--foreground) 10%, transparent),
-    0 8px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+  box-shadow: none;
   color: var(--ifm-pre-color);
   line-height: var(--ifm-pre-line-height);
   margin-bottom: var(--ifm-spacing-vertical);
@@ -13,10 +11,7 @@
   transition: 300ms;
 
   &:hover {
-    box-shadow:
-      0 0 0 2px color-mix(in oklab, var(--foreground) 15%, transparent),
-      0 2px 3px color-mix(in oklab, var(--foreground) 15%, transparent),
-      0 16px 16px -10px color-mix(in oklab, var(--foreground) 20%, transparent);
+    box-shadow: none;
   }
 
   .openapi-explorer__code-block code {
@@ -66,23 +61,25 @@
 }
 
 .openapi-response__dot::before {
-  margin-right: 0.2rem;
-  margin-bottom: 0.15rem;
-  content: "⬤";
-  color: var(--ifm-color-primary);
-  font-size: 8px;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.25rem;
+  border-radius: 50%;
+  background: var(--primary);
+  content: "";
 }
 
 .openapi-response__dot--danger::before {
-  color: var(--ifm-color-danger);
+  background: var(--destructive);
 }
 
 .openapi-response__dot--success::before {
-  color: var(--ifm-color-success);
+  background: var(--success);
 }
 
 .openapi-response__dot--info::before {
-  color: var(--ifm-color-info);
+  background: var(--info);
 }
 
 .openapi-response__status-code {
