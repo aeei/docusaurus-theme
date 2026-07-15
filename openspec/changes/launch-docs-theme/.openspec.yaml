@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-07-15
+goal: Publish a clean Docusaurus docs theme and starter while preserving
+  upstream attribution and minimizing rebase conflicts.
