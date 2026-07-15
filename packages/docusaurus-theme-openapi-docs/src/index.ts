@@ -11,10 +11,13 @@ import type { Plugin } from "@docusaurus/types";
 
 export default function docusaurusThemeOpenAPI(): Plugin<void> {
   return {
-    name: "docusaurus-theme-openapi",
+    name: "docusaurus-theme-shadcn-docs",
 
     getClientModules() {
       const modules = [
+        require.resolve(
+          path.join(__dirname, "..", "lib", "theme", "shadcn.scss")
+        ),
         require.resolve(
           path.join(__dirname, "..", "lib", "theme", "styles.scss")
         ),

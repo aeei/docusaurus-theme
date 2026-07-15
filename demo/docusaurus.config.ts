@@ -43,10 +43,6 @@ const config: Config = {
         theme: {
           customCss: ["./src/css/custom.css", "./src/css/tokens.css"],
         },
-        gtag: {
-          trackingID: "GTM-THVM29S",
-          anonymizeIP: false,
-        },
       } satisfies Preset.Options,
     ],
   ],
@@ -89,18 +85,6 @@ const config: Config = {
               to: "/category/tests",
             },
           ],
-        },
-        {
-          href: "https://medium.com/palo-alto-networks-developer-blog",
-          position: "right",
-          className: "theme-navbar-rss-link",
-          "aria-label": "Palo Alto Networks Developer Blog",
-        },
-        {
-          href: "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs",
-          position: "right",
-          className: "theme-navbar-github-link",
-          "aria-label": "GitHub repository",
         },
       ],
     },
@@ -150,8 +134,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Palo Alto Networks, Inc. Built with Docusaurus ${DOCUSAURUS_VERSION}.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.oneLight,
+      darkTheme: prismThemes.oneDark,
       additionalLanguages: [
         "ruby",
         "csharp",
@@ -380,7 +364,7 @@ const config: Config = {
       },
     ],
   ],
-  themes: ["docusaurus-theme-openapi-docs"],
+  themes: ["docusaurus-theme-shadcn-docs"],
 };
 
 export default async function createConfig() {

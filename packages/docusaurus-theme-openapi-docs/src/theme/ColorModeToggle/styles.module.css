@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  border-radius: calc(var(--radius) - 0.25rem);
+  border-radius: var(--radius);
   background: transparent;
   color: var(--muted-foreground);
   cursor: pointer;

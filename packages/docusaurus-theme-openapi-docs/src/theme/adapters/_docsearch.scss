@@ -1,0 +1,137 @@
+/* Algolia owns this DOM. Keep the adapter token-driven and selectors structural. */
+:root {
+  --docsearch-primary-color: var(--primary);
+  --docsearch-soft-primary-color: color-mix(
+    in oklab,
+    var(--primary) 12%,
+    transparent
+  );
+  --docsearch-subtle-color: var(--border);
+  --docsearch-text-color: var(--foreground);
+  --docsearch-error-color: var(--destructive);
+  --docsearch-success-color: var(--success-background);
+  --docsearch-secondary-text-color: var(--muted-foreground);
+  --docsearch-background-color: var(--background);
+  --docsearch-focus-color: var(--ring);
+  --docsearch-highlight-color: var(--primary);
+  --docsearch-muted-color: var(--muted-foreground);
+  --docsearch-muted-color-darker: color-mix(
+    in oklab,
+    var(--muted-foreground) 25%,
+    transparent
+  );
+  --docsearch-icon-color: var(--muted-foreground);
+  --docsearch-container-background: color-mix(
+    in oklab,
+    var(--background) 70%,
+    transparent
+  );
+  --docsearch-logo-color: var(--primary);
+  --docsearch-border-radius: var(--radius);
+  --docsearch-search-button-background: var(--background);
+  --docsearch-search-button-text-color: var(--muted-foreground);
+  --docsearch-modal-width: 48rem;
+  --docsearch-modal-height: min(42rem, calc(100dvh - 4rem));
+  --docsearch-modal-variable-height: min(32rem, calc(100dvh - 12rem));
+  --docsearch-modal-background: var(--popover);
+  --docsearch-modal-shadow: none;
+  --docsearch-searchbox-background: var(--background);
+  --docsearch-searchbox-focus-background: var(--background);
+  --docsearch-hit-color: var(--foreground);
+  --docsearch-hit-highlight-color: var(--accent);
+  --docsearch-hit-background: var(--card);
+  --docsearch-key-background: var(--muted);
+  --docsearch-key-color: var(--foreground);
+  --docsearch-key-pressed-shadow: none;
+  --docsearch-footer-background: var(--muted);
+  --docsearch-footer-shadow: 0 -1px 0 var(--border);
+  --docsearch-dropdown-menu-background: var(--popover);
+  --docsearch-dropdown-menu-item-hover-background: var(--accent);
+}
+
+.DocSearch-Container {
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.DocSearch-Modal {
+  width: min(var(--docsearch-modal-width), calc(100vw - 2rem));
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--popover-foreground);
+}
+
+.DocSearch-Form {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.DocSearch-Input {
+  color: var(--foreground);
+  font-family: inherit;
+}
+
+.DocSearch-Input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+
+.DocSearch-Hit a,
+.DocSearch-Menu-item {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+.DocSearch-Hit[aria-selected="true"] a,
+.DocSearch-Menu-item:hover {
+  border-color: var(--border);
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.DocSearch-Clear,
+.DocSearch-Close,
+.DocSearch-Action,
+.DocSearch-Hit-action-button {
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+}
+
+.DocSearch-Clear:hover,
+.DocSearch-Close:hover,
+.DocSearch-Action:hover,
+.DocSearch-Hit-action-button:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.DocSearch-Commands-Key,
+.DocSearch-Escape-Key {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  box-shadow: none;
+  color: var(--foreground);
+}
+
+.DocSearch-Footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 996px) {
+  .DocSearch-Container {
+    padding: 0;
+  }
+
+  .DocSearch-Modal {
+    width: 100vw;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+  }
+}

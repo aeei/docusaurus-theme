@@ -1,12 +1,12 @@
 # Contributor Guide
 
-This repository hosts the **docusaurus-plugin-openapi-docs** and **docusaurus-theme-openapi-docs** packages. The plugin converts OpenAPI specs to MDX and the theme provides React components for rendering those docs. The `demo` directory shows them working together.
+This repository hosts the **docusaurus-plugin-openapi-docs** and **docusaurus-theme-shadcn-docs** packages. The plugin converts OpenAPI specs to MDX and the theme provides React components for rendering those docs. The `demo` directory shows them working together.
 
 ```
 root
 ├─ packages
 │  ├─ docusaurus-plugin-openapi-docs   # generates MDX from OpenAPI specs
-│  └─ docusaurus-theme-openapi-docs    # theme components for API docs
+│  └─ docusaurus-theme-shadcn-docs    # theme components for API docs
 ├─ demo                                # example site using the plugin and theme
 └─ scripts                             # release and helper scripts
 ```

@@ -123,7 +123,7 @@ function main() {
   if (fs.existsSync(templatePkgPath)) {
     const templatePkg = JSON.parse(fs.readFileSync(templatePkgPath, "utf-8"));
     templatePkg.dependencies["docusaurus-plugin-openapi-docs"] = nextVersion;
-    templatePkg.dependencies["docusaurus-theme-openapi-docs"] = nextVersion;
+    templatePkg.dependencies["docusaurus-theme-shadcn-docs"] = nextVersion;
     fs.writeFileSync(
       templatePkgPath,
       JSON.stringify(templatePkg, null, 2) + "\n"

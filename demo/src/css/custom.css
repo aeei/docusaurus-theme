@@ -23,7 +23,7 @@
   font-size: 0.55rem;
   font-weight: 700;
   padding: 0.125rem 0.25rem;
-  border-radius: 0.375rem;
+  border-radius: var(--radius);
   line-height: 1.25;
   width: 2.25rem;
   height: auto;
@@ -95,7 +95,7 @@
   line-height: 20px;
   text-transform: uppercase;
   font-weight: 600;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   border: 1px solid;
   border-inline-start-width: 5px;
   margin-right: var(--ifm-spacing-horizontal);
@@ -167,7 +167,7 @@
   line-height: 20px;
   text-transform: uppercase;
   font-weight: 600;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   align-content: start;
   margin-right: var(--ifm-spacing-horizontal);
   text-align: right;
@@ -240,26 +240,6 @@
 
 .tabs-container [role="tabpanel"] pre::-webkit-scrollbar-thumb:hover {
   background: var(--ifm-color-emphasis-500);
-}
-
-/* ============================================================
- * OpenAPI code tab language icons
- * ============================================================ */
-
-.openapi-tabs__code-item--python {
-  color: var(--ifm-color-success);
-}
-.openapi-tabs__code-item--python::after {
-  content: "";
-  width: var(--code-tab-logo-width);
-  height: var(--code-tab-logo-height);
-  background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-plain.svg")
-    no-repeat;
-  margin-block: auto;
-}
-.openapi-tabs__code-item--python.active {
-  box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-python);
-  border-color: var(--openapi-code-tab-border-color-python);
 }
 
 /* ============================================================

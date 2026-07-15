@@ -4,7 +4,7 @@ import ComponentTypes from "@theme/NavbarItem/ComponentTypes";
 import { Github, Rss } from "lucide-react";
 
 type NavbarItemType = keyof typeof ComponentTypes;
-type NavbarItemProps = {
+export type Props = {
   type?: NavbarItemType;
   className?: string;
   href?: string;
@@ -28,7 +28,7 @@ function normalizeComponentType(
   return type;
 }
 
-export default function NavbarItem(props: NavbarItemProps): React.JSX.Element {
+export default function NavbarItem(props: Props): React.JSX.Element {
   const Icon = Object.entries(iconByClassName).find(([className]) =>
     props.className?.split(" ").includes(className)
   )?.[1];

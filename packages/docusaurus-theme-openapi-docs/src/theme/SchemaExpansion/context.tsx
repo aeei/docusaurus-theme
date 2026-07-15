@@ -15,7 +15,7 @@ import React, {
 } from "react";
 
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import type { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
+import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
 
 export const SCHEMA_EXPANSION_STORAGE_KEY =
   "docusaurus-openapi-schema-expansion-level";

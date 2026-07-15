@@ -22,6 +22,6 @@ html[data-theme="dark"] .openapi-explorer__select-input {
   color: var(--ifm-pre-color);
 
   &:focus {
-    box-shadow: inset 0px 0px 0px 2px var(--input);
+    box-shadow: none;
   }
 }

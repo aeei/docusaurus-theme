@@ -9,6 +9,7 @@ import React, { cloneElement, ReactElement, useEffect, useRef } from "react";
 
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
+import { Code2, Terminal } from "lucide-react";
 
 import { useScrollPositionBlocker } from "@theme/utils/scrollUtils";
 import {
@@ -158,33 +159,41 @@ function TabList({
       )}
       ref={tabsScrollContainerRef}
     >
-      {tabValues.map(({ value, label, attributes }) => (
-        <li
-          // TODO extract TabListItem
-          role="tab"
-          tabIndex={selectedValue === value ? 0 : -1}
-          aria-selected={selectedValue === value}
-          key={value}
-          ref={(tabControl) => {
-            if (tabControl) {
-              tabRefs.current.push(tabControl);
-            }
-          }}
-          onKeyDown={handleKeydown}
-          onClick={handleTabChange}
-          {...attributes}
-          className={clsx(
-            "tabs__item",
-            "openapi-tabs__code-item",
-            attributes?.className as string,
-            {
-              active: selectedValue === value,
-            }
-          )}
-        >
-          <span>{label ?? value}</span>
-        </li>
-      ))}
+      {tabValues.map(({ value, label, attributes }) => {
+        const itemClassName = attributes?.className as string | undefined;
+        const Icon = itemClassName?.includes("--shell") ? Terminal : Code2;
+
+        return (
+          <li
+            // TODO extract TabListItem
+            role="tab"
+            tabIndex={selectedValue === value ? 0 : -1}
+            aria-selected={selectedValue === value}
+            key={value}
+            ref={(tabControl) => {
+              if (tabControl) {
+                tabRefs.current.push(tabControl);
+              }
+            }}
+            onKeyDown={handleKeydown}
+            onClick={handleTabChange}
+            {...attributes}
+            className={clsx(
+              "tabs__item",
+              "openapi-tabs__code-item",
+              attributes?.className as string,
+              {
+                active: selectedValue === value,
+              }
+            )}
+          >
+            {itemClassName && (
+              <Icon aria-hidden="true" className="openapi-tabs__code-icon" />
+            )}
+            <span>{label ?? value}</span>
+          </li>
+        );
+      })}
     </ul>
   );
 }

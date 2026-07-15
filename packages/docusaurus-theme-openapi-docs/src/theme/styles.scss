@@ -6,6 +6,7 @@
  * ========================================================================== */
 /* Shared docs shell */
 @use "./base";
+@use "./adapters/docsearch";
 
 /* API Demo Panel */
 @use "./ApiExplorer/CodeTabs/CodeTabs";
@@ -163,7 +164,7 @@
 
 /* Loading Skeleton */
 .openapi-skeleton {
-  border-radius: var(--ifm-pre-border-radius);
+  border-radius: var(--radius);
   background-color: var(--muted);
   max-width: 100%;
   margin: 1rem auto;

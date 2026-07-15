@@ -11,12 +11,13 @@ import React, {
   useEffect,
   useState,
   ReactElement,
-  LegacyRef,
 } from "react";
 
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
 import flatten from "lodash/flatten";
+
+import { TabScrollButton } from "@theme/components/tab-scroll-button";
 
 import { useScrollPositionBlocker } from "@theme/utils/scrollUtils";
 import {
@@ -133,13 +134,10 @@ function TabList({
       style={{ marginBottom: "1rem" }}
     >
       {showTabArrows && (
-        <button
-          className="openapi-tabs__arrow left"
-          onClick={handleLeftClick}
-        />
+        <TabScrollButton direction="left" onClick={handleLeftClick} />
       )}
       <ul
-        ref={tabItemListContainerRef as LegacyRef<HTMLUListElement>}
+        ref={tabItemListContainerRef}
         role="tablist"
         aria-orientation="horizontal"
         className={clsx(
@@ -178,10 +176,7 @@ function TabList({
         ))}
       </ul>
       {showTabArrows && (
-        <button
-          className="openapi-tabs__arrow right"
-          onClick={handleRightClick}
-        />
+        <TabScrollButton direction="right" onClick={handleRightClick} />
       )}
     </div>
   );

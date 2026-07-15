@@ -1,0 +1,26 @@
+import React, { type ReactNode } from "react";
+
+import Link from "@docusaurus/Link";
+import type { Props } from "@theme/Tag";
+
+import { Badge } from "@theme/components/ui/badge";
+
+export default function Tag({
+  permalink,
+  label,
+  count,
+  description,
+}: Props): ReactNode {
+  return (
+    <Badge
+      asChild
+      variant="outline"
+      className="gap-1 hover:bg-accent hover:text-accent-foreground"
+    >
+      <Link rel="tag" href={permalink} title={description}>
+        <span>{label}</span>
+        {count ? <span className="text-muted-foreground">{count}</span> : null}
+      </Link>
+    </Badge>
+  );
+}
