@@ -42,25 +42,20 @@
   font-weight: bold;
 }
 
-.openapi-explorer__expand-details-btn {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 0;
-  cursor: pointer;
-  border: 0px solid transparent;
-  background-color: transparent;
-  text-transform: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .openapi-explorer__details-outer-container {
   padding: 1rem;
+}
+
+.openapi-explorer__request-form .openapi-explorer__details-container {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.openapi-explorer__request-form
+  .openapi-explorer__details-container
+  + .openapi-explorer__details-container {
+  border-top: 1px solid var(--border);
 }
 
 .openapi-explorer__details-container[open] {
@@ -99,27 +94,12 @@
 }
 
 .openapi-explorer__request-btn {
-  border: none;
-  border-radius: var(--radius);
-  padding: 0.5rem 1rem;
   margin-top: 1rem;
-  background-color: var(--primary);
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 0.75rem;
-  color: var(--primary-foreground);
-  cursor: pointer;
-  transition: 300ms;
-
-  &:hover,
-  &:active {
-    background-color: var(--primary);
-  }
 }
 
 .openapi-security__summary-container {
-  background: var(--ifm-pre-background);
-  border-radius: var(--radius);
+  background: transparent;
+  border-radius: 0;
 }
 
 // Prevent auto zoom on mobile iOS devices when focusing on input elmenents

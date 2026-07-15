@@ -1,7 +1,12 @@
 /* Reference token owner: shadcn Nova / Neutral. The reusable theme only consumes these. */
 :root {
-  --radius: 0.625rem;
-  --radius-sm: 0.375rem;
+  --radius-xs-value: 0.25rem;
+  --radius-sm-value: 0.375rem;
+  --radius-md-value: 0.5rem;
+  --radius-lg-value: 0.625rem;
+  --radius-xl-value: 0.75rem;
+  --radius: var(--radius-lg-value);
+  --radius-sm: var(--radius-sm-value);
   --layout-max-width: 96rem;
 
   /* Toss typography scale: size / line-height */

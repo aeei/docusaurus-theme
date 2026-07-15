@@ -15,6 +15,10 @@ import { Search } from "lucide-react";
 
 import { Button } from "@theme/components/ui/button";
 import { Kbd, KbdGroup } from "@theme/components/ui/kbd";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+} from "@theme/components/ui/navigation-menu";
 
 function useNavbarItems() {
   return useThemeConfig().navbar.items as NavbarItemConfig[];
@@ -37,6 +41,24 @@ function NavbarItems({ items }: { items: NavbarItemConfig[] }): ReactNode {
         </ErrorCauseBoundary>
       ))}
     </>
+  );
+}
+
+function NavbarNavigation({
+  items,
+  align = "start",
+}: {
+  items: NavbarItemConfig[];
+  align?: "start" | "end";
+}): ReactNode {
+  if (items.length === 0) return null;
+
+  return (
+    <NavigationMenu align={align} className="theme-navbar-desktop-navigation">
+      <NavigationMenuList className="m-0 p-0">
+        <NavbarItems items={items} />
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
 
@@ -84,12 +106,12 @@ export default function NavbarContent(): ReactNode {
       >
         {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
         <NavbarLogo />
-        <NavbarItems items={leftItems} />
+        <NavbarNavigation items={leftItems} />
       </div>
       <div
         className={`${ThemeClassNames.layout.navbar.containerRight} navbar__items navbar__items--right`}
       >
-        <NavbarItems items={rightItems} />
+        <NavbarNavigation items={rightItems} align="end" />
         <CommandSearch />
       </div>
     </div>

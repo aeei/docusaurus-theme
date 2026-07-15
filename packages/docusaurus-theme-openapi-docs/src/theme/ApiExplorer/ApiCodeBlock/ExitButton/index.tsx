@@ -8,8 +8,9 @@
 import React from "react";
 
 import { translate } from "@docusaurus/Translate";
-import clsx from "clsx";
 import { X } from "lucide-react";
+
+import { Button } from "@theme/components/ui/button";
 
 export interface Props {
   readonly className: string;
@@ -21,31 +22,24 @@ export default function ExitButton({
   handler,
 }: Props): React.JSX.Element {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="icon-sm"
       aria-label={translate({
         id: "theme.CodeBlock.exitButtonAriaLabel",
         message: "Exit expanded view",
         description: "The ARIA label for exit expanded view button",
       })}
       title={translate({
-        id: "theme.CodeBlock.copy",
-        message: "Copy",
+        id: "theme.CodeBlock.exit",
+        message: "Exit",
         description: "The exit button label on code blocks",
       })}
-      className={clsx(
-        "clean-btn",
-        "openapi-explorer__code-block-exit-btn",
-        className
-      )}
+      className={className}
       onClick={handler}
     >
-      <span
-        className="openapi-explorer__code-block-exit-btn-icons"
-        aria-hidden="true"
-      >
-        <X className="openapi-explorer__code-block-exit-btn-icon" />
-      </span>
-    </button>
+      <X aria-hidden="true" />
+    </Button>
   );
 }

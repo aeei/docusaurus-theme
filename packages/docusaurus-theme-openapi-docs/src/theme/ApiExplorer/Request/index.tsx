@@ -27,6 +27,7 @@ import {
 } from "@theme/ApiExplorer/Response/slice";
 import Server from "@theme/ApiExplorer/Server";
 import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import { Button } from "@theme/components/ui/button";
 import type { ParameterObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
 import type { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
 import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
@@ -256,29 +257,23 @@ function Request({ item }: { item: ApiItem }) {
               message: "Request",
             })}
           </span>
-          {allDetailsExpanded ? (
-            <button
-              type="button"
-              className="openapi-explorer__expand-details-btn"
-              onClick={collapseAllDetails}
-            >
-              {translate({
-                id: "theme.openapi.request.collapseAll",
-                message: "Collapse all",
-              })}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="openapi-explorer__expand-details-btn"
-              onClick={expandAllDetails}
-            >
-              {translate({
-                id: "theme.openapi.request.expandAll",
-                message: "Expand all",
-              })}
-            </button>
-          )}
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="openapi-explorer__expand-details-btn"
+            onClick={allDetailsExpanded ? collapseAllDetails : expandAllDetails}
+          >
+            {allDetailsExpanded
+              ? translate({
+                  id: "theme.openapi.request.collapseAll",
+                  message: "Collapse all",
+                })
+              : translate({
+                  id: "theme.openapi.request.expandAll",
+                  message: "Expand all",
+                })}
+          </Button>
         </div>
         <div className="openapi-explorer__details-outer-container">
           {showServerOptions && item.method !== "event" && (
@@ -401,12 +396,16 @@ function Request({ item }: { item: ApiItem }) {
             </details>
           )}
           {showRequestButton && item.method !== "event" && (
-            <button className="openapi-explorer__request-btn" type="submit">
+            <Button
+              className="openapi-explorer__request-btn"
+              type="submit"
+              size="sm"
+            >
               {translate({
                 id: "theme.openapi.request.sendButton",
                 message: "Send API Request",
               })}
-            </button>
+            </Button>
           )}
         </div>
       </form>

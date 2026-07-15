@@ -7,6 +7,8 @@
 
 import React from "react";
 
+import { Button } from "@theme/components/ui/button";
+
 export interface Props {
   label?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -15,11 +17,11 @@ export interface Props {
 
 function FloatingButton({ label, onClick, children }: Props) {
   return (
-    <div tabIndex={0} className="openapi-explorer__floating-btn">
+    <div className="openapi-explorer__floating-btn">
       {label && (
-        <button tabIndex={0} onClick={onClick}>
+        <Button type="button" variant="ghost" size="sm" onClick={onClick}>
           {label}
-        </button>
+        </Button>
       )}
       {children}
     </div>

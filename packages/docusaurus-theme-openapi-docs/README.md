@@ -1,5 +1,7 @@
 # docusaurus-theme-shadcn-docs
 
+This theme is developed in [`keIIy-kim/docusaurus-openapi-shadcn-theme`](https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme), a modified fork of [`PaloAltoNetworks/docusaurus-openapi-docs`](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs). The original copyright and MIT License are preserved.
+
 Reusable Docusaurus theme for Markdown docs and `docusaurus-plugin-openapi-docs` API references.
 
 - Nextra-inspired documentation shell
@@ -66,7 +68,13 @@ The theme consumes, but never defines, these CSS custom properties:
   --chart-3: ...;
   --chart-4: ...;
   --chart-5: ...;
-  --radius: 0.625rem;
+  --radius-xs-value: 0.25rem;
+  --radius-sm-value: 0.375rem;
+  --radius-md-value: 0.5rem;
+  --radius-lg-value: 0.625rem;
+  --radius-xl-value: 0.75rem;
+  --radius: var(--radius-lg-value);
+  --radius-sm: var(--radius-sm-value);
   --sidebar: ...;
   --sidebar-foreground: ...;
   --sidebar-primary: ...;

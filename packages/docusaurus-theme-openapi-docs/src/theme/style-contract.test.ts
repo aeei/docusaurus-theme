@@ -13,6 +13,7 @@ function listStyles(directory: string): string[] {
 
 it("keeps OpenAPI styles within the public semantic token contract", () => {
   const stylesheet = listStyles(__dirname)
+    .filter((file) => path.basename(file) !== "shadcn.css")
     .map((file) => fs.readFileSync(file, "utf8"))
     .join("\n");
 

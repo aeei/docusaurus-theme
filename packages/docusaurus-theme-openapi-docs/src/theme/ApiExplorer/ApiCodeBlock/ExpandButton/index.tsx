@@ -14,7 +14,9 @@ import CopyButton from "@theme/ApiExplorer/ApiCodeBlock/CopyButton";
 import ExitButton from "@theme/ApiExplorer/ApiCodeBlock/ExitButton";
 import Line from "@theme/ApiExplorer/ApiCodeBlock/Line";
 import clsx from "clsx";
-import { Check, Maximize2 } from "lucide-react";
+import { Maximize2 } from "lucide-react";
+
+import { Button } from "@theme/components/ui/button";
 import { Highlight, Language } from "prism-react-renderer";
 import Modal from "react-modal";
 
@@ -46,8 +48,10 @@ export default function ExpandButton({
 
   return (
     <>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon-sm"
         aria-label={
           isModalOpen
             ? translate({
@@ -66,22 +70,11 @@ export default function ExpandButton({
           message: "Expand",
           description: "The expand button label on code blocks",
         })}
-        className={clsx(
-          "clean-btn",
-          className,
-          "openapi-explorer__code-block-expand-btn",
-          isModalOpen && "openapi-explorer__code-block-expand-btn--copied"
-        )}
+        className={clsx(className, "openapi-explorer__code-block-expand-btn")}
         onClick={() => setIsModalOpen(true)}
       >
-        <span
-          className="openapi-explorer__code-block-expand-btn-icons"
-          aria-hidden="true"
-        >
-          <Maximize2 className="openapi-explorer__code-block-expand-btn-icon" />
-          <Check className="openapi-explorer__code-block-expand-btn-icon--success" />
-        </span>
-      </button>
+        <Maximize2 aria-hidden="true" />
+      </Button>
       <Modal
         className="openapi-explorer__expand-modal-content"
         overlayClassName="openapi-explorer__expand-modal-overlay"

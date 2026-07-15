@@ -1,24 +1,8 @@
 .openapi-explorer__form-item-input {
-  margin-top: calc(var(--ifm-pre-padding) / 2);
-  background-color: var(--background);
-  border: 1px solid transparent;
-  outline: none;
-  width: 100%;
-  color: var(--ifm-pre-color);
-  padding: 0.5rem;
-  border-radius: var(--radius);
-
-  &:hover {
-    border: 1px solid var(--ifm-toc-border-color);
-  }
-
-  &:focus {
-    border: 1px solid var(--ifm-color-primary);
-    box-shadow: none;
-  }
+  margin-top: 0.5rem;
 
   &.error {
-    border: 1px solid var(--destructive);
+    border-color: var(--destructive);
   }
 }
 

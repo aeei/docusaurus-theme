@@ -1,220 +1,58 @@
-/* ============================================================================
- * Copyright (c) Palo Alto Networks
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- * ========================================================================== */
-
-import React, {
-  cloneElement,
-  useRef,
-  useEffect,
-  useState,
-  ReactElement,
-} from "react";
+import React, { cloneElement, type ReactElement } from "react";
 
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import clsx from "clsx";
 import flatten from "lodash/flatten";
 
-import { TabScrollButton } from "@theme/components/tab-scroll-button";
-
-import { useScrollPositionBlocker } from "@theme/utils/scrollUtils";
+import { OpenApiTabList } from "@theme/components/openapi-tab-list";
 import {
   sanitizeTabsChildren,
   type TabItemProps,
-  TabProps,
+  type TabProps,
   TabsProvider,
   useTabsContextValue,
 } from "@theme/utils/tabsUtils";
-
-function TabList({
-  className,
-  block,
-  selectedValue,
-  selectValue,
-  tabValues,
-}: TabProps & ReturnType<typeof useTabsContextValue>) {
-  const tabRefs: (HTMLLIElement | null)[] = [];
-  const { blockElementScrollPositionUntilNextRender } =
-    useScrollPositionBlocker();
-
-  const handleTabChange = (
-    event:
-      | React.FocusEvent<HTMLLIElement>
-      | React.MouseEvent<HTMLLIElement>
-      | React.KeyboardEvent<HTMLLIElement>
-  ) => {
-    const newTab = event.currentTarget;
-    const newTabIndex = tabRefs.indexOf(newTab);
-    const newTabValue = tabValues[newTabIndex]!.value;
-
-    if (newTabValue !== selectedValue) {
-      blockElementScrollPositionUntilNextRender(newTab);
-      selectValue(newTabValue);
-    }
-  };
-
-  const handleKeydown = (event: React.KeyboardEvent<HTMLLIElement>) => {
-    let focusElement = null;
-
-    switch (event.key) {
-      case "Enter": {
-        handleTabChange(event);
-        break;
-      }
-      case "ArrowRight": {
-        const nextTab = tabRefs.indexOf(event.currentTarget) + 1;
-        focusElement = tabRefs[nextTab] ?? tabRefs[0]!;
-        break;
-      }
-      case "ArrowLeft": {
-        const prevTab = tabRefs.indexOf(event.currentTarget) - 1;
-        focusElement = tabRefs[prevTab] ?? tabRefs[tabRefs.length - 1]!;
-        break;
-      }
-      default:
-        break;
-    }
-
-    focusElement?.focus();
-  };
-
-  const tabItemListContainerRef = useRef<HTMLUListElement>(null);
-  const [showTabArrows, setShowTabArrows] = useState<boolean>(false);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        requestAnimationFrame(() => {
-          if (entry.target.clientWidth < entry.target.scrollWidth) {
-            setShowTabArrows(true);
-          } else {
-            setShowTabArrows(false);
-          }
-        });
-      }
-    });
-
-    resizeObserver.observe(tabItemListContainerRef.current!);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  const handleRightClick = () => {
-    tabItemListContainerRef.current!.scrollLeft += 90;
-  };
-
-  const handleLeftClick = () => {
-    tabItemListContainerRef.current!.scrollLeft -= 90;
-  };
-
-  return (
-    <div className="openapi-tabs__discriminator-top-section">
-      <div className="openapi-tabs__discriminator-container">
-        {showTabArrows && (
-          <TabScrollButton direction="left" onClick={handleLeftClick} />
-        )}
-        <ul
-          ref={tabItemListContainerRef}
-          role="tablist"
-          aria-orientation="horizontal"
-          className={clsx(
-            "openapi-tabs__discriminator-list-container",
-            "tabs",
-            {
-              "tabs--block": block,
-            },
-            className
-          )}
-        >
-          {tabValues.map(({ value, label, attributes }) => (
-            <li
-              // TODO extract TabListItem
-              role="tab"
-              tabIndex={selectedValue === value ? 0 : -1}
-              aria-selected={selectedValue === value}
-              key={value}
-              ref={(tabControl) => {
-                tabRefs.push(tabControl);
-              }}
-              onKeyDown={handleKeydown}
-              onClick={handleTabChange}
-              {...attributes}
-              className={clsx(
-                "tabs__item",
-                "openapi-tabs__discriminator-item",
-                attributes?.className as string,
-                {
-                  active: selectedValue === value,
-                }
-              )}
-            >
-              <span className="openapi-tabs__discriminator-tab-label">
-                {label ?? value}
-              </span>
-            </li>
-          ))}
-        </ul>
-        {showTabArrows && (
-          <TabScrollButton direction="right" onClick={handleRightClick} />
-        )}
-      </div>
-    </div>
-  );
-}
 
 function TabContent({
   lazy,
   children,
   selectedValue,
-}: TabProps &
-  ReturnType<typeof useTabsContextValue>): React.JSX.Element | null {
-  const childTabs = (Array.isArray(children) ? children : [children]).filter(
-    Boolean
+}: TabProps & ReturnType<typeof useTabsContextValue>) {
+  const childTabs = flatten(
+    (Array.isArray(children) ? children : [children]).filter(Boolean)
   ) as ReactElement<TabItemProps>[];
-  const flattenedChildTabs = flatten(childTabs);
-  if (lazy) {
-    const selectedTabItem = flattenedChildTabs.find(
-      (tabItem) => tabItem.props.value === selectedValue
-    );
-    if (!selectedTabItem) {
-      // fail-safe or fail-fast? not sure what's best here
-      return null;
-    }
-    return cloneElement(selectedTabItem, { className: "margin-top--md" });
-  }
-  return <div className="margin-top--md">{childTabs}</div>;
+
+  if (!lazy) return <div className="margin-top--md">{childTabs}</div>;
+
+  const selectedTab = childTabs.find(
+    (tab) => tab.props.value === selectedValue
+  );
+  return selectedTab
+    ? cloneElement(selectedTab, { className: "margin-top--md" })
+    : null;
 }
+
 function TabsComponent(props: TabProps): React.JSX.Element {
   const tabs = useTabsContextValue(props);
   return (
     <TabsProvider value={tabs}>
-      <div className="openapi-tabs__container">
-        <TabList {...props} {...tabs} />
+      <div className="tabs-container">
+        <OpenApiTabList
+          values={tabs.tabValues}
+          value={tabs.selectedValue}
+          onValueChange={tabs.selectValue}
+          className={props.className}
+          block={props.block}
+        />
         <TabContent {...props} {...tabs} />
       </div>
     </TabsProvider>
   );
 }
-export default function DiscriminatorTabs(props: TabProps): React.JSX.Element {
+
+export default function DiscriminatorTabs(props: TabProps) {
   const isBrowser = useIsBrowser();
-
-  if (
-    !props.children ||
-    (Array.isArray(props.children) && props.children.length === 0)
-  )
-    return <React.Fragment />;
-
   return (
-    <TabsComponent
-      // Remount tabs after hydration
-      // Temporary fix for https://github.com/facebook/docusaurus/issues/5653
-      key={String(isBrowser)}
-      {...props}
-    >
+    <TabsComponent key={String(isBrowser)} {...props}>
       {sanitizeTabsChildren(props.children)}
     </TabsComponent>
   );
