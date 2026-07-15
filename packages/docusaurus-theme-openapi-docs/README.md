@@ -1,6 +1,6 @@
 # docusaurus-theme-shadcn-docs
 
-This theme is developed in [`keIIy-kim/docusaurus-openapi-shadcn-theme`](https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme), a modified fork of [`PaloAltoNetworks/docusaurus-openapi-docs`](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs). The original copyright and MIT License are preserved.
+This theme is developed in [`aeei/docusaurus-openapi-shadcn-theme`](https://github.com/aeei/docusaurus-openapi-shadcn-theme), a modified fork of [`PaloAltoNetworks/docusaurus-openapi-docs`](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs). The original copyright and MIT License are preserved.
 
 Reusable Docusaurus theme for Markdown docs and `docusaurus-plugin-openapi-docs` API references.
 

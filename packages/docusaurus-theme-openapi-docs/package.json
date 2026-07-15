@@ -15,11 +15,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme.git",
+    "url": "https://github.com/aeei/docusaurus-openapi-shadcn-theme.git",
     "directory": "packages/docusaurus-theme-openapi-docs"
   },
   "bugs": {
-    "url": "https://github.com/keIIy-kim/docusaurus-openapi-shadcn-theme/issues"
+    "url": "https://github.com/aeei/docusaurus-openapi-shadcn-theme/issues"
   },
   "types": "src/theme-openapi.d.ts",
   "main": "lib/index.js",

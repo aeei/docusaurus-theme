@@ -1,7 +1,7 @@
 <h1 align="center">Docusaurus OpenAPI Shadcn Theme</h1>
 
 > [!NOTE]
-> This repository is a modified fork of [PaloAltoNetworks/docusaurus-openapi-docs](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs), focused on the `docusaurus-theme-shadcn-docs` theme. The upstream project and original copyright remain licensed under the included MIT License.
+> This repository is a modified fork of [PaloAltoNetworks/docusaurus-openapi-docs](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs), maintained at [aeei/docusaurus-openapi-shadcn-theme](https://github.com/aeei/docusaurus-openapi-shadcn-theme) and focused on the `docusaurus-theme-shadcn-docs` theme. The upstream project and original copyright remain licensed under the included MIT License.
 
 <div align="center">
 <img width="200" src="https://user-images.githubusercontent.com/9343811/165975569-1bc29814-884c-4931-83df-860043b625b7.svg" />
