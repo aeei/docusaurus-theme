@@ -26,6 +26,8 @@
   "main": "lib/index.js",
   "files": [
     "lib",
+    "src/theme",
+    "src/plugin-content-docs.d.ts",
     "src/theme-classic.d.ts",
     "README.md",
     "VENDORED_SOURCES.md",

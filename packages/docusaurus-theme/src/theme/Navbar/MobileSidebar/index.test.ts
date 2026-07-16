@@ -30,7 +30,7 @@ it("restores focus to the mobile navigation toggle after closing", () => {
     "utf8"
   );
 
-  expect(layout).toContain("onCloseAutoFocus");
+  expect(layout).toContain("onOpenChangeComplete");
   expect(layout).toContain(
     'querySelector<HTMLButtonElement>(".navbar__toggle")'
   );
