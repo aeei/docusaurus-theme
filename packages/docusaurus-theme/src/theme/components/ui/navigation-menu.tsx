@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@theme/lib/utils";
+import { cn } from "@theme/utils/cn";
 import { ChevronDown } from "lucide-react";
 
 function NavigationMenu({

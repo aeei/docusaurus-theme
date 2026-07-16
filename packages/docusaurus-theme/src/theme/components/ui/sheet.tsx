@@ -4,7 +4,7 @@ import * as React from "react";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { X } from "lucide-react";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../utils/cn";
 import { Button } from "./button";
 
 function Sheet(props: SheetPrimitive.Root.Props) {
