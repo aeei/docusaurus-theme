@@ -2,6 +2,17 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import { themes as prismThemes } from "prism-react-renderer";
 
+const algolia =
+  process.env.ALGOLIA_APP_ID &&
+  process.env.ALGOLIA_SEARCH_API_KEY &&
+  process.env.ALGOLIA_INDEX_NAME
+    ? {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
+        indexName: process.env.ALGOLIA_INDEX_NAME,
+      }
+    : undefined;
+
 const config: Config = {
   title: "aeei Docusaurus Theme",
   tagline: "A docs-first starter for @aeei/docusaurus-theme.",
@@ -108,6 +119,7 @@ const config: Config = {
       copyright:
         "Docusaurus Theme · Maintained by aeei · Based on Docusaurus OpenAPI Docs by Palo Alto Networks",
     },
+    ...(algolia ? { algolia } : {}),
     prism: { theme: prismThemes.github, darkTheme: prismThemes.dracula },
   } satisfies Preset.ThemeConfig,
 };

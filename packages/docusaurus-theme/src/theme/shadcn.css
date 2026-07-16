@@ -196,8 +196,8 @@
       scroll-fade-reveal-b 1ms ease-in-out;
     animation-timeline: scroll(self y), scroll(self y);
     animation-range:
-      0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),
-      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%;
+      0 var(--scroll-fade-reveal, 6rem),
+      calc(100% - var(--scroll-fade-reveal, 6rem)) 100%;
     animation-fill-mode: both;
   }
 

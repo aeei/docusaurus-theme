@@ -21,7 +21,7 @@ export default function docusaurusTheme(): Plugin<void> {
     },
 
     getThemePath() {
-      return path.join(__dirname, "theme");
+      return path.resolve(__dirname, "..", "src", "theme");
     },
 
     getTypeScriptThemePath() {

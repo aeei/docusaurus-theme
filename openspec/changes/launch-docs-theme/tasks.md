@@ -31,28 +31,28 @@
 - [x] 4.2 Restore `packages/docusaurus-plugin-openapi-docs`, `packages/create-docusaurus-openapi-docs`, and `demo` to `origin/main`
 - [x] 4.3 Remove superseded `docs/superpowers` design/plan artifacts after OpenSpec contains the approved requirements
 - [x] 4.4 Reconcile root workspace metadata and lockfile for the additive package/starter structure
-- [ ] 4.5 Verify the upstream-owned path diff audit is empty
+- [x] 4.5 Verify the upstream-owned path diff audit is empty
 
 ## 5. Attribution and public documentation
 
-- [ ] 5.1 Create `THIRD_PARTY_NOTICES.md` with exact provenance and copied-file mappings
-- [ ] 5.2 Add required full license texts under `LICENSES/` and preserve copied source headers
-- [ ] 5.3 Ensure repository and npm tarball include README, LICENSE, notices, and applicable license texts
-- [ ] 5.4 Rewrite root README for `@aeei/docusaurus-theme` with live demo, quick start, features, Markdown/Mermaid, customization, development, roadmap, and attribution
-- [ ] 5.5 Capture deterministic `1440×900` light/dark WebP starter screenshots and add the responsive README `<picture>` hero
-- [ ] 5.6 Verify GitHub About description/topics, retained fork relationship, and empty pre-deploy homepage
+- [x] 5.1 Create `THIRD_PARTY_NOTICES.md` with exact provenance and copied-file mappings
+- [x] 5.2 Add required full license texts under `LICENSES/` and preserve copied source headers
+- [x] 5.3 Ensure repository and npm tarball include README, LICENSE, notices, and applicable license texts
+- [x] 5.4 Rewrite root README for `@aeei/docusaurus-theme` with live demo, quick start, features, Markdown/Mermaid, customization, development, roadmap, and attribution
+- [x] 5.5 Capture deterministic `1440×900` light/dark WebP starter screenshots and add the responsive README `<picture>` hero
+- [x] 5.6 Verify GitHub About description/topics, retained fork relationship, and empty pre-deploy homepage
 
 ## 6. CI and browser verification
 
-- [ ] 6.1 Add CI for install, contracts/tests, package build, starter build, packed clean install, and license/tarball audit
-- [ ] 6.2 Add browser checks for desktop/mobile, light/dark, home/Markdown/Mermaid routes, console/load/overflow failures, and essential interactions
-- [ ] 6.3 Verify footer links, keyboard navigation, focus restoration, sidebar/TOC/paginator/back-to-top, code actions, tables, and Mermaid diagrams
-- [ ] 6.4 Verify an unset Algolia environment produces no config/control and a complete test environment preserves project-index config and attribution
-- [ ] 6.5 Run all focused and repository-level validation and retain browser traces/screenshots as artifacts
+- [x] 6.1 Add CI for install, contracts/tests, package build, starter build, packed clean install, and license/tarball audit
+- [x] 6.2 Add browser checks for desktop/mobile, light/dark, home/Markdown/Mermaid routes, console/load/overflow failures, and essential interactions
+- [x] 6.3 Verify footer links, keyboard navigation, focus restoration, sidebar/TOC/paginator/back-to-top, code actions, tables, and Mermaid diagrams
+- [x] 6.4 Verify an unset Algolia environment produces no config/control and a complete test environment preserves project-index config and attribution
+- [x] 6.5 Run all focused and repository-level validation and retain browser traces/screenshots as artifacts
 
 ## 7. GitHub Pages release
 
-- [ ] 7.1 Add full-SHA-pinned official GitHub Pages workflow with minimum permissions and `examples/docs-starter/build` artifact root
+- [x] 7.1 Add full-SHA-pinned official GitHub Pages workflow with minimum permissions and `examples/docs-starter/build` artifact root
 - [ ] 7.2 Configure the repository Pages source for GitHub Actions and deploy the validated `shadcn-theme` build
 - [ ] 7.3 Verify `https://aeei.github.io/docusaurus-theme/` routes/assets/hard refreshes and set it as the repository homepage
 - [ ] 7.4 Submit the live Pages and repository URLs to Algolia DocSearch and record the external approval status without blocking the no-search release
