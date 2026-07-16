@@ -31,7 +31,7 @@ import type { ApiItem as ApiItemType } from "docusaurus-plugin-openapi-docs/src/
 import type {
   DocFrontMatter,
   ThemeConfig,
-} from "docusaurus-theme-shadcn-docs/src/types";
+} from "docusaurus-theme-openapi-docs/src/types";
 import { ungzip } from "pako";
 import { Provider } from "react-redux";
 

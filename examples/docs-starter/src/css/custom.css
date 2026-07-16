@@ -1,0 +1,35 @@
+.theme-doc-markdown .theme-doc-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.markdown-demo-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  margin: 1.5rem 0;
+}
+
+.markdown-demo-card {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.markdown-demo-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-demo-note {
+  color: var(--text-secondary);
+  font-size: var(--typography-small-size);
+}
+
+.hero-art {
+  width: 100%;
+  max-width: 32rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 0.25rem);
+}

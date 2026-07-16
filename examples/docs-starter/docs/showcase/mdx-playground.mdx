@@ -1,0 +1,60 @@
+---
+sidebar_position: 1
+title: MDX playground
+description: Fixture coverage for Tabs and custom MDX components.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { FeatureCallout } from "../../src/components/FeatureCallout";
+
+# MDX playground
+
+<div className="markdown-demo-grid">
+  <FeatureCallout title="Custom component">
+    MDX can render local React components alongside normal Markdown.
+  </FeatureCallout>
+  <FeatureCallout title="Theme components">
+    Tabs below come from Docusaurus and inherit the docs theme styling.
+  </FeatureCallout>
+</div>
+
+## Tabs
+
+<Tabs>
+  <TabItem value="install" label="Install" default>
+
+```bash
+npm install @aeei/docusaurus-theme @docusaurus/theme-mermaid
+```
+
+  </TabItem>
+  <TabItem value="config" label="Config">
+
+```ts
+export default {
+  markdown: { mermaid: true },
+  themes: ["@docusaurus/theme-mermaid", "@aeei/docusaurus-theme"],
+};
+```
+
+  </TabItem>
+  <TabItem value="tokens" label="Tokens">
+
+```css
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0 0);
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## JSX mixed with Markdown
+
+The starter keeps authoring simple:
+
+- write Markdown for most content
+- drop into JSX for interactive or repeated UI
+- keep components local to the starter unless they belong in the theme package

@@ -170,8 +170,8 @@ export async function init(
   if (sitePkg.dependencies["docusaurus-plugin-openapi-docs"]) {
     sitePkg.dependencies["docusaurus-plugin-openapi-docs"] = openapiVersion;
   }
-  if (sitePkg.dependencies["docusaurus-theme-shadcn-docs"]) {
-    sitePkg.dependencies["docusaurus-theme-shadcn-docs"] = openapiVersion;
+  if (sitePkg.dependencies["docusaurus-theme-openapi-docs"]) {
+    sitePkg.dependencies["docusaurus-theme-openapi-docs"] = openapiVersion;
   }
 
   fs.writeFileSync(pkgJsonPath, JSON.stringify(sitePkg, null, 2) + "\n");

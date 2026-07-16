@@ -16,7 +16,7 @@
   margin-bottom: 0.5rem;
   padding: 0;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: var(--openapi-explorer-font-size-input);
   user-select: none;
   white-space: nowrap;
   border: 0px solid transparent;
@@ -61,14 +61,14 @@
   padding: 0 12px;
 
   margin-top: calc(var(--ifm-pre-padding) / 2);
-  background-color: var(--background);
+  background-color: var(--openapi-input-background);
   border: none;
   color: var(--ifm-pre-color);
-  border-radius: var(--radius);
+  border-radius: 4px;
   margin-left: 4px;
 
   &:active {
-    box-shadow: none;
+    box-shadow: inset 0px 0px 0px 2px var(--openapi-input-border);
   }
 }
 
@@ -86,19 +86,21 @@
   user-select: none;
   white-space: nowrap;
   background-color: transparent;
-  color: var(--input);
-  border: 1px solid var(--input);
-  border-radius: var(--radius);
+  color: var(--openapi-input-border);
+  border: 1px solid var(--openapi-input-border);
+  border-radius: var(--ifm-pre-border-radius);
   margin-top: calc(var(--ifm-pre-padding) / 2);
   text-transform: uppercase;
 
   &:hover {
-    color: var(--primary-foreground);
-    background-color: var(--input);
+    color: var(--openapi-inverse-color);
+    background-color: var(--openapi-input-border);
   }
 
   &:active {
-    box-shadow: none;
+    box-shadow:
+      inset 0 0 0 1px var(--openapi-input-border),
+      inset 0 0 0 2px var(--openapi-inverse-color);
   }
 }
 

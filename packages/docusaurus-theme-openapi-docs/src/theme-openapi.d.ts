@@ -15,6 +15,6 @@ export type {
   PropSidebars,
 } from "@docusaurus/plugin-content-docs/lib/sidebars/types";
 
-declare module "docusaurus-theme-shadcn-docs" {
+declare module "docusaurus-theme-openapi-docs" {
   export type ThemeConfig = Partial<import("./types").ThemeConfig>;
 }

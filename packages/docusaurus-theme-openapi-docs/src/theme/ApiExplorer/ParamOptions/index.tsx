@@ -8,7 +8,6 @@
 import React, { useState, useId } from "react";
 
 import { translate } from "@docusaurus/Translate";
-import { Plus } from "lucide-react";
 import FormItem from "@theme/ApiExplorer/FormItem";
 import ParamArrayFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamArrayFormItem";
 import ParamBooleanFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamBooleanFormItem";
@@ -185,7 +184,24 @@ function ParamOptions() {
                     : "openapi-explorer__plus-btn"
                 }
               >
-                <Plus aria-hidden="true" size={12} strokeWidth={2} />
+                <div>
+                  <svg
+                    style={{
+                      fill: "currentColor",
+                      width: "10px",
+                      height: "10px",
+                    }}
+                    height="16"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 7h6a1 1 0 0 1 0 2H9v6a1 1 0 0 1-2 0V9H1a1 1 0 1 1 0-2h6V1a1 1 0 1 1 2 0z"
+                      fillRule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
               </span>
             </span>
             {showOptional

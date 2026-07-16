@@ -1,8 +1,10 @@
 .openapi-explorer__request-form {
   background-color: var(--ifm-pre-background);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: none;
+  border-radius: var(--openapi-card-border-radius);
+  border: 1px solid var(--openapi-explorer-border-color);
+  box-shadow:
+    0 2px 3px hsla(222, 8%, 43%, 0.1),
+    0 8px 16px -10px hsla(222, 8%, 43%, 0.2);
   color: var(--ifm-pre-color);
   line-height: var(--ifm-pre-line-height);
   margin-bottom: var(--ifm-spacing-vertical);
@@ -18,12 +20,15 @@
   }
 
   &:hover {
-    box-shadow: none;
+    box-shadow:
+      0 0 0 2px rgba(38, 53, 61, 0.15),
+      0 2px 3px hsla(222, 8%, 43%, 0.15),
+      0 16px 16px -10px hsla(222, 8%, 43%, 0.2);
   }
 
   .required {
     font-size: var(--ifm-code-font-size);
-    color: var(--destructive);
+    color: var(--openapi-required);
 
     &.request-body {
       padding-left: 0.25rem;
@@ -34,7 +39,7 @@
 .openapi-explorer__request-header-container {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--openapi-explorer-border-color);
   margin: 0;
   padding: 0.75rem var(--ifm-pre-padding);
   text-transform: uppercase;
@@ -42,20 +47,25 @@
   font-weight: bold;
 }
 
+.openapi-explorer__expand-details-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+  border: 0px solid transparent;
+  background-color: transparent;
+  text-transform: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .openapi-explorer__details-outer-container {
   padding: 1rem;
-}
-
-.openapi-explorer__request-form .openapi-explorer__details-container {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.openapi-explorer__request-form
-  .openapi-explorer__details-container
-  + .openapi-explorer__details-container {
-  border-top: 1px solid var(--border);
 }
 
 .openapi-explorer__details-container[open] {
@@ -84,7 +94,7 @@
     margin-right: 0.25rem;
     margin-bottom: 0.25rem;
     margin-top: 0.25rem;
-    background-image: none;
+    background-image: var(--openapi-explorer-caret-bg);
     border: none !important;
     transform: rotate(90deg);
     content: "";
@@ -94,12 +104,30 @@
 }
 
 .openapi-explorer__request-btn {
+  border: none;
+  border-radius: var(--ifm-global-radius);
+  padding: 0.5rem 1rem;
   margin-top: 1rem;
+  background-color: var(--ifm-color-primary-light);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+  transition: 300ms;
+
+  &:hover {
+    background-color: var(--ifm-color-primary-lightest);
+  }
+
+  &:active {
+    background-color: var(--ifm-color-primary-light);
+  }
 }
 
 .openapi-security__summary-container {
-  background: transparent;
-  border-radius: 0;
+  background: var(--ifm-pre-background);
+  border-radius: var(--ifm-pre-border-radius);
 }
 
 // Prevent auto zoom on mobile iOS devices when focusing on input elmenents

@@ -11,6 +11,7 @@ module.exports = {
   roots: [
     "<rootDir>/packages/docusaurus-plugin-openapi-docs/src",
     "<rootDir>/packages/docusaurus-theme-openapi-docs/src",
+    "<rootDir>/packages/docusaurus-theme/src",
   ],
   moduleNameMapper: {
     "^chalk$": "<rootDir>/__mocks__/chalk.js",

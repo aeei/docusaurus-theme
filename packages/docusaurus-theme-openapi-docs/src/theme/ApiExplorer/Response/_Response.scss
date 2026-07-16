@@ -1,8 +1,10 @@
 .openapi-explorer__response-container {
   background-color: var(--ifm-pre-background);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: none;
+  border-radius: var(--openapi-card-border-radius);
+  border: 1px solid var(--openapi-explorer-border-color);
+  box-shadow:
+    0 2px 3px hsla(222, 8%, 43%, 0.1),
+    0 8px 16px -10px hsla(222, 8%, 43%, 0.2);
   color: var(--ifm-pre-color);
   line-height: var(--ifm-pre-line-height);
   margin-bottom: var(--ifm-spacing-vertical);
@@ -11,7 +13,10 @@
   transition: 300ms;
 
   &:hover {
-    box-shadow: none;
+    box-shadow:
+      0 0 0 2px rgba(38, 53, 61, 0.15),
+      0 2px 3px hsla(222, 8%, 43%, 0.15),
+      0 16px 16px -10px hsla(222, 8%, 43%, 0.2);
   }
 
   .openapi-explorer__code-block code {
@@ -22,7 +27,7 @@
 .openapi-explorer__response-title-container {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--openapi-explorer-border-color);
   margin: 0;
   padding: 0.75rem var(--ifm-pre-padding);
   text-transform: uppercase;
@@ -61,25 +66,23 @@
 }
 
 .openapi-response__dot::before {
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-right: 0.25rem;
-  border-radius: 50%;
-  background: var(--primary);
-  content: "";
+  margin-right: 0.2rem;
+  margin-bottom: 0.15rem;
+  content: "⬤";
+  color: var(--ifm-color-primary);
+  font-size: 8px;
 }
 
 .openapi-response__dot--danger::before {
-  background: var(--destructive);
+  color: var(--ifm-color-danger);
 }
 
 .openapi-response__dot--success::before {
-  background: var(--success);
+  color: var(--ifm-color-success);
 }
 
 .openapi-response__dot--info::before {
-  background: var(--info);
+  color: var(--ifm-color-info);
 }
 
 .openapi-response__status-code {
@@ -104,7 +107,7 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 5px solid var(--primary);
+  border: 5px solid #dfc;
   border-radius: 50%;
   animation: openapi-response__lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1)
     infinite;

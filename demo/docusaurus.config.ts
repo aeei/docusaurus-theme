@@ -41,7 +41,11 @@ const config: Config = {
         },
         blog: false,
         theme: {
-          customCss: ["./src/css/custom.css", "./src/css/tokens.css"],
+          customCss: ["./src/css/custom.css"],
+        },
+        gtag: {
+          trackingID: "GTM-THVM29S",
+          anonymizeIP: false,
         },
       } satisfies Preset.Options,
     ],
@@ -59,7 +63,10 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "OpenAPI Docs",
+      logo: {
+        alt: "OpenAPI Docs",
+        src: "img/docusaurus-openapi-docs-logo.svg",
+      },
       items: [
         {
           type: "doc",
@@ -85,6 +92,19 @@ const config: Config = {
               to: "/category/tests",
             },
           ],
+        },
+        { type: "custom-PalettePicker", position: "right" },
+        {
+          href: "https://medium.com/palo-alto-networks-developer-blog",
+          position: "right",
+          className: "header-medium-link",
+          "aria-label": "Palo Alto Networks Developer Blog",
+        },
+        {
+          href: "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs",
+          position: "right",
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
         },
       ],
     },
@@ -134,8 +154,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Palo Alto Networks, Inc. Built with Docusaurus ${DOCUSAURUS_VERSION}.`,
     },
     prism: {
-      theme: prismThemes.oneLight,
-      darkTheme: prismThemes.oneDark,
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
       additionalLanguages: [
         "ruby",
         "csharp",
@@ -246,6 +266,10 @@ const config: Config = {
       apiKey: "441074cace987cbf4640c039ebed303c",
       appId: "J0EABTYI1A",
       indexName: "docusaurus-openapi",
+    },
+    announcementBar: {
+      id: "announcementBar_2",
+      content: "v5.0.0 is now available! Requires Docusaurus 3.10.0+",
     },
     api: {
       schemaExpansion: {
@@ -363,8 +387,30 @@ const config: Config = {
         } satisfies Plugin.PluginOptions,
       },
     ],
+    // FOUC prevention: restore saved palette before React hydrates
+    function paletteScript() {
+      return {
+        name: "palette-fouc-script",
+        injectHtmlTags() {
+          return {
+            headTags: [
+              {
+                tagName: "script",
+                innerHTML: `try{var p=localStorage.getItem('openapi-demo-palette');if(p){var l=document.createElement('link');l.id='openapi-palette-link';l.rel='stylesheet';l.href='/themes/'+p+'.css';document.head.appendChild(l);}}catch(e){}`,
+              },
+            ],
+          };
+        },
+      };
+    },
   ],
-  themes: ["docusaurus-theme-shadcn-docs"],
+  themes: ["docusaurus-theme-openapi-docs"],
+  stylesheets: [
+    {
+      href: "https://use.fontawesome.com/releases/v5.11.0/css/all.css",
+      type: "text/css",
+    },
+  ],
 };
 
 export default async function createConfig() {

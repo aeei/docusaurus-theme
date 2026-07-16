@@ -12,7 +12,7 @@ import type {
   SecuritySchemeObject,
 } from "docusaurus-plugin-openapi-docs/src/openapi/types";
 /* eslint-disable import/no-extraneous-dependencies*/
-import { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
+import { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
 
 import { getAuthDataKeys } from "./auth-types";
 
