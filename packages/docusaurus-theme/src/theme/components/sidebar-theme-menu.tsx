@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@theme/components/ui/dropdown-menu";
-import { cn } from "@theme/lib/utils";
+import { cn } from "@theme/utils/cn";
 
 const modes = [
   { value: "light", label: "Light", icon: Sun },

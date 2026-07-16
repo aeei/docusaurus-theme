@@ -6,7 +6,7 @@ import type { Props } from "@theme/CodeBlock/Buttons/WordWrapButton";
 import { WrapText } from "lucide-react";
 
 import { Button } from "@theme/components/ui/button";
-import { cn } from "@theme/lib/utils";
+import { cn } from "@theme/utils/cn";
 
 export default function WordWrapButton({ className }: Props): ReactNode {
   const { wordWrap } = useCodeBlockContext();

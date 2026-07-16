@@ -6,7 +6,7 @@ import { useBackToTopButton } from "@docusaurus/theme-common/internal";
 import { ArrowUp } from "lucide-react";
 
 import { Button } from "@theme/components/ui/button";
-import { cn } from "@theme/lib/utils";
+import { cn } from "@theme/utils/cn";
 
 export default function BackToTopButton(): ReactNode {
   const { shown, scrollToTop } = useBackToTopButton({ threshold: 300 });
