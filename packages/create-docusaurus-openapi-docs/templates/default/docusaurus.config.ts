@@ -265,7 +265,7 @@ const config: Config = {
     ],
   ],
 
-  themes: ["docusaurus-theme-shadcn-docs"],
+  themes: ["docusaurus-theme-openapi-docs"],
 };
 
 export default async function createConfig() {

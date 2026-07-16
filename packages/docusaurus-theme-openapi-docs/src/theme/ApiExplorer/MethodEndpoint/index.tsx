@@ -10,26 +10,32 @@ import React from "react";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import { useTypedSelector } from "@theme/ApiItem/hooks";
-import { MethodBadge } from "@theme/components/method-badge";
+
+function colorForMethod(method: string) {
+  switch (method.toLowerCase()) {
+    case "get":
+      return "primary";
+    case "post":
+      return "success";
+    case "delete":
+      return "danger";
+    case "put":
+      return "info";
+    case "patch":
+      return "warning";
+    case "head":
+      return "secondary";
+    case "event":
+      return "secondary";
+    default:
+      return undefined;
+  }
+}
 
 export interface Props {
   method: string;
   path: string;
   context?: "endpoint" | "callback";
-}
-
-function SoftWrapUrl({ value }: { value: string }) {
-  return value.split("/").map((part, index) => (
-    <React.Fragment key={`${index}-${part}`}>
-      {index > 0 && (
-        <>
-          /
-          <wbr />
-        </>
-      )}
-      {part}
-    </React.Fragment>
-  ));
 }
 
 function MethodEndpoint({ method, path, context }: Props) {
@@ -39,11 +45,13 @@ function MethodEndpoint({ method, path, context }: Props) {
     return (
       <>
         <pre className="openapi__method-endpoint">
-          <MethodBadge method={method} />{" "}
+          <span className={"badge badge--" + colorForMethod(method)}>
+            {method === "event" ? "Webhook" : method.toUpperCase()}
+          </span>{" "}
           {method !== "event" && (
-            <code className="openapi__method-endpoint-path">
-              <SoftWrapUrl value={path.replace(/{([a-z0-9-_]+)}/gi, ":$1")} />
-            </code>
+            <h2 className="openapi__method-endpoint-path">
+              {`${path.replace(/{([a-z0-9-_]+)}/gi, ":$1")}`}
+            </h2>
           )}
         </pre>
         <div className="openapi__divider" />
@@ -74,11 +82,10 @@ function MethodEndpoint({ method, path, context }: Props) {
       <BrowserOnly>
         {() => {
           if (serverUrlWithVariables.length) {
-            return <SoftWrapUrl value={serverUrlWithVariables} />;
+            return serverUrlWithVariables;
           } else if (serverValue && serverValue.url) {
-            return <SoftWrapUrl value={serverValue.url} />;
+            return serverValue.url;
           }
-          return null;
         }}
       </BrowserOnly>
     );
@@ -87,12 +94,14 @@ function MethodEndpoint({ method, path, context }: Props) {
   return (
     <>
       <pre className="openapi__method-endpoint">
-        <MethodBadge method={method} />{" "}
+        <span className={"badge badge--" + colorForMethod(method)}>
+          {method === "event" ? "Webhook" : method.toUpperCase()}
+        </span>{" "}
         {method !== "event" && (
-          <code className="openapi__method-endpoint-path">
+          <h2 className="openapi__method-endpoint-path">
             {renderServerUrl()}
-            <SoftWrapUrl value={path.replace(/{([a-z0-9-_]+)}/gi, ":$1")} />
-          </code>
+            {`${path.replace(/{([a-z0-9-_]+)}/gi, ":$1")}`}
+          </h2>
         )}
       </pre>
       <div className="openapi__divider" />

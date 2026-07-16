@@ -1,13 +1,13 @@
 .openapi-explorer__form-item {
-  padding: 0.5rem;
-  font-size: 0.75rem;
+  padding: var(--openapi-explorer-padding-input);
+  font-size: var(--openapi-explorer-font-size-input);
 
   &:first-child {
     margin-top: 0;
   }
 
   .required {
-    color: var(--destructive);
+    color: var(--openapi-required);
   }
 }
 

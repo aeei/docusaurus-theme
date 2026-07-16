@@ -17,10 +17,4 @@ declare module "@docusaurus/plugin-content-docs/client" {
   });
 
   export function useDoc();
-
-  export function useCurrentSidebarSiblings(): import("@docusaurus/plugin-content-docs").PropSidebarItem[];
-
-  export function filterDocCardListItems(
-    items: import("@docusaurus/plugin-content-docs").PropSidebarItem[]
-  ): import("@docusaurus/plugin-content-docs").PropSidebarItem[];
 }

@@ -11,7 +11,6 @@ import { translate } from "@docusaurus/Translate";
 import { ExampleObject } from "@theme/ParamsItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
-import { ValueBadge } from "@theme/components/value-badge";
 
 const EXAMPLE_CLASS_NAME = "openapi-example";
 const EXAMPLES_CLASS_NAME = "openapi-examples";
@@ -63,7 +62,7 @@ const renderExample = (example: ExampleType) => {
         })}{" "}
       </strong>
       <span>
-        <ValueBadge>{formatExample(example)}</ValueBadge>
+        <code>{formatExample(example)}</code>
       </span>
     </div>
   );

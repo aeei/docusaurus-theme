@@ -42,7 +42,6 @@ function useDocTOC() {
 
   return {
     hidden,
-    canRender,
     mobile,
     desktop,
   };
@@ -56,7 +55,7 @@ export default function DocItemLayout({ children }: Props): JSX.Element {
   const schema = frontMatter.schema;
   return (
     <div className="row">
-      <div className={clsx("col", docTOC.canRender && styles.docItemCol)}>
+      <div className={clsx("col", !docTOC.hidden && styles.docItemCol)}>
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
         <div className={styles.docItemContainer}>

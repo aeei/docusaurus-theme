@@ -13,12 +13,11 @@ import Translate, { translate } from "@docusaurus/Translate";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import ApiCodeBlock from "@theme/ApiExplorer/ApiCodeBlock";
 import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
-import { Button } from "@theme/components/ui/button";
 import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
 import clsx from "clsx";
 import type { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
-import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
+import type { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
 
 import { clearResponse, clearCode, clearHeaders } from "./slice";
 
@@ -139,10 +138,8 @@ function Response({ item }: { item: ApiItem }) {
             message: "Response",
           })}
         </span>
-        <Button
+        <button
           type="button"
-          variant="ghost"
-          size="sm"
           className="openapi-explorer__response-clear-btn"
           onClick={() => {
             dispatch(clearResponse());
@@ -151,7 +148,7 @@ function Response({ item }: { item: ApiItem }) {
           }}
         >
           {translate({ id: "theme.openapi.response.clear", message: "Clear" })}
-        </Button>
+        </button>
       </div>
       <div
         style={{

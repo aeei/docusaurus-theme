@@ -12,7 +12,7 @@ import {
 } from "@theme/ApiExplorer/Authorization/slice";
 import type { AppDispatch, RootState } from "@theme/ApiItem/store";
 import type { ServerObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
-import type { ThemeConfig } from "docusaurus-theme-shadcn-docs/src/types";
+import type { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
 
 import { createStorage, hashArray } from "./storage-utils";
 

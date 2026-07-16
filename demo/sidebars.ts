@@ -26,6 +26,11 @@ import cloudObjectStorageSidebar from "./docs/cos/sidebar";
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     {
+      type: "html",
+      value: `<p style="color: var(--ifm-color-secondary-darkest)">DOCUMENTATION</p>`, // The HTML to be rendered
+      defaultStyle: true, // Use the default menu item styling
+    },
+    {
       type: "doc",
       id: "intro",
     },

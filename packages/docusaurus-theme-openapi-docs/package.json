@@ -1,6 +1,6 @@
 {
-  "name": "docusaurus-theme-shadcn-docs",
-  "description": "Shadcn-style Docusaurus theme with OpenAPI support.",
+  "name": "docusaurus-theme-openapi-docs",
+  "description": "OpenAPI theme for Docusaurus.",
   "version": "5.1.2",
   "license": "MIT",
   "keywords": [
@@ -15,22 +15,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aeei/docusaurus-openapi-shadcn-theme.git",
+    "url": "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs.git",
     "directory": "packages/docusaurus-theme-openapi-docs"
   },
   "bugs": {
-    "url": "https://github.com/aeei/docusaurus-openapi-shadcn-theme/issues"
+    "url": "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/issues"
   },
   "types": "src/theme-openapi.d.ts",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    "src/theme-openapi.d.ts",
-    "src/types.d.ts",
-    "README.md"
-  ],
   "scripts": {
-    "build": "tsc --build && node ../../scripts/copyUntypedFiles.mjs && tailwindcss -i src/theme/shadcn.css -o lib/theme/shadcn.scss --minify && prettier --config ../../.prettierrc.json --write \"lib/theme/**/*.js\"",
+    "build": "tsc --build && node ../../scripts/copyUntypedFiles.mjs && prettier --config ../../.prettierrc.json --write \"lib/theme/**/*.js\"",
     "watch": "concurrently --names \"lib,lib-next,tsc\" --kill-others \"yarn babel:lib --watch\" \"yarn babel:lib-next --watch\" \"yarn tsc --watch\""
   },
   "devDependencies": {
@@ -43,26 +37,21 @@
     "@types/pako": "^2.0.3",
     "@types/postman-collection": "^3.5.11",
     "@types/react-modal": "^3.16.3",
-    "@tailwindcss/cli": "^4.3.2",
     "concurrently": "^10.0.3",
     "docusaurus-plugin-openapi-docs": "^5.1.2",
     "docusaurus-plugin-sass": "^0.2.6",
-    "eslint-plugin-prettier": "^5.5.1",
-    "tailwindcss": "^4.3.2"
+    "eslint-plugin-prettier": "^5.5.1"
   },
   "dependencies": {
-    "@base-ui/react": "^1.6.0",
     "@hookform/error-message": "^2.0.1",
     "@reduxjs/toolkit": "^2.8.2",
     "allof-merge": "^0.6.6",
     "buffer": "^6.0.3",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "copy-text-to-clipboard": "^3.2.0",
     "crypto-js": "^4.2.0",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.468.0",
     "pako": "^2.1.0",
     "path-browserify": "^1.0.1",
     "postman-code-generators": "^2.0.0",
@@ -73,14 +62,12 @@
     "react-live": "^4.1.8",
     "react-magic-dropzone": "^1.0.1",
     "react-markdown": "^10.1.0",
-    "radix-ui": "^1.6.2",
     "react-modal": "^3.16.3",
     "react-redux": "^9.2.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "4.0.1",
     "sass": "^1.89.2",
     "sass-loader": "^16.0.5",
-    "tailwind-merge": "^3.4.0",
     "unist-util-visit": "^5.0.0",
     "url": "^0.11.4",
     "xml-formatter": "^3.6.6"

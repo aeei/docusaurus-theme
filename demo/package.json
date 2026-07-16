@@ -27,7 +27,7 @@
     "@docusaurus/preset-classic": "3.10.1",
     "clsx": "^2.1.1",
     "docusaurus-plugin-openapi-docs": "*",
-    "docusaurus-theme-shadcn-docs": "*",
+    "docusaurus-theme-openapi-docs": "*",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
