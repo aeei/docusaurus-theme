@@ -44,7 +44,7 @@ export function SidebarThemeMenu({
           <Button
             type="button"
             variant="ghost"
-            size={compact ? "icon-sm" : "sm"}
+            size={compact ? "icon" : "default"}
             className={cn(!compact && "flex-1 justify-start", className)}
             title={`Color theme: ${current.label}`}
             aria-label={`Color theme: ${current.label}`}
@@ -58,7 +58,7 @@ export function SidebarThemeMenu({
         {choices.map(({ value: choice, label, icon: ChoiceIcon }) => (
           <DropdownMenuItem
             key={choice}
-            onSelect={() =>
+            onClick={() =>
               setColorMode(
                 choice === "light" ? "light" : choice === "dark" ? "dark" : null
               )

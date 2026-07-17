@@ -16,7 +16,10 @@ export default function TOCCollapsibleCollapseButton({
     <Button
       type="button"
       variant="ghost"
-      className={clsx("theme-mobile-toc-trigger", className)}
+      className={clsx(
+        "theme-mobile-toc-trigger w-full justify-between! hover:bg-accent! dark:hover:bg-accent!",
+        className
+      )}
       aria-expanded={!collapsed}
       {...props}
     >

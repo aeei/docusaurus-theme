@@ -25,7 +25,7 @@ export default function DocRootLayoutSidebarExpandButton({
       <Button
         type="button"
         variant="ghost"
-        size="icon-sm"
+        size="icon"
         title={label}
         aria-label={label}
         className="theme-doc-sidebar-expand"

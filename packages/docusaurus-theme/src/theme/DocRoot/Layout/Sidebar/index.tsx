@@ -37,14 +37,16 @@ export default function DocRootLayoutSidebar({ sidebar }: Props): ReactNode {
   return (
     <ResetOnSidebarChange>
       {windowSize === "mobile" && docSidebar}
-      <Sidebar
-        side="left"
-        variant="sidebar"
-        collapsible={hideable ? "icon" : "none"}
-        className="theme-doc-sidebar-container"
-      >
-        {windowSize !== "mobile" && docSidebar}
-      </Sidebar>
+      {windowSize !== "mobile" && (
+        <Sidebar
+          side="left"
+          variant="sidebar"
+          collapsible={hideable ? "icon" : "none"}
+          className="theme-doc-sidebar-container"
+        >
+          {docSidebar}
+        </Sidebar>
+      )}
     </ResetOnSidebarChange>
   );
 }

@@ -5,11 +5,12 @@ const componentPath = path.join(__dirname, "index.tsx");
 const navbarContentPath = path.join(__dirname, "../Content/index.tsx");
 const baseStylesPath = path.join(__dirname, "../../base.scss");
 
-it("closes the mobile navigation drawer when Escape is pressed", () => {
+it("leaves Escape dismissal to Base Dialog and keeps the mobile shortcut", () => {
   const source = fs.readFileSync(componentPath, "utf8");
 
-  expect(source).toContain('event.key !== "Escape"');
+  expect(source).not.toContain('event.key === "Escape"');
   expect(source).toContain("mobileSidebar.toggle()");
+  expect(source).toContain('event.key.toLowerCase() === "b"');
 });
 
 it("keeps the mobile brand visible and desktop navigation hidden", () => {

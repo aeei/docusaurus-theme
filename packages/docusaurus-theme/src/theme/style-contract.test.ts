@@ -33,6 +33,11 @@ it("keeps docs styles within the public semantic token contract", () => {
   expect(stylesheet).not.toMatch(
     /#[\da-f]{3,8}\b|\b(?:rgb|hsl)a?\(|:\s*(?:white|black)\b/i
   );
+  expect(stylesheet).not.toMatch(/\d+(?:\.\d+)?rem\b/);
+  expect(stylesheet).not.toMatch(
+    /^[ \t]*(?:padding|margin|gap|width|height|border(?:-(?:top|right|bottom|left))?|outline(?:-offset)?|backdrop-filter):[^;]*\d+(?:\.\d+)?(?:px|rem)\b/m
+  );
+  expect(stylesheet).toContain("var(--spacing)");
 });
 
 it("keeps the shared stylesheet docs-only", () => {

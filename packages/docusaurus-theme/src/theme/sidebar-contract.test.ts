@@ -20,12 +20,28 @@ describe("shadcn Base Nova sidebar contract", () => {
     const layout = read("DocRoot/Layout/index.tsx");
     const rootSidebar = read("DocRoot/Layout/Sidebar/index.tsx");
     const desktop = read("DocSidebar/Desktop/index.tsx");
+    const desktopContent = read("DocSidebar/Desktop/Content/index.tsx");
+    const mobile = read("DocSidebar/Mobile/index.tsx");
+    const link = read("DocSidebarItem/Link/index.tsx");
+    const category = read("DocSidebarItem/Category/index.tsx");
+    const mobileNavbar = read("Navbar/MobileSidebar/index.tsx");
 
     expect(layout).toContain("<SidebarProvider");
     expect(rootSidebar).toContain('windowSize === "mobile" && docSidebar');
+    expect(rootSidebar).toContain('windowSize !== "mobile" && (');
+    expect(mobileNavbar).toContain('event.key.toLowerCase() === "b"');
+    expect(mobileNavbar).toContain('window.matchMedia("(max-width: 996px)")');
     expect(rootSidebar).toContain('collapsible={hideable ? "icon" : "none"}');
     expect(rootSidebar).not.toContain("<SidebarRail");
     expect(desktop).toContain("<SidebarContent");
+    expect(desktopContent).toContain("<SidebarMenu");
+    expect(mobile).toContain("<SidebarProvider");
+    expect(mobile).toContain("<SidebarContent");
+    expect(mobile).toContain("<SidebarMenu");
+    expect(link).toContain("<SidebarMenuButton");
+    expect(link).toContain("<SidebarMenuSubButton");
+    expect(category).toContain("<SidebarMenuButton");
+    expect(category).toContain("<SidebarMenuSub");
     expect(desktop).toContain('className="scroll-fade-y overflow-x-hidden"');
     expect(desktop).toContain("<SidebarFooter");
     expect(desktop).toContain("<SidebarTrigger");

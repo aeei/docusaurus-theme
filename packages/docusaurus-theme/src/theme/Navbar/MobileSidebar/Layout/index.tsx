@@ -41,8 +41,18 @@ export default function NavbarMobileSidebarLayout({
       >
         {header}
         <div className="theme-mobile-sheet__menus">
-          <div hidden={secondaryMenuShown}>{primaryMenu}</div>
-          <div hidden={!secondaryMenuShown}>{secondaryMenu}</div>
+          <div
+            className="theme-mobile-sheet__panel theme-mobile-sheet__panel--primary"
+            hidden={secondaryMenuShown}
+          >
+            {primaryMenu}
+          </div>
+          <div
+            className="theme-mobile-sheet__panel theme-mobile-sheet__panel--secondary"
+            hidden={!secondaryMenuShown}
+          >
+            {secondaryMenu}
+          </div>
         </div>
       </SheetContent>
     </Sheet>

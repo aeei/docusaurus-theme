@@ -75,7 +75,6 @@ function CommandSearch(): ReactNode {
       </div>
       <Button
         variant="outline"
-        size="sm"
         className="theme-command-search__trigger"
         onClick={() =>
           hostRef.current
