@@ -22,22 +22,19 @@ export default function DocCardLayout({
 }: Props): ReactNode {
   return (
     <Card
-      className={`h-full gap-0 py-0 shadow-none transition-colors hover:border-foreground/20 hover:bg-muted/30 ${className ?? ""}`}
+      className={`h-full transition-colors hover:bg-muted/30 ${className ?? ""}`}
     >
       <Link
         href={href}
-        className="block h-full p-4 text-card-foreground no-underline hover:no-underline"
+        className="block h-full text-card-foreground no-underline hover:no-underline"
       >
-        <CardHeader className="gap-2 px-0">
-          <CardTitle className="flex items-center gap-2 text-base leading-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
             {icon && <Icon item={item} icon={icon} />}
             <Text item={item} title={title} />
           </CardTitle>
           {description ? (
-            <CardDescription
-              className="line-clamp-2 leading-5"
-              title={description}
-            >
+            <CardDescription className="line-clamp-2" title={description}>
               {description}
             </CardDescription>
           ) : null}

@@ -2,6 +2,7 @@ import React, { type ReactNode } from "react";
 
 import Link from "@docusaurus/Link";
 import type { Props } from "@theme/TOCItems/Tree";
+import clsx from "clsx";
 
 import { Badge } from "@theme/components/ui/badge";
 
@@ -18,8 +19,8 @@ function HeadingLabel({ html }: { html: string }): React.JSX.Element {
             <Badge
               key={index}
               render={<code dangerouslySetInnerHTML={{ __html: code[1] }} />}
-              variant="outline"
-              className="mx-0.5 rounded-[var(--radius-sm)] !px-1 !py-0 font-mono !text-[0.7em] font-normal !leading-4 align-baseline"
+              variant="codeCompact"
+              className="mx-0.5"
             />
           );
         }
@@ -44,7 +45,13 @@ function TOCItemTree({
     <ul className={isChild ? undefined : className}>
       {toc.map((heading) => (
         <li key={heading.id}>
-          <Link to={`#${heading.id}`} className={linkClassName ?? undefined}>
+          <Link
+            to={`#${heading.id}`}
+            className={clsx(
+              linkClassName,
+              "hover:bg-accent! hover:text-accent-foreground! dark:hover:bg-accent!"
+            )}
+          >
             <HeadingLabel html={heading.value} />
           </Link>
           <TOCItemTree

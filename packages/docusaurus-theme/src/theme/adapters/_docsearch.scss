@@ -30,9 +30,15 @@
   --docsearch-border-radius: var(--radius);
   --docsearch-search-button-background: var(--background);
   --docsearch-search-button-text-color: var(--muted-foreground);
-  --docsearch-modal-width: 48rem;
-  --docsearch-modal-height: min(42rem, calc(100dvh - 4rem));
-  --docsearch-modal-variable-height: min(32rem, calc(100dvh - 12rem));
+  --docsearch-modal-width: calc(var(--spacing) * 192);
+  --docsearch-modal-height: min(
+    calc(var(--spacing) * 168),
+    calc(100dvh - calc(var(--spacing) * 16))
+  );
+  --docsearch-modal-variable-height: min(
+    calc(var(--spacing) * 128),
+    calc(100dvh - calc(var(--spacing) * 48))
+  );
   --docsearch-modal-background: var(--popover);
   --docsearch-modal-shadow: none;
   --docsearch-searchbox-background: var(--background);
@@ -44,28 +50,31 @@
   --docsearch-key-color: var(--foreground);
   --docsearch-key-pressed-shadow: none;
   --docsearch-footer-background: var(--muted);
-  --docsearch-footer-shadow: 0 -1px 0 var(--border);
+  --docsearch-footer-shadow: 0 calc(var(--border-width) * -1) 0 var(--border);
   --docsearch-dropdown-menu-background: var(--popover);
   --docsearch-dropdown-menu-item-hover-background: var(--accent);
 }
 
 .DocSearch-Container {
-  padding: 1rem;
-  backdrop-filter: blur(8px);
+  padding: calc(var(--spacing) * 4);
+  backdrop-filter: blur(var(--surface-backdrop-blur));
 }
 
 .DocSearch-Modal {
-  width: min(var(--docsearch-modal-width), calc(100vw - 2rem));
+  width: min(
+    var(--docsearch-modal-width),
+    calc(100vw - calc(var(--spacing) * 8))
+  );
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   color: var(--popover-foreground);
 }
 
 .DocSearch-Form {
-  gap: 0.75rem;
+  gap: calc(var(--spacing) * 3);
   border: 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
   border-radius: 0;
   box-shadow: none;
 }
@@ -85,7 +94,7 @@
 
 .DocSearch-Hit a,
 .DocSearch-Menu-item {
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   border-radius: var(--radius);
   box-shadow: none;
 }
@@ -114,7 +123,7 @@
 }
 
 .DocSearch-Commands-Key {
-  border: 1px solid var(--border);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--muted);
   box-shadow: none;
@@ -122,7 +131,7 @@
 }
 
 .DocSearch-Footer {
-  border-top: 1px solid var(--border);
+  border-top: var(--border-width) solid var(--border);
   color: var(--muted-foreground);
 }
 

@@ -11,9 +11,9 @@ export default function EditThisPage({ editUrl }: Props): ReactNode {
   return (
     <Button
       render={<Link to={editUrl} />}
+      nativeButton={false}
       variant="link"
-      size="sm"
-      className="h-auto p-0! underline underline-offset-4"
+      className="underline underline-offset-4"
     >
       <Pencil aria-hidden="true" />
       <Translate

@@ -53,8 +53,8 @@
 ## 7. GitHub Pages release
 
 - [x] 7.1 Add full-SHA-pinned official GitHub Pages workflow with minimum permissions and `examples/docs-starter/build` artifact root
-- [ ] 7.2 Configure the repository Pages source for GitHub Actions and deploy the validated `shadcn-theme` build
-- [ ] 7.3 Verify `https://aeei.github.io/docusaurus-theme/` routes/assets/hard refreshes and set it as the repository homepage
+- [x] 7.2 Configure the repository Pages source for GitHub Actions and deploy the validated `shadcn-theme` build
+- [x] 7.3 Verify `https://aeei.github.io/docusaurus-theme/` routes/assets/hard refreshes and set it as the repository homepage
 - [ ] 7.4 Submit the live Pages and repository URLs to Algolia DocSearch and record the external approval status without blocking the no-search release
 
 ## 8. npm release

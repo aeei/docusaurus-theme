@@ -29,7 +29,14 @@ import {
 import Link from "@docusaurus/Link";
 import { translate } from "@docusaurus/Translate";
 import { ChevronRight } from "lucide-react";
-import { Button } from "@theme/components/ui/button";
+import {
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+} from "@theme/components/ui/sidebar";
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import DocSidebarItems from "@theme/DocSidebarItems";
 import DocSidebarItemLink from "@theme/DocSidebarItem/Link";
@@ -108,7 +115,7 @@ function CollapseButton({
   onClick: ComponentProps<"button">["onClick"];
 }) {
   return (
-    <Button
+    <SidebarMenuAction
       aria-label={
         collapsed
           ? translate(
@@ -130,8 +137,6 @@ function CollapseButton({
       }
       aria-expanded={!collapsed}
       type="button"
-      variant="ghost"
-      size="icon"
       className="theme-doc-sidebar-chevron"
       onClick={onClick}
     >
@@ -141,7 +146,7 @@ function CollapseButton({
           collapsed ? undefined : "theme-doc-sidebar-chevron--expanded"
         }
       />
-    </Button>
+    </SidebarMenuAction>
   );
 }
 
@@ -150,6 +155,45 @@ function CategoryLinkLabel({ label }: { label: string }) {
     <span title={label} className={styles.categoryLinkLabel}>
       {label}
     </span>
+  );
+}
+
+function CategoryMenuButton({
+  level,
+  link,
+  label,
+  isActive,
+  className,
+  children,
+}: {
+  level: number;
+  link: React.ReactElement;
+  label: string;
+  isActive: boolean;
+  className?: string;
+  children: ReactNode;
+}) {
+  if (level > 1) {
+    return (
+      <SidebarMenuSubButton
+        render={link}
+        isActive={isActive}
+        className={className}
+      >
+        {children}
+      </SidebarMenuSubButton>
+    );
+  }
+
+  return (
+    <SidebarMenuButton
+      render={link}
+      isActive={isActive}
+      tooltip={label}
+      className={className}
+    >
+      {children}
+    </SidebarMenuButton>
   );
 }
 
@@ -270,60 +314,60 @@ function DocSidebarItemCategoryCollapsible({
     }
   };
 
+  const MenuItem = level > 1 ? SidebarMenuSubItem : SidebarMenuItem;
+  const categoryLink = (
+    <Link
+      onClick={handleItemClick}
+      aria-current={isCurrentPage ? "page" : undefined}
+      role={collapsible && !href ? "button" : undefined}
+      aria-expanded={collapsible && !href ? !collapsed : undefined}
+      href={collapsible ? (hrefWithSSRFallback ?? "#") : hrefWithSSRFallback}
+      {...props}
+    />
+  );
+
   return (
-    <li
+    <MenuItem
       className={clsx(
         ThemeClassNames.docs.docSidebarItemCategory,
         ThemeClassNames.docs.docSidebarItemCategoryLevel(level),
-        "menu__list-item",
-        {
-          "menu__list-item--collapsed": collapsed,
-        },
         className
       )}
     >
-      <div
-        className={clsx("menu__list-item-collapsible", {
-          "menu__list-item-collapsible--active": isCurrentPage,
-        })}
+      <CategoryMenuButton
+        level={level}
+        link={categoryLink}
+        label={label}
+        isActive={isActive}
+        className={styles.categoryLink}
       >
-        <Link
-          className={clsx(styles.categoryLink, "menu__link", {
-            "menu__link--sublist": collapsible,
-            "menu__link--active": isActive,
-          })}
-          onClick={handleItemClick}
-          aria-current={isCurrentPage ? "page" : undefined}
-          role={collapsible && !href ? "button" : undefined}
-          aria-expanded={collapsible && !href ? !collapsed : undefined}
-          href={
-            collapsible ? (hrefWithSSRFallback ?? "#") : hrefWithSSRFallback
-          }
-          {...props}
-        >
-          <CategoryLinkLabel label={label} />
-          {!href && collapsible && (
-            <ChevronRight
-              aria-hidden="true"
-              className={clsx("theme-doc-sidebar-chevron", {
-                "theme-doc-sidebar-chevron--expanded": !collapsed,
-              })}
-            />
-          )}
-        </Link>
-        {href && collapsible && (
-          <CollapseButton
-            collapsed={collapsed}
-            categoryLabel={label}
-            onClick={(e) => {
-              e.preventDefault();
-              updateCollapsed();
-            }}
+        <CategoryLinkLabel label={label} />
+        {!href && collapsible && (
+          <ChevronRight
+            aria-hidden="true"
+            className={clsx("ml-auto theme-doc-sidebar-chevron", {
+              "theme-doc-sidebar-chevron--expanded": !collapsed,
+            })}
           />
         )}
-      </div>
+      </CategoryMenuButton>
+      {href && collapsible && (
+        <CollapseButton
+          collapsed={collapsed}
+          categoryLabel={label}
+          onClick={(event) => {
+            event.preventDefault();
+            updateCollapsed();
+          }}
+        />
+      )}
 
-      <Collapsible lazy as="ul" className="menu__list" collapsed={collapsed}>
+      <Collapsible
+        lazy
+        as={SidebarMenuSub}
+        className="theme-doc-sidebar-submenu"
+        collapsed={collapsed}
+      >
         <DocSidebarItems
           items={items}
           tabIndex={collapsed ? -1 : 0}
@@ -332,6 +376,6 @@ function DocSidebarItemCategoryCollapsible({
           level={level + 1}
         />
       </Collapsible>
-    </li>
+    </MenuItem>
   );
 }

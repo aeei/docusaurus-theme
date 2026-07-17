@@ -29,7 +29,8 @@ Install the theme alongside Docusaurus classic:
 
 ```bash
 npm install @aeei/docusaurus-theme \
-  @docusaurus/core @docusaurus/preset-classic
+  @docusaurus/core @docusaurus/plugin-content-docs \
+  @docusaurus/preset-classic @docusaurus/theme-common
 ```
 
 Register it after the classic preset:

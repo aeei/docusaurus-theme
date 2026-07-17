@@ -50,6 +50,8 @@
   --text-xs--line-height: var(--typography-caption-line-height);
   --text-sm: var(--typography-small-size);
   --text-sm--line-height: var(--typography-small-line-height);
+  --text-ui: var(--typography-ui-size);
+  --text-ui--line-height: var(--typography-ui-line-height);
   --text-base: var(--typography-body-size);
   --text-base--line-height: var(--typography-body-line-height);
 }
@@ -204,5 +206,13 @@
   @supports not (animation-timeline: scroll()) {
     --scroll-fade-t: var(--_scroll-fade-size-t);
     --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+/* Docusaurus PostCSS cannot downlevel chained peer variants without :is(). */
+@media (min-width: 768px) {
+  .peer[data-variant="inset"][data-state="collapsed"]
+    ~ [data-slot="sidebar-inset"] {
+    margin-left: calc(var(--spacing) * 2);
   }
 }

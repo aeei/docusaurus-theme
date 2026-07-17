@@ -49,7 +49,7 @@ export default function DocBreadcrumbs(): ReactNode {
                     />
                   }
                 >
-                  <Home size={14} />
+                  <Home aria-hidden="true" className="size-4" />
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

@@ -14,7 +14,7 @@ const algolia =
     : undefined;
 
 const config: Config = {
-  title: "aeei Docusaurus Theme",
+  title: "Docusaurus Theme",
   tagline: "A docs-first starter for @aeei/docusaurus-theme.",
   favicon: "img/favicon.svg",
   url: "https://aeei.github.io",
@@ -35,6 +35,8 @@ const config: Config = {
         docs: {
           routeBasePath: "/",
           sidebarPath: "./sidebars.ts",
+          editUrl:
+            "https://github.com/aeei/docusaurus-theme/edit/shadcn-theme/examples/docs-starter/",
           showLastUpdateAuthor: false,
           showLastUpdateTime: false,
         },
@@ -58,7 +60,7 @@ const config: Config = {
       sidebar: { hideable: true, autoCollapseCategories: false },
     },
     navbar: {
-      title: "aeei Theme",
+      title: "Docusaurus Theme",
       items: [
         { type: "doc", docId: "intro", label: "Docs", position: "left" },
         {

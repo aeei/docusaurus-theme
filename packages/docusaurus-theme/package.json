@@ -26,6 +26,7 @@
   "main": "lib/index.js",
   "files": [
     "lib",
+    "lib-theme",
     "src/theme",
     "src/plugin-content-docs.d.ts",
     "src/theme-classic.d.ts",
@@ -36,7 +37,7 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
-    "build": "tsc --build && node ../../scripts/copyUntypedFiles.mjs && tailwindcss -i src/theme/shadcn.css -o lib/theme/shadcn.scss --minify && prettier --config ../../.prettierrc.json --write \"lib/theme/**/*.js\""
+    "build": "tsc --build && tsc --project tsconfig.theme.json && node ../../scripts/copyUntypedFiles.mjs && node scripts/copy-theme-assets.mjs && tailwindcss -i src/theme/shadcn.css -o lib/theme/shadcn.scss --minify && prettier --config ../../.prettierrc.json --write \"lib/theme/**/*.js\" \"lib-theme/theme/**/*.js\""
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -59,7 +60,7 @@
   },
   "peerDependencies": {
     "@docusaurus/core": "^3.10.0",
-    "@docusaurus/theme-classic": "^3.10.0",
+    "@docusaurus/plugin-content-docs": "^3.10.0",
     "@docusaurus/theme-common": "^3.10.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"

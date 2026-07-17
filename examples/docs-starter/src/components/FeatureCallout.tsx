@@ -1,5 +1,12 @@
 import React from "react";
 
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@theme/components/ui/card";
+
 export function FeatureCallout({
   title,
   children,
@@ -8,9 +15,13 @@ export function FeatureCallout({
   children: React.ReactNode;
 }): React.JSX.Element {
   return (
-    <section className="markdown-demo-card">
-      <h3>{title}</h3>
-      <div>{children}</div>
-    </section>
+    <Card>
+      <CardHeader>
+        <CardTitle role="heading" aria-level={3}>
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="theme-content-flow">{children}</CardContent>
+    </Card>
   );
 }

@@ -53,7 +53,9 @@ function DocSidebarDesktop({ path, sidebar }: Props) {
           <Content path={path} sidebar={sidebar} />
         </div>
       </SidebarContent>
-      <SidebarFooter className={styles.footer}>
+      <SidebarFooter
+        className={`${styles.footer} sticky bottom-0 z-10 mt-auto h-8! bg-sidebar p-0! group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:p-2!`}
+      >
         <div
           className={`${styles.footerControls} group-data-[collapsible=icon]:flex-col`}
         >
@@ -66,6 +68,7 @@ function DocSidebarDesktop({ path, sidebar }: Props) {
               <TooltipTrigger
                 render={
                   <SidebarTrigger
+                    className="size-8"
                     aria-keyshortcuts="Control+B Meta+B"
                     aria-label={
                       collapsed ? "Expand sidebar" : "Collapse sidebar"

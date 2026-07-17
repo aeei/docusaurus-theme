@@ -8,20 +8,21 @@
 }
 
 .sidebarLogo img {
-  height: 2rem;
-  margin-right: 0.5rem;
+  height: calc(var(--spacing) * 8);
+  margin-right: calc(var(--spacing) * 2);
 }
 
 .footer {
-  padding: 0.75rem;
-  border-top: 1px solid var(--border);
+  height: calc(var(--spacing) * 8);
+  padding: 0;
+  border-top: var(--border-width) solid var(--border);
   background: var(--sidebar);
 }
 
 .footerControls {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: calc(var(--spacing) * 1);
 }
 
 .themeTrigger {
