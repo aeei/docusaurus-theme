@@ -34,6 +34,14 @@ it("uses official Sheet, Button, and Sidebar composition", () => {
   expect(layout).toContain('<SidebarThemeMenu side="top" align="start" />');
 });
 
+it("removes the legacy text arrow when the back action already has an icon", () => {
+  const secondaryMenu = read("SecondaryMenu/index.tsx");
+
+  expect(secondaryMenu).toContain(".replace(/^←\\s*/u, \"\")");
+  expect(secondaryMenu).toContain("<ArrowLeft");
+  expect(secondaryMenu).not.toContain("<Translate");
+});
+
 it("restores focus to the official mobile navigation Button", () => {
   const layout = read("Layout/index.tsx");
 
