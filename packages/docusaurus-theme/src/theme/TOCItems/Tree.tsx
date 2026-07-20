@@ -2,9 +2,6 @@ import React, { type ReactNode } from "react";
 
 import Link from "@docusaurus/Link";
 import type { Props } from "@theme/TOCItems/Tree";
-import clsx from "clsx";
-
-import { Badge } from "@theme/components/ui/badge";
 
 const codePattern = /(<code(?:\s[^>]*)?>[\s\S]*?<\/code>)/gi;
 const codeContentPattern = /^<code(?:\s[^>]*)?>([\s\S]*?)<\/code>$/i;
@@ -16,12 +13,7 @@ function HeadingLabel({ html }: { html: string }): React.JSX.Element {
         const code = part.match(codeContentPattern);
         if (code) {
           return (
-            <Badge
-              key={index}
-              render={<code dangerouslySetInnerHTML={{ __html: code[1] }} />}
-              variant="codeCompact"
-              className="mx-0.5"
-            />
+            <code key={index} dangerouslySetInnerHTML={{ __html: code[1] }} />
           );
         }
 
@@ -42,15 +34,13 @@ function TOCItemTree({
   if (!toc.length) return null;
 
   return (
-    <ul className={isChild ? undefined : className}>
+    <ul className={isChild ? "table-of-contents__sublist" : className}>
       {toc.map((heading) => (
-        <li key={heading.id}>
+        <li key={heading.id} className="table-of-contents__item">
           <Link
             to={`#${heading.id}`}
-            className={clsx(
-              linkClassName,
-              "hover:bg-accent! hover:text-accent-foreground! dark:hover:bg-accent!"
-            )}
+            className={linkClassName ?? undefined}
+            data-depth={heading.level}
           >
             <HeadingLabel html={heading.value} />
           </Link>

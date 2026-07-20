@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import React, { type CSSProperties, type ReactNode } from "react";
 
 import {
   useNavbarMobileSidebar,
@@ -6,6 +6,7 @@ import {
 } from "@docusaurus/theme-common/internal";
 
 import { Sheet, SheetContent } from "@theme/components/ui/sheet";
+import { SidebarProvider } from "@theme/components/ui/sidebar";
 
 type Props = {
   header: ReactNode;
@@ -29,31 +30,42 @@ export default function NavbarMobileSidebarLayout({
       }}
       onOpenChangeComplete={(open) => {
         if (!open) {
-          document.querySelector<HTMLButtonElement>(".navbar__toggle")?.focus();
+          document
+            .querySelector<HTMLButtonElement>(
+              "[data-mobile-navigation-trigger]"
+            )
+            ?.focus();
         }
       }}
     >
       <SheetContent
         side="left"
-        showCloseButton={false}
-        className="theme-mobile-sheet"
         aria-label="Navigation menu"
+        className="theme-mobile-sidebar-content w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground"
+        style={
+          {
+            "--sidebar-width": "18rem",
+            width: "var(--sidebar-width)",
+          } as CSSProperties
+        }
       >
-        {header}
-        <div className="theme-mobile-sheet__menus">
-          <div
-            className="theme-mobile-sheet__panel theme-mobile-sheet__panel--primary"
-            hidden={secondaryMenuShown}
-          >
-            {primaryMenu}
+        <SidebarProvider className="flex-col">
+          {header}
+          <div className="theme-mobile-sheet__menus">
+            <div
+              className="theme-mobile-sheet__panel theme-mobile-sheet__panel--primary"
+              hidden={secondaryMenuShown}
+            >
+              {primaryMenu}
+            </div>
+            <div
+              className="theme-mobile-sheet__panel theme-mobile-sheet__panel--secondary"
+              hidden={!secondaryMenuShown}
+            >
+              {secondaryMenu}
+            </div>
           </div>
-          <div
-            className="theme-mobile-sheet__panel theme-mobile-sheet__panel--secondary"
-            hidden={!secondaryMenuShown}
-          >
-            {secondaryMenu}
-          </div>
-        </div>
+        </SidebarProvider>
       </SheetContent>
     </Sheet>
   );

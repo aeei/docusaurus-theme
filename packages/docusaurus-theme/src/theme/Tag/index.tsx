@@ -15,10 +15,8 @@ export default function Tag({
     <Badge
       render={<Link rel="tag" href={permalink} title={description} />}
       variant="outline"
-      className="gap-1 no-underline hover:bg-accent hover:text-accent-foreground hover:no-underline"
     >
-      <span>{label}</span>
-      {count ? <span className="text-muted-foreground">{count}</span> : null}
+      {count ? `${label} (${count})` : label}
     </Badge>
   );
 }

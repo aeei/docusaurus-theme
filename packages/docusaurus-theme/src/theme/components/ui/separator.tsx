@@ -1,10 +1,8 @@
-"use client";
+import * as React from "react"
 
-import * as React from "react";
+import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 
-import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
-
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn"
 
 function Separator({
   className,
@@ -21,7 +19,7 @@ function Separator({
       )}
       {...props}
     />
-  );
+  )
 }
 
-export { Separator };
+export { Separator }

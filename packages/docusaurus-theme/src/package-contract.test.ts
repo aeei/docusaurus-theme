@@ -90,6 +90,7 @@ it("keeps only docs runtime dependencies", () => {
 
   expect(packageJson.dependencies["@base-ui/react"]).toBeDefined();
   expect(packageJson.dependencies["lucide-react"]).toBeDefined();
+  expect(packageJson.dependencies["copy-text-to-clipboard"]).toBeDefined();
   expect(packageJson.dependencies["parse-numeric-range"]).toBeDefined();
   expect(packageJson.dependencies["prism-react-renderer"]).toBeDefined();
   expect(packageJson.peerDependencies.react).toBeDefined();

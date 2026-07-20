@@ -21,7 +21,7 @@ export function FeatureCallout({
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="theme-content-flow">{children}</CardContent>
+      <CardContent>{children}</CardContent>
     </Card>
   );
 }

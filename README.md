@@ -1,6 +1,6 @@
 <h1 align="center">@aeei/docusaurus-theme</h1>
 
-<p align="center">A shadcn Base Nova theme for Docusaurus docs.</p>
+<p align="center">A compiled shadcn Base Nova theme for Docusaurus documentation.</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aeei/docusaurus-theme"><img alt="npm" src="https://img.shields.io/npm/v/%40aeei%2Fdocusaurus-theme" /></a>
@@ -10,22 +10,21 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/theme-dark.webp">
-  <img alt="aeei Docusaurus Theme documentation layout" src=".github/assets/theme-light.webp">
+  <img alt="Base Nova Docusaurus documentation shell" src=".github/assets/theme-light.webp">
 </picture>
 
 ## Features
 
-- shadcn Base Nova components backed only by [Base UI](https://base-ui.com/)
-- responsive navbar, collapsible sidebar, table of contents, paginator, and compact footer
+- shadcn `4.12.0` Base Nova components backed by [Base UI](https://base-ui.com/)
+- official Neutral light/dark tokens, Geist, Geist Mono, and Lucide
+- responsive GNB, sticky/collapsible LNB, TOC, paginator, and footer
 - Markdown, GFM, MDX, admonitions, tabs, code blocks, and [Mermaid](https://mermaid.js.org/)
-- semantic light/dark tokens owned by the consuming site
-- Lucide icons and accessible keyboard/focus behavior
-- precompiled theme CSS; consumers do not configure Tailwind
-- optional Docusaurus Algolia DocSearch styling
+- optional build-time local search or Algolia DocSearch
+- optional page-level Markdown copy/view using the official Base Nova `ButtonGroup`
+- compiled CSS; consumers need no Tailwind or Sass configuration
+- SSR-safe responsive layout and keyboard/focus behavior
 
-## Quick start
-
-Install the theme alongside Docusaurus classic:
+## Install
 
 ```bash
 npm install @aeei/docusaurus-theme \
@@ -33,7 +32,7 @@ npm install @aeei/docusaurus-theme \
   @docusaurus/preset-classic @docusaurus/theme-common
 ```
 
-Register it after the classic preset:
+Minimal configuration:
 
 ```ts
 // docusaurus.config.ts
@@ -47,32 +46,71 @@ const config: Config = {
 export default config;
 ```
 
-The theme consumes semantic CSS variables rather than shipping brand values. Start from [`examples/docs-starter/src/css/tokens.css`](./examples/docs-starter/src/css/tokens.css), then edit values in your own site.
+The package ships Base Nova tokens, fonts, preflight, animations, and compiled theme CSS. Consumer Tailwind/Sass config is neither required nor read.
 
-## Markdown and Mermaid
+## Search
 
-The starter demonstrates the supported authoring surface:
+Search is disabled by default.
 
-- [Markdown and GFM](./examples/docs-starter/docs/guides/markdown-gfm.md)
-- [MDX components](./examples/docs-starter/docs/showcase/mdx-playground.mdx)
-- [Mermaid diagrams](./examples/docs-starter/docs/showcase/mermaid.md)
+### Local search
 
-For Mermaid, install the official Docusaurus theme and enable it:
+```ts
+themes: [["@aeei/docusaurus-theme", { search: "local" }]];
+```
+
+Each production build extracts rendered Markdown/MDX routes into `build/search-index.json`. The browser fetches that same-origin index only when search opens. Protect the index behind the same auth/network boundary as private docs.
+
+### Algolia
+
+```ts
+themes: [["@aeei/docusaurus-theme", { search: "algolia" }]],
+themeConfig: {
+  algolia: {
+    appId: process.env.ALGOLIA_APP_ID,
+    apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
+    indexName: process.env.ALGOLIA_INDEX_NAME,
+  },
+},
+```
+
+Use a public Search API key, never an Admin API key.
+
+## Copy Page
+
+The visual control is theme-native Base Nova. Markdown route generation is delegated to [`docusaurus-plugin-copy-page-button`](https://github.com/portdeveloper/docusaurus-plugin-copy-page-button); its injected UI is disabled.
+
+```bash
+npm install docusaurus-plugin-copy-page-button
+```
+
+```ts
+plugins: [
+  [
+    "docusaurus-plugin-copy-page-button",
+    { injectButton: false, generateMarkdownRoutes: true },
+  ],
+],
+themes: [
+  ["@aeei/docusaurus-theme", { copyPage: true }],
+],
+```
+
+The primary action copies the generated Markdown. The menu can view the `.md` route or copy its link. External AI actions are intentionally excluded for private-doc safety.
+
+## Mermaid
 
 ```bash
 npm install @docusaurus/theme-mermaid @mermaid-js/layout-elk
 ```
 
 ```ts
-const config = {
-  markdown: { mermaid: true },
-  themes: ["@docusaurus/theme-mermaid", "@aeei/docusaurus-theme"],
-};
+markdown: { mermaid: true },
+themes: ["@docusaurus/theme-mermaid", "@aeei/docusaurus-theme"],
 ```
 
 ## Starter
 
-[`examples/docs-starter`](./examples/docs-starter) is both the live demo source and a copyable docs-first starter. Routine authors edit:
+[`examples/docs-starter`](./examples/docs-starter) is the live-demo source and a copyable docs-first starter. Routine authors edit:
 
 ```text
 docs/**/*.md
@@ -80,7 +118,10 @@ docs/**/*.mdx
 static/**
 ```
 
-Navigation is generated from the docs filesystem. Use front matter such as `sidebar_position` when ordering is needed.
+- [Markdown and GFM](./examples/docs-starter/docs/guides/markdown-gfm.md)
+- [Search and Copy Page](./examples/docs-starter/docs/guides/search.md)
+- [MDX components](./examples/docs-starter/docs/showcase/mdx-playground.mdx)
+- [Mermaid diagrams](./examples/docs-starter/docs/showcase/mermaid.md)
 
 ## Development
 
@@ -90,28 +131,44 @@ yarn workspace @aeei/docusaurus-theme build
 yarn workspace @aeei/docs-starter start
 ```
 
-Production checks:
+Production smoke:
 
 ```bash
 yarn workspace @aeei/docusaurus-theme build
 yarn workspace @aeei/docs-starter build
 ```
 
-The project uses OpenSpec. Current launch artifacts live in [`openspec/changes/launch-docs-theme`](./openspec/changes/launch-docs-theme).
+## Publishing to npm
 
-## Search
+Maintainers only, after explicit visual approval:
 
-The first release does not reuse the upstream project's Algolia credentials. Search activates only after this site's own DocSearch application provides `ALGOLIA_APP_ID`, `ALGOLIA_SEARCH_API_KEY`, and `ALGOLIA_INDEX_NAME`. Admin keys are never accepted by the frontend.
+```bash
+yarn workspace @aeei/docusaurus-theme build
+cd packages/docusaurus-theme
+npm pack --dry-run
+npm publish --access public
+```
 
-## Roadmap
+Requirements:
 
-The core package is docs-only. OpenAPI rendering may return later as an optional `@aeei/docusaurus-theme-openapi` addon rather than adding API dependencies to every docs site.
+- npm account authorized for the `@aeei` scope
+- npm login/2FA completed
+- package version not already published
+- theme build, starter build, isolated tarball build, Jest, TypeScript/LSP, Playwright, and visual evidence passing
+
+Consumers then install a pinned release:
+
+```bash
+npm install @aeei/docusaurus-theme@0.1.0
+```
+
+This repository does not publish automatically from an unapproved working tree.
 
 ## Attribution
 
 This repository is a modified fork of [PaloAltoNetworks/docusaurus-openapi-docs](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs). It is maintained independently and is not an official Palo Alto Networks project.
 
-See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) and [`LICENSES/`](./LICENSES/) for Docusaurus, shadcn/ui, Base UI, Lucide, Mermaid, and upstream notices.
+See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) and package `LICENSES/` for Docusaurus, shadcn/ui, Base UI, Lucide, Mermaid, Geist, animation, and upstream notices.
 
 ## License
 

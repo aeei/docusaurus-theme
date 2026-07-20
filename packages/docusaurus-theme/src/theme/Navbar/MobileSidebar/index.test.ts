@@ -1,39 +1,46 @@
 import fs from "fs";
 import path from "path";
 
-const componentPath = path.join(__dirname, "index.tsx");
-const navbarContentPath = path.join(__dirname, "../Content/index.tsx");
-const baseStylesPath = path.join(__dirname, "../../base.scss");
+const read = (relativePath: string) =>
+  fs.readFileSync(path.join(__dirname, relativePath), "utf8");
 
 it("leaves Escape dismissal to Base Dialog and keeps the mobile shortcut", () => {
-  const source = fs.readFileSync(componentPath, "utf8");
+  const source = read("index.tsx");
 
   expect(source).not.toContain('event.key === "Escape"');
   expect(source).toContain("mobileSidebar.toggle()");
   expect(source).toContain('event.key.toLowerCase() === "b"');
+  expect(source).toContain('window.matchMedia("(max-width: 1023px)")');
+  expect(source).toContain("if (mobileSidebar.disabled) return null;");
+  expect(source).not.toContain("if (!mobileSidebar.shouldRender) return null;");
 });
 
-it("keeps the mobile brand visible and desktop navigation hidden", () => {
-  const navbarContent = fs.readFileSync(navbarContentPath, "utf8");
-  const baseStyles = fs.readFileSync(baseStylesPath, "utf8");
+it("uses official Sheet, Button, and Sidebar composition", () => {
+  const layout = read("Layout/index.tsx");
+  const header = read("Header/index.tsx");
+  const toggle = read("Toggle/index.tsx");
+  const navbarContent = read("../Content/index.tsx");
 
-  expect(navbarContent).toContain("theme-navbar-desktop-navigation");
-  expect(baseStyles).toContain(".theme-navbar-desktop-navigation,");
-  expect(baseStyles).toContain(".navbar__brand {");
-  expect(baseStyles).toContain("display: inline-flex !important;");
-  expect(baseStyles).toContain(".theme-mobile-sheet .navbar-sidebar__back");
-  expect(baseStyles).toContain("background: transparent;");
-});
-
-it("restores focus to the mobile navigation toggle after closing", () => {
-  const layout = fs.readFileSync(
-    path.join(__dirname, "Layout/index.tsx"),
-    "utf8"
+  expect(layout).toContain("<SheetContent");
+  expect(layout).toContain("<SidebarProvider");
+  expect(header).toContain("<SheetHeader>");
+  expect(header).not.toContain("<SidebarHeader>");
+  expect(header).not.toContain("SidebarThemeMenu");
+  expect(toggle).toContain('variant="ghost"');
+  expect(toggle).toContain('size="icon"');
+  expect(toggle).not.toContain('className="navbar__toggle"');
+  expect(navbarContent).toContain("theme-navbar-mobile-trigger");
+  expect(navbarContent).toContain(
+    '<SidebarThemeMenu compact side="bottom" align="end" />'
   );
+});
+
+it("restores focus to the official mobile navigation Button", () => {
+  const layout = read("Layout/index.tsx");
 
   expect(layout).toContain("onOpenChangeComplete");
-  expect(layout).toContain(
-    'querySelector<HTMLButtonElement>(".navbar__toggle")'
+  expect(layout).toMatch(
+    /querySelector<HTMLButtonElement>\([\s\S]*"\[data-mobile-navigation-trigger\]"/
   );
   expect(layout).toContain("?.focus()");
 });

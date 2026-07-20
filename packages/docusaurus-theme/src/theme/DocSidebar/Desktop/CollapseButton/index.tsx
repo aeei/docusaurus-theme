@@ -23,7 +23,6 @@ export default function CollapseButton({ onClick }: Props): ReactNode {
       size="icon"
       title={label}
       aria-label={label}
-      className="theme-doc-sidebar-collapse"
       onClick={onClick}
     >
       <PanelLeftClose aria-hidden="true" />

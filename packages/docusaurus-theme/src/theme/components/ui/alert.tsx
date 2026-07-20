@@ -1,7 +1,7 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn"
 
 const alertVariants = cva(
   "group/alert relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4",
@@ -17,7 +17,7 @@ const alertVariants = cva(
       variant: "default",
     },
   }
-);
+)
 
 function Alert({
   className,
@@ -31,7 +31,7 @@ function Alert({
       className={cn(alertVariants({ variant }), className)}
       {...props}
     />
-  );
+  )
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -44,7 +44,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  );
+  )
 }
 
 function AlertDescription({
@@ -55,12 +55,12 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "theme-content-flow text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+        "text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
         className
       )}
       {...props}
     />
-  );
+  )
 }
 
 function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
@@ -70,7 +70,7 @@ function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("absolute top-2 right-2", className)}
       {...props}
     />
-  );
+  )
 }
 
-export { Alert, AlertTitle, AlertDescription, AlertAction };
+export { Alert, AlertTitle, AlertDescription, AlertAction }

@@ -4,8 +4,6 @@ import Link from "@docusaurus/Link";
 import { translate } from "@docusaurus/Translate";
 import { useHomePageRoute } from "@docusaurus/theme-common/internal";
 import * as DocsClient from "@docusaurus/plugin-content-docs/client";
-import { Home } from "lucide-react";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,7 +24,6 @@ export default function DocBreadcrumbs(): ReactNode {
     <>
       <DocBreadcrumbsStructuredData breadcrumbs={breadcrumbs} />
       <Breadcrumb
-        className="theme-doc-breadcrumbs"
         aria-label={translate({
           id: "theme.docs.breadcrumbs.navAriaLabel",
           message: "Breadcrumbs",
@@ -49,7 +46,7 @@ export default function DocBreadcrumbs(): ReactNode {
                     />
                   }
                 >
-                  <Home aria-hidden="true" className="size-4" />
+                  Home
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

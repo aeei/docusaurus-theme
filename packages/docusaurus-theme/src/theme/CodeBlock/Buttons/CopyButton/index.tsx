@@ -11,7 +11,7 @@ import { useCodeBlockContext } from "@docusaurus/theme-common/internal";
 import type { Props } from "@theme/CodeBlock/Buttons/CopyButton";
 import { Check, Copy } from "lucide-react";
 
-import { Button } from "@theme/components/ui/button";
+import Button from "@theme/CodeBlock/Buttons/Button";
 
 async function copyToClipboard(text: string) {
   if (navigator.clipboard) return navigator.clipboard.writeText(text);
@@ -19,7 +19,9 @@ async function copyToClipboard(text: string) {
   return copy(text);
 }
 
-export default function CopyButton({ className }: Props): ReactNode {
+export default function CopyButton({
+  className: _className,
+}: Props): ReactNode {
   const {
     metadata: { code },
   } = useCodeBlockContext();
@@ -40,22 +42,20 @@ export default function CopyButton({ className }: Props): ReactNode {
         id: "theme.CodeBlock.copyButtonAriaLabel",
         message: "Copy code to clipboard",
       });
+  const shortLabel = isCopied
+    ? translate({ id: "theme.CodeBlock.copied", message: "Copied" })
+    : translate({ id: "theme.CodeBlock.copy", message: "Copy" });
 
   return (
     <Button
-      type="button"
-      variant="ghost"
-      size="icon-sm"
-      className={className}
+      data-slot="copy-button"
+      data-copied={isCopied}
       aria-label={label}
       title={label}
       onClick={copyCode}
     >
-      {isCopied ? (
-        <Check aria-hidden="true" className="text-success" />
-      ) : (
-        <Copy aria-hidden="true" />
-      )}
+      <span className="sr-only">{shortLabel}</span>
+      {isCopied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
     </Button>
   );
 }

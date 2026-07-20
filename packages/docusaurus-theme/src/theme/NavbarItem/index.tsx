@@ -1,7 +1,12 @@
 import React from "react";
 
 import ComponentTypes from "@theme/NavbarItem/ComponentTypes";
-import { Github, Rss } from "lucide-react";
+import { Button } from "@theme/components/ui/button";
+import {
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@theme/components/ui/sidebar";
+import { GithubIcon, RssIcon } from "lucide-react";
 
 type NavbarItemType = keyof typeof ComponentTypes;
 export type Props = {
@@ -9,13 +14,14 @@ export type Props = {
   className?: string;
   href?: string;
   target?: string;
+  mobile?: boolean;
   "aria-label"?: string;
   [key: string]: unknown;
 };
 
 const iconByClassName = {
-  "theme-navbar-github-link": Github,
-  "theme-navbar-rss-link": Rss,
+  "theme-navbar-github-link": GithubIcon,
+  "theme-navbar-rss-link": RssIcon,
 } as const;
 
 function normalizeComponentType(
@@ -34,16 +40,30 @@ export default function NavbarItem(props: Props): React.JSX.Element {
   )?.[1];
 
   if (Icon && props.href) {
-    return (
+    const link = (
       <a
-        className="navbar__item navbar__link theme-navbar-icon-link"
         href={props.href}
         target={props.target}
         rel={props.target === "_blank" ? "noreferrer" : undefined}
         aria-label={props["aria-label"]}
-      >
-        <Icon aria-hidden="true" size={18} strokeWidth={1.8} />
-      </a>
+      />
+    );
+
+    if (props.mobile) {
+      return (
+        <SidebarMenuItem>
+          <SidebarMenuButton render={link}>
+            <Icon aria-hidden="true" />
+            <span>{props["aria-label"]}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      );
+    }
+
+    return (
+      <Button render={link} nativeButton={false} variant="ghost" size="icon">
+        <Icon aria-hidden="true" />
+      </Button>
     );
   }
 

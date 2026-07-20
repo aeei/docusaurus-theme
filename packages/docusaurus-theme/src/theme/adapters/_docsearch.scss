@@ -9,7 +9,7 @@
   --docsearch-subtle-color: var(--border);
   --docsearch-text-color: var(--foreground);
   --docsearch-error-color: var(--destructive);
-  --docsearch-success-color: var(--success-background);
+  --docsearch-success-color: var(--primary);
   --docsearch-secondary-text-color: var(--muted-foreground);
   --docsearch-background-color: var(--background);
   --docsearch-focus-color: var(--ring);
@@ -57,7 +57,7 @@
 
 .DocSearch-Container {
   padding: calc(var(--spacing) * 4);
-  backdrop-filter: blur(var(--surface-backdrop-blur));
+  backdrop-filter: blur(var(--theme-backdrop-blur));
 }
 
 .DocSearch-Modal {

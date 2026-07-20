@@ -9,13 +9,15 @@ type Props = {
   className?: string;
 };
 
-export default function DocVersionBadge({ className }: Props): ReactNode {
+export default function DocVersionBadge({
+  className: _className,
+}: Props): ReactNode {
   const versionMetadata = (DocsClient as any).useDocsVersion();
 
   if (!versionMetadata?.badge) return null;
 
   return (
-    <Badge variant="secondary" className={className}>
+    <Badge variant="secondary">
       <Translate
         id="theme.docs.versionBadge.label"
         values={{ versionLabel: versionMetadata.label }}

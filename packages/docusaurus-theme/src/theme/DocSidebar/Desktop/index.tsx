@@ -6,7 +6,7 @@ import Content from "@theme/DocSidebar/Desktop/Content";
 import type { Props } from "@theme/DocSidebar/Desktop";
 
 import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu";
-import { Kbd } from "@theme/components/ui/kbd";
+import { Kbd, KbdGroup } from "@theme/components/ui/kbd";
 import {
   SidebarContent,
   SidebarFooter,
@@ -20,8 +20,6 @@ import {
   TooltipTrigger,
 } from "@theme/components/ui/tooltip";
 
-import styles from "./styles.module.css";
-
 function DocSidebarDesktop({ path, sidebar }: Props) {
   const {
     navbar: { hideOnScroll },
@@ -31,44 +29,38 @@ function DocSidebarDesktop({ path, sidebar }: Props) {
   } = useThemeConfig();
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const [shortcutModifier, setShortcutModifier] = useState<"CMD" | "CTRL">(
-    "CTRL"
+  const [shortcutModifier, setShortcutModifier] = useState<"⌘" | "Ctrl">(
+    "Ctrl"
   );
 
   useEffect(() => {
     setShortcutModifier(
-      /Mac|iPhone|iPad|iPod/.test(navigator.userAgent) ? "CMD" : "CTRL"
+      /Mac|iPhone|iPad|iPod/.test(navigator.userAgent) ? "⌘" : "Ctrl"
     );
   }, []);
 
   return (
     <>
-      {hideOnScroll && (
-        <SidebarHeader className="group-data-[collapsible=icon]:hidden">
-          <Logo tabIndex={-1} className={styles.sidebarLogo} />
+      {hideOnScroll && !collapsed && (
+        <SidebarHeader className="theme-doc-sidebar-header">
+          <Logo tabIndex={-1} />
         </SidebarHeader>
       )}
-      <SidebarContent className="scroll-fade-y overflow-x-hidden">
-        <div className="theme-doc-sidebar-navigation min-w-(--sidebar-width)">
-          <Content path={path} sidebar={sidebar} />
-        </div>
+      <SidebarContent className="theme-doc-sidebar-content scroll-fade">
+        {!collapsed && <Content path={path} sidebar={sidebar} />}
       </SidebarContent>
-      <SidebarFooter
-        className={`${styles.footer} sticky bottom-0 z-10 mt-auto h-8! bg-sidebar p-0! group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:p-2!`}
-      >
-        <div
-          className={`${styles.footerControls} group-data-[collapsible=icon]:flex-col`}
-        >
+      <SidebarFooter className="theme-doc-sidebar-footer">
+        <div className="theme-doc-sidebar-footer-actions">
           <SidebarThemeMenu
             compact={collapsed}
-            className={collapsed ? undefined : styles.themeTrigger}
+            side={collapsed ? "right" : "top"}
+            align="start"
           />
           {hideable && (
             <Tooltip>
               <TooltipTrigger
                 render={
                   <SidebarTrigger
-                    className="size-8"
                     aria-keyshortcuts="Control+B Meta+B"
                     aria-label={
                       collapsed ? "Expand sidebar" : "Collapse sidebar"
@@ -78,11 +70,10 @@ function DocSidebarDesktop({ path, sidebar }: Props) {
               />
               <TooltipContent side={collapsed ? "right" : "top"}>
                 {collapsed ? "Expand" : "Collapse"}
-                <span className="inline-flex items-center gap-0.5">
+                <KbdGroup>
                   <Kbd>{shortcutModifier}</Kbd>
-                  <span aria-hidden="true">+</span>
                   <Kbd>B</Kbd>
-                </span>
+                </KbdGroup>
               </TooltipContent>
             </Tooltip>
           )}

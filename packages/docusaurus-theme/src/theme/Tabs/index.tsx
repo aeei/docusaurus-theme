@@ -1,10 +1,12 @@
 import React, { type ReactNode } from "react";
 
-import { ThemeClassNames } from "@docusaurus/theme-common";
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import clsx from "clsx";
 
-import { ThemeTabList } from "@theme/components/theme-tab-list";
+import {
+  Tabs as TabsPrimitive,
+  TabsList,
+  TabsTrigger,
+} from "@theme/components/ui/tabs";
 import {
   sanitizeTabsChildren,
   type TabsProps,
@@ -13,43 +15,33 @@ import {
   useTabsContextValue,
 } from "@theme/utils/tabsUtils";
 
-import styles from "./styles.module.css";
-
 type Props = TabsProps;
 
-function TabList({ className }: { className?: string }) {
-  const { selectedValue, selectValue, tabValues, block } = useTabs();
+function TabsContainer({ children }: { children: ReactNode }) {
+  const { selectedValue, selectValue, tabValues } = useTabs();
 
   return (
-    <ThemeTabList
-      values={tabValues}
-      value={selectedValue}
-      onValueChange={selectValue}
-      variant="line"
-      className={className}
-      block={block}
-    />
-  );
-}
-
-function TabsContainer({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div
-      className={clsx(
-        ThemeClassNames.tabs.container,
-        "tabs-container",
-        styles.tabList
-      )}
-    >
-      <TabList className={className} />
-      <div className="mt-4">{children}</div>
-    </div>
+    <TabsPrimitive value={selectedValue} onValueChange={selectValue}>
+      <TabsList>
+        {tabValues.map(({ value, label, attributes }) => {
+          const {
+            className: _className,
+            style: _style,
+            ...tabAttributes
+          } = attributes ?? {};
+          return (
+            <TabsTrigger
+              key={value}
+              {...(tabAttributes as React.ComponentPropsWithoutRef<"button">)}
+              value={value}
+            >
+              {label ?? value}
+            </TabsTrigger>
+          );
+        })}
+      </TabsList>
+      {children}
+    </TabsPrimitive>
   );
 }
 
@@ -59,9 +51,7 @@ export default function Tabs(props: Props): ReactNode {
 
   return (
     <TabsProvider value={value} key={String(isBrowser)}>
-      <TabsContainer className={props.className}>
-        {sanitizeTabsChildren(props.children)}
-      </TabsContainer>
+      <TabsContainer>{sanitizeTabsChildren(props.children)}</TabsContainer>
     </TabsProvider>
   );
 }

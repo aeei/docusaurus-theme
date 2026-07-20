@@ -9,13 +9,8 @@ import { Button } from "@theme/components/ui/button";
 
 export default function EditThisPage({ editUrl }: Props): ReactNode {
   return (
-    <Button
-      render={<Link to={editUrl} />}
-      nativeButton={false}
-      variant="link"
-      className="underline underline-offset-4"
-    >
-      <Pencil aria-hidden="true" />
+    <Button render={<Link to={editUrl} />} nativeButton={false} variant="link">
+      <Pencil data-icon="inline-start" aria-hidden="true" />
       <Translate
         id="theme.common.editThisPage"
         description="The link label to edit the current page"
