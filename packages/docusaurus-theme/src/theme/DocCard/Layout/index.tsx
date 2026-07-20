@@ -2,7 +2,6 @@ import React, { type ReactNode } from "react";
 
 import Link from "@docusaurus/Link";
 import type { Props } from "@theme/DocCard/Layout";
-import Icon from "@theme/DocCard/Heading/Icon";
 import Text from "@theme/DocCard/Heading/Text";
 
 import {
@@ -14,32 +13,24 @@ import {
 
 export default function DocCardLayout({
   item,
-  className,
+  className: _className,
   href,
-  icon,
+  icon: _icon,
   title,
   description,
 }: Props): ReactNode {
   return (
-    <Card
-      className={`h-full transition-colors hover:bg-muted/30 ${className ?? ""}`}
-    >
-      <Link
-        href={href}
-        className="block h-full text-card-foreground no-underline hover:no-underline"
-      >
+    <Link href={href} className="contents">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {icon && <Icon item={item} icon={icon} />}
+          <CardTitle>
             <Text item={item} title={title} />
           </CardTitle>
           {description ? (
-            <CardDescription className="line-clamp-2" title={description}>
-              {description}
-            </CardDescription>
+            <CardDescription title={description}>{description}</CardDescription>
           ) : null}
         </CardHeader>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 }

@@ -2,8 +2,9 @@ import React, { type ReactNode } from "react";
 
 import { useDocsSidebar } from "@docusaurus/plugin-content-docs/client";
 import { useLocation } from "@docusaurus/router";
-import { useThemeConfig, useWindowSize } from "@docusaurus/theme-common";
-import DocSidebar from "@theme/DocSidebar";
+import { useThemeConfig } from "@docusaurus/theme-common";
+import DocSidebarDesktop from "@theme/DocSidebar/Desktop";
+import DocSidebarMobile from "@theme/DocSidebar/Mobile";
 import type { Props } from "@theme/DocRoot/Layout/Sidebar";
 import { Sidebar, useSidebar } from "@theme/components/ui/sidebar";
 
@@ -18,15 +19,15 @@ function ResetOnSidebarChange({ children }: { children: ReactNode }) {
 
 export default function DocRootLayoutSidebar({ sidebar }: Props): ReactNode {
   const { pathname } = useLocation();
-  const { toggleSidebar } = useSidebar();
-  const windowSize = useWindowSize();
+  const { state, toggleSidebar } = useSidebar();
   const {
     docs: {
       sidebar: { hideable },
     },
   } = useThemeConfig();
-  const docSidebar = (
-    <DocSidebar
+
+  const desktopSidebar = (
+    <DocSidebarDesktop
       sidebar={sidebar}
       path={pathname}
       onCollapse={toggleSidebar}
@@ -36,17 +37,25 @@ export default function DocRootLayoutSidebar({ sidebar }: Props): ReactNode {
 
   return (
     <ResetOnSidebarChange>
-      {windowSize === "mobile" && docSidebar}
-      {windowSize !== "mobile" && (
+      <DocSidebarMobile
+        sidebar={sidebar}
+        path={pathname}
+        onCollapse={toggleSidebar}
+        isHidden={false}
+      />
+      <div
+        className="theme-doc-sidebar-desktop hidden lg:block"
+        data-collapsed={state === "collapsed"}
+      >
         <Sidebar
           side="left"
           variant="sidebar"
           collapsible={hideable ? "icon" : "none"}
           className="theme-doc-sidebar-container"
         >
-          {docSidebar}
+          {desktopSidebar}
         </Sidebar>
-      )}
+      </div>
     </ResetOnSidebarChange>
   );
 }

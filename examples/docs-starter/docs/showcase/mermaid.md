@@ -25,7 +25,7 @@ sequenceDiagram
   participant Starter
   participant Theme
   Author->>Starter: Add docs content
-  Starter->>Theme: Consume semantic tokens
+  Theme->>Starter: Ship Base Nova UI tokens
   Theme-->>Author: Render styled docs
 ```
 

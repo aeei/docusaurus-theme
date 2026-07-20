@@ -8,9 +8,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@theme/components/ui/dropdown-menu";
-import { cn } from "@theme/utils/cn";
 
 const modes = [
   { value: "light", label: "Light", icon: Sun },
@@ -20,10 +20,12 @@ const modes = [
 
 export function SidebarThemeMenu({
   compact = false,
-  className,
+  side = "top",
+  align = "start",
 }: {
   compact?: boolean;
-  className?: string;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
 }): React.JSX.Element | null {
   const { disableSwitch, respectPrefersColorScheme } =
     useThemeConfig().colorMode;
@@ -45,7 +47,6 @@ export function SidebarThemeMenu({
             type="button"
             variant="ghost"
             size={compact ? "icon" : "default"}
-            className={cn(!compact && "flex-1 justify-start", className)}
             title={`Color theme: ${current.label}`}
             aria-label={`Color theme: ${current.label}`}
           />
@@ -54,7 +55,7 @@ export function SidebarThemeMenu({
         <Icon aria-hidden="true" />
         {!compact && <span>{current.label}</span>}
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" align="start" className="min-w-40">
+      <DropdownMenuContent side={side} align={align}>
         {choices.map(({ value: choice, label, icon: ChoiceIcon }) => (
           <DropdownMenuItem
             key={choice}
@@ -67,7 +68,9 @@ export function SidebarThemeMenu({
             <ChoiceIcon aria-hidden="true" />
             {label}
             {choice === value && (
-              <Check aria-hidden="true" className="ml-auto" />
+              <DropdownMenuShortcut>
+                <Check aria-hidden="true" />
+              </DropdownMenuShortcut>
             )}
           </DropdownMenuItem>
         ))}

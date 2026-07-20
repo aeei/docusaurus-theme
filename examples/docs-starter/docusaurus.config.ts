@@ -16,7 +16,7 @@ const algolia =
 const config: Config = {
   title: "Docusaurus Theme",
   tagline: "A docs-first starter for @aeei/docusaurus-theme.",
-  favicon: "img/favicon.svg",
+  favicon: "img/favicon.ico",
   url: "https://aeei.github.io",
   baseUrl: "/docusaurus-theme/",
   organizationName: "aeei",
@@ -26,7 +26,16 @@ const config: Config = {
   trailingSlash: false,
 
   markdown: { mermaid: true },
-  themes: ["@docusaurus/theme-mermaid", "@aeei/docusaurus-theme"],
+  plugins: [
+    [
+      "docusaurus-plugin-copy-page-button",
+      { injectButton: false, generateMarkdownRoutes: true },
+    ],
+  ],
+  themes: [
+    "@docusaurus/theme-mermaid",
+    ["@aeei/docusaurus-theme", { search: "local", copyPage: true }],
+  ],
 
   presets: [
     [
@@ -43,7 +52,7 @@ const config: Config = {
         blog: false,
         pages: false,
         theme: {
-          customCss: ["./src/css/tokens.css", "./src/css/custom.css"],
+          customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
     ],
@@ -90,36 +99,8 @@ const config: Config = {
             { label: "Mermaid", to: "/showcase/mermaid" },
           ],
         },
-        {
-          title: "Project",
-          items: [
-            {
-              label: "GitHub",
-              href: "https://github.com/aeei/docusaurus-theme",
-            },
-            {
-              label: "MIT",
-              href: "https://github.com/aeei/docusaurus-theme/blob/shadcn-theme/LICENSE",
-            },
-            {
-              label: "Third-party notices",
-              href: "https://github.com/aeei/docusaurus-theme/blob/shadcn-theme/THIRD_PARTY_NOTICES.md",
-            },
-          ],
-        },
-        {
-          title: "Credits",
-          items: [
-            { label: "Docusaurus", href: "https://docusaurus.io" },
-            {
-              label: "Docusaurus OpenAPI Docs",
-              href: "https://github.com/PaloAltoNetworks/docusaurus-openapi-docs",
-            },
-          ],
-        },
       ],
-      copyright:
-        "Docusaurus Theme · Maintained by aeei · Based on Docusaurus OpenAPI Docs by Palo Alto Networks",
+      copyright: "Docusaurus Theme · Maintained by aeei",
     },
     ...(algolia ? { algolia } : {}),
     prism: { theme: prismThemes.github, darkTheme: prismThemes.dracula },

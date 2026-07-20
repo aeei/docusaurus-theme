@@ -148,3 +148,8 @@ demo/**/*.json
 
 # Playwright
 visual_diffs/
+test-results/
+artifacts/
+
+# Local pi session state
+.pi/goals/

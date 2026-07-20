@@ -21,7 +21,7 @@ export default function MobileSidebarToggle(): ReactNode {
         description: "The accessible label of the mobile navigation toggle.",
       })}
       aria-expanded={shown}
-      className="navbar__toggle"
+      data-mobile-navigation-trigger=""
     >
       <Menu aria-hidden="true" />
     </Button>

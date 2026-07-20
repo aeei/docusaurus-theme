@@ -1,13 +1,15 @@
 import React, { type ReactNode } from "react";
 
 import DropdownNavbarItemMobile from "@theme/NavbarItem/DropdownNavbarItem/Mobile";
+import { ChevronDown } from "lucide-react";
 
+import { Button } from "@theme/components/ui/button";
 import {
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuTrigger,
-} from "@theme/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@theme/components/ui/dropdown-menu";
 
 type DropdownItem = {
   label?: ReactNode;
@@ -31,27 +33,22 @@ function DesktopDropdownNavbarItem({
   items,
   label,
   children,
-  className,
+  className: _className,
 }: Props): ReactNode {
   return (
-    <NavigationMenuItem>
-      <NavigationMenuTrigger
-        className={["theme-navbar-nav-link", className]
-          .filter(Boolean)
-          .join(" ")}
-        aria-label={typeof label === "string" ? label : undefined}
-      >
+    <DropdownMenu>
+      <DropdownMenuTrigger render={<Button variant="ghost" />}>
         {children ?? label}
-      </NavigationMenuTrigger>
-      <NavigationMenuContent className="min-w-48 p-1">
+        <ChevronDown aria-hidden="true" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
         {items.map((item, index) => {
           const href = item.to ?? item.href ?? "#";
           const external = item.target === "_blank";
 
           return (
-            <NavigationMenuLink
+            <DropdownMenuItem
               key={index}
-              className="px-2 py-1.5"
               render={
                 <a
                   href={href}
@@ -61,11 +58,11 @@ function DesktopDropdownNavbarItem({
               }
             >
               {item.label}
-            </NavigationMenuLink>
+            </DropdownMenuItem>
           );
         })}
-      </NavigationMenuContent>
-    </NavigationMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

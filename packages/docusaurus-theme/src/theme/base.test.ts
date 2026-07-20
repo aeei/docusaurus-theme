@@ -1,21 +1,18 @@
 import fs from "fs";
 import path from "path";
 
-const stylesheetPath = path.join(__dirname, "base.scss");
+const stylesheet = fs.readFileSync(path.join(__dirname, "base.scss"), "utf8");
+const canonicalStylesheet = stylesheet
+  .replace(/\s+/g, " ")
+  .replace(/\s*([(),])\s*/g, "$1");
 
-it("uses only the public semantic color token contract", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
-  const forbiddenToken = /--(?:docs|api|openapi|nextra|fumadocs)-/;
-  const hardcodedColor = /#[\da-f]{3,8}\b|\b(?:rgb|hsl)a?\(/i;
-
-  expect(stylesheet).not.toMatch(forbiddenToken);
-  expect(stylesheet).not.toMatch(hardcodedColor);
+it("keeps docs CSS on semantic color tokens", () => {
+  expect(stylesheet).not.toMatch(/--(?:docs|api|openapi|nextra|fumadocs)-/);
+  expect(stylesheet).not.toMatch(/#[\da-f]{3,8}\b|\b(?:rgb|hsl)a?\(/i);
 });
 
-it("keeps pointer and keyboard focus signifiers on interactive controls", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
-
-  expect(stylesheet).toContain(
+it("leaves component focus visuals to official primitives", () => {
+  expect(stylesheet).not.toContain(
     ":where(a, button, input, select, textarea, [tabindex]):focus-visible"
   );
   expect(stylesheet).toMatch(/\[role="tab"\][\s\S]*cursor: pointer;/);
@@ -24,71 +21,107 @@ it("keeps pointer and keyboard focus signifiers on interactive controls", () => 
   );
 });
 
-it("maps every semantic docs text tag to the typography token scale", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
-  const headingTokens = [
-    ["h1", "title-1"],
-    ["h2", "title-2"],
-    ["h3", "title-3"],
-    ["h4", "title-4"],
-    ["h5", "body"],
-    ["h6", "ui"],
-  ];
-
-  for (const [tag, token] of headingTokens) {
-    expect(stylesheet).toMatch(
-      new RegExp(
-        `\\.theme-doc-markdown ${tag} \\{[\\s\\S]*?font-size: var\\(--typography-${token}-size\\);[\\s\\S]*?line-height: var\\(--typography-${token}-line-height\\);`
-      )
-    );
-  }
+it("keeps article prose size stable across responsive widths", () => {
+  expect(stylesheet).toContain("--typeset-size: 0.9375rem;");
+  expect(stylesheet).toContain("--typeset-flow: 1.25em;");
+  expect(stylesheet).toContain("--typeset-body-size: var(--typeset-size);");
+  expect(stylesheet).toContain("font-size: var(--typeset-body-size);");
+  expect(stylesheet).toContain("line-height: var(--typeset-leading);");
+  expect(stylesheet).toContain("font-size: 1.875rem !important;");
+  expect(stylesheet).toContain("line-height: 2.25rem !important;");
+  expect(stylesheet).toContain("font-size: 1.25em !important;");
   expect(stylesheet).toContain(
-    'p:not(.docusaurus-mermaid-container *):not([data-slot="alert"] *)'
+    "margin-block-start: calc(var(--typeset-flow) * 1.4) !important;"
+  );
+  expect(stylesheet).toContain("font-size: 1.125em !important;");
+  expect(stylesheet).toContain(
+    "margin-block-start: var(--typeset-flow) !important;"
   );
   expect(stylesheet).toContain(
-    "font-size: var(--typography-body-size);\n  line-height: var(--typography-body-line-height);"
+    "border-inline-start: 2px solid var(--typeset-rule) !important;"
+  );
+  expect(stylesheet).toContain(
+    "border-block-start: 1px solid var(--typeset-rule);"
+  );
+  expect(stylesheet).toContain(
+    "margin-block-start: calc(var(--typeset-flow) * 2.4) !important;"
+  );
+  expect(stylesheet).toMatch(
+    /\.theme-code-inline \{[\s\S]*border-radius: min\(calc\(var\(--radius\) \* 0\.6\), 0\.35em\);/
+  );
+  expect(stylesheet).toContain("border-radius: var(--radius) !important;");
+  expect(stylesheet).not.toContain("--typeset-size: 1.05rem;");
+  expect(stylesheet).not.toContain(
+    "--typeset-body-size: calc(var(--typeset-size) * 1.125);"
   );
 });
 
-it("normalizes every text renderer onto the rem token system", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
+it("keeps prose ownership outside official UI interiors", () => {
+  expect(canonicalStylesheet).toContain(
+    ":not(:where(.theme-doc-markdown [data-slot],.theme-doc-markdown [data-slot] *,.theme-doc-markdown .theme-code-block,.theme-doc-markdown .theme-code-block *,.theme-doc-markdown .docusaurus-mermaid-container,.theme-doc-markdown .docusaurus-mermaid-container *))"
+  );
+  expect(stylesheet).not.toContain(":where(img, picture img, video, svg)");
+  expect(stylesheet).not.toContain(":not([data-slot] *)");
+});
 
-  expect(stylesheet).toMatch(/html \{[\s\S]*font-size: 100%;/);
+it("matches the rendered shadcn docs code surface", () => {
   expect(stylesheet).toMatch(
-    /:where\(button, input, select, textarea\) \{[\s\S]*font-family: inherit;/
+    /\.theme-code-block \{[\s\S]*border-radius: calc\(var\(--radius\) \+ 8px\);[\s\S]*background: var\(--code\);/
   );
   expect(stylesheet).toMatch(
-    /\.pagination-nav__label \{[\s\S]*font-size: var\(--typography-body-size\);[\s\S]*line-height: var\(--typography-body-line-height\);/
+    /\.theme-code-block pre \{[\s\S]*padding: calc\(var\(--spacing\) \* 3\.5\) calc\(var\(--spacing\) \* 4\);[\s\S]*font-size: 0\.875rem;[\s\S]*line-height: 1\.53125rem;/
   );
   expect(stylesheet).toMatch(
-    /\.pagination-nav__sublabel \{[\s\S]*font-size: var\(--typography-small-size\);[\s\S]*line-height: var\(--typography-small-line-height\);/
+    /\.theme-code-block__title \{[\s\S]*padding: calc\(var\(--spacing\) \* 2\.5\) calc\(var\(--spacing\) \* 4\);[\s\S]*font-size: 0\.765625rem;[\s\S]*line-height: 1\.33984375rem;/
   );
   expect(stylesheet).toMatch(
-    /\.theme-code-block__content pre[\s\S]*font-size: var\(--typography-small-size\);[\s\S]*line-height: var\(--typography-small-line-height\);/
+    /\.theme-code-block \[class\*="codeLineNumber"\] \{[\s\S]*width: calc\(var\(--spacing\) \* 16\) !important;[\s\S]*padding: 0 calc\(var\(--spacing\) \* 6\) 0 0 !important;[\s\S]*color: var\(--code-number\);/
   );
   expect(stylesheet).toMatch(
-    /\.docusaurus-mermaid-container > svg[\s\S]*font-family: var\(--ifm-font-family-base\) !important;[\s\S]*font-size: var\(--typography-small-size\) !important;/
+    /\.theme-code-block-highlighted-line \{[\s\S]*background: var\(--code-highlight\);/
+  );
+  expect(stylesheet).toMatch(
+    /\.theme-code-block \.token \{[\s\S]*font-style: normal !important;[\s\S]*font-weight: 400 !important;/
+  );
+  expect(stylesheet).toMatch(
+    /\.theme-code-block \.token\.keyword[\s\S]*color: var\(--code-syntax-keyword\) !important;/
+  );
+  expect(stylesheet).toMatch(
+    /\.theme-code-block \.token\.function[\s\S]*color: var\(--code-syntax-function\) !important;/
   );
 });
 
-it("keeps responsive hierarchy and tablet gutters token-driven", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
-
+it("keeps structural Docusaurus integration separate from component visuals", () => {
+  expect(stylesheet).toContain(".theme-navbar-mobile-trigger");
+  expect(stylesheet).toContain(".theme-doc-sidebar-container");
   expect(stylesheet).toMatch(
-    /@media \(max-width: 996px\)[\s\S]*\.theme-doc-markdown h1 \{[\s\S]*var\(--typography-title-1-size\)/
+    /\.theme-doc-sidebar-desktop,[\s\S]*\.theme-mobile-sidebar-content \{[\s\S]*--sidebar: var\(--background\);[\s\S]*--sidebar-foreground: var\(--foreground\);/
   );
   expect(stylesheet).toMatch(
-    /@media \(min-width: 640px\) and \(max-width: 996px\)[\s\S]*--layout-gutter:[\s\S]*\.theme-doc-shell main > \.container/
+    /\.theme-doc-sidebar-container \{[\s\S]*border-right: 0 !important;/
   );
   expect(stylesheet).toMatch(
-    /\.docusaurus-mermaid-container \{[\s\S]*justify-content: center;/
+    /\.theme-mobile-sidebar-content \{[\s\S]*border-right: 0 !important;/
   );
+  expect(stylesheet).toContain("position: relative;");
+  expect(stylesheet).not.toContain(".theme-doc-sidebar-chevron");
+  expect(stylesheet).not.toContain(".theme-details-content");
+  expect(stylesheet).not.toContain(".theme-mobile-toc-content");
 });
 
-it("overrides the semantic b element used for the navbar title", () => {
-  const stylesheet = fs.readFileSync(stylesheetPath, "utf8");
-
-  expect(stylesheet).toMatch(
-    /\.navbar__title\s*{[\s\S]*?font-weight: 600;[\s\S]*?}/
+it("uses Geist and live shell geometry tokens", () => {
+  expect(stylesheet).toContain(
+    '--ifm-font-family-base: Geist, "Geist Fallback";'
   );
+  expect(stylesheet).toContain(
+    "--ifm-navbar-height: calc(var(--spacing) * 14);"
+  );
+  expect(stylesheet).toMatch(
+    /@media \(min-width: 1024px\)[\s\S]*--ifm-navbar-height: calc\(var\(--spacing\) \* 16\);/
+  );
+  expect(stylesheet).toContain(".theme-doc-root-layout");
+  expect(stylesheet).toContain(".theme-doc-page__content");
+  expect(stylesheet).toContain(".theme-doc-page__toc");
+  expect(stylesheet).toContain("max-width: 40rem;");
+  expect(stylesheet).toContain("width: 18rem;");
 });

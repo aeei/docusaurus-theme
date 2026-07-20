@@ -3,7 +3,6 @@ import React, { type ReactNode } from "react";
 import { translate } from "@docusaurus/Translate";
 import { PanelLeftOpen } from "lucide-react";
 
-import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu";
 import { Button } from "@theme/components/ui/button";
 
 type Props = {
@@ -20,15 +19,13 @@ export default function DocRootLayoutSidebarExpandButton({
   });
 
   return (
-    <div className="theme-doc-sidebar-collapsed-footer">
-      <SidebarThemeMenu compact />
+    <div>
       <Button
         type="button"
         variant="ghost"
         size="icon"
         title={label}
         aria-label={label}
-        className="theme-doc-sidebar-expand"
         onClick={toggleSidebar}
       >
         <PanelLeftOpen aria-hidden="true" />

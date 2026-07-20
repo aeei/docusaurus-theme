@@ -1,11 +1,16 @@
 # Vendored source inventory
 
-Snapshot date: 2026-07-16
+Snapshot date: 2026-07-20
 
-| Source                                   | Revision                                   | Local paths                                          | Decision                                                            |
-| ---------------------------------------- | ------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------- |
-| PaloAltoNetworks/docusaurus-openapi-docs | `9f33f16352eaa0cad62bf54668de702ce2ce1a8a` | `src/index.ts`, selected `src/theme/**` docs seams   | Keep with original headers; OpenAPI-only source removed             |
-| shadcn/ui Base Nova registry             | registry snapshot 2026-07-16               | `src/theme/components/ui/**`, `src/theme/shadcn.css` | Keep only components used by the docs theme; Base UI runtime only   |
-| Docusaurus theme-classic 3.10.1          | `@docusaurus/theme-classic@3.10.1`         | selected docs theme override interfaces              | Keep Docusaurus alias contracts; classic remains the fallback layer |
+| Source                                   | Revision                                       | Local paths                                                                       | Decision                                                                                                       |
+| ---------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| PaloAltoNetworks/docusaurus-openapi-docs | `9f33f16352eaa0cad62bf54668de702ce2ce1a8a`     | `src/index.ts`, selected `src/theme/**` docs seams                                | Keep with original headers; OpenAPI-only source removed                                                        |
+| shadcn/ui Base Nova registry             | `shadcn@4.12.0`, `base-nova`, Base UI, Neutral | `src/theme/components/ui/**`, `src/theme/shadcn.css`, `src/theme/vendor/**`       | Preserve registry source; only import paths and Docusaurus data/routing adapters differ                        |
+| ui.shadcn.com live docs `.typeset` CSS   | snapshot 2026-07-18                            | `src/theme/base.scss` prose block                                                 | Adapt live docs prose contract for `.theme-doc-markdown`; keep article-local exclusions only                   |
+| shadcn/ui live docs CodeBlock            | snapshot 2026-07-19                            | `src/theme/components/code-language-icon.tsx`, `src/theme/base.scss`              | Preserve title icons, GitHub Light Default/Vesper syntax colors, line numbers, highlights, and action geometry |
+| shadcn/ui live docs Command/Copy Page    | snapshot 2026-07-20                            | `src/theme/components/local-search/**`, `src/theme/components/docs-copy-page.tsx` | Adapt live composition to Base Nova registry primitives and Docusaurus data/routing only                       |
+| Geist                                    | upstream snapshot 2026-07-18                   | `src/theme/fonts/**`                                                              | Ship the official example font locally                                                                         |
+| tw-animate-css                           | upstream snapshot 2026-07-18                   | `src/theme/vendor/tw-animate.css`                                                 | Ship Base Nova animation utilities                                                                             |
+| Docusaurus theme-classic 3.10.1          | `@docusaurus/theme-classic@3.10.1`             | selected docs theme override interfaces                                           | Keep Docusaurus alias contracts; classic remains the fallback layer                                            |
 
 Detailed license texts and redistribution notices are maintained in the repository and package `THIRD_PARTY_NOTICES.md` and `LICENSES/` paths.

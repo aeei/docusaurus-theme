@@ -6,6 +6,8 @@ description: Fixture coverage for Tabs and custom MDX components.
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { ArrowUp, LoaderCircle } from "lucide-react";
+import { Button } from "@theme/components/ui/button";
 import { FeatureCallout } from "../../src/components/FeatureCallout";
 
 # MDX playground
@@ -50,6 +52,52 @@ export default {
 
   </TabItem>
 </Tabs>
+
+## Button states
+
+<div className="base-nova-button-fixture">
+  <Button variant="outline">Ready</Button>
+  <Button variant="outline" disabled>
+    Disabled
+  </Button>
+  <Button variant="outline" disabled>
+    <LoaderCircle
+      className="size-4 animate-spin"
+      data-slot="spinner"
+      data-icon="inline-start"
+      role="status"
+      aria-label="Loading"
+    />
+    Generating
+  </Button>
+</div>
+
+## Button sizes
+
+<div className="base-nova-button-fixture">
+  <Button size="xs" aria-label="Extra small button">
+    XS
+  </Button>
+  <Button size="sm" aria-label="Small button">
+    Small
+  </Button>
+  <Button aria-label="Default button">Default</Button>
+  <Button size="lg" aria-label="Large button">
+    Large
+  </Button>
+  <Button size="icon-xs" aria-label="Extra small icon button">
+    <ArrowUp aria-hidden="true" />
+  </Button>
+  <Button size="icon-sm" aria-label="Small icon button">
+    <ArrowUp aria-hidden="true" />
+  </Button>
+  <Button size="icon" aria-label="Default icon button">
+    <ArrowUp aria-hidden="true" />
+  </Button>
+  <Button size="icon-lg" aria-label="Large icon button">
+    <ArrowUp aria-hidden="true" />
+  </Button>
+</div>
 
 ## JSX mixed with Markdown
 

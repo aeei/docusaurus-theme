@@ -14,7 +14,7 @@ export default function NavbarMobileSidebar(): ReactNode {
       if (
         event.key.toLowerCase() === "b" &&
         (event.metaKey || event.ctrlKey) &&
-        window.matchMedia("(max-width: 996px)").matches
+        window.matchMedia("(max-width: 1023px)").matches
       ) {
         event.preventDefault();
         mobileSidebar.toggle();
@@ -25,7 +25,7 @@ export default function NavbarMobileSidebar(): ReactNode {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [mobileSidebar]);
 
-  if (!mobileSidebar.shouldRender) return null;
+  if (mobileSidebar.disabled) return null;
 
   return (
     <NavbarMobileSidebarLayout

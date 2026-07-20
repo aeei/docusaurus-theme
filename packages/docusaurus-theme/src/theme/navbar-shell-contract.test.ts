@@ -1,0 +1,69 @@
+import fs from "node:fs";
+import path from "node:path";
+
+const themeRoot = path.resolve(__dirname);
+const read = (relativePath: string) =>
+  fs.readFileSync(path.join(themeRoot, relativePath), "utf8");
+
+describe("live shadcn navbar shell contract", () => {
+  it("uses the official NavigationMenu trigger style for direct GNB links", () => {
+    const navbar = read("Navbar/Content/index.tsx");
+
+    expect(navbar).toContain("navigationMenuTriggerStyle");
+    expect(navbar).toContain("className={navigationMenuTriggerStyle()}");
+  });
+
+  it("keeps the mobile theme action in the navbar and moves desktop control to the LNB footer", () => {
+    const navbar = read("Navbar/Content/index.tsx");
+    const sidebar = read("DocSidebar/Desktop/index.tsx");
+
+    expect(navbar).toContain(
+      'import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu"'
+    );
+    expect(navbar).toContain(
+      '<div className="theme-navbar-color-mode lg:hidden">'
+    );
+    expect(navbar).toContain(
+      '<SidebarThemeMenu compact side="bottom" align="end" />'
+    );
+    expect(sidebar).toContain("SidebarThemeMenu");
+    expect(sidebar).toContain("compact={collapsed}");
+    expect(sidebar).toContain("<SidebarTrigger");
+  });
+
+  it("aligns mobile action glyphs to the content edge", () => {
+    const css = read("base.scss");
+
+    expect(css).toMatch(
+      /@media \(max-width: 1023px\) \{[\s\S]*\.navbar__inner \{[\s\S]*width: calc\(100% - calc\(var\(--spacing\) \* 8\)\);/
+    );
+  });
+
+  it("matches the Nextra translucent blurred header surface", () => {
+    const css = read("base.scss");
+    const navbarBlock = css.match(/\.navbar \{([\s\S]*?)\n\}/)?.[1] ?? "";
+    const blurBlock = css.match(/\.navbar::before \{([\s\S]*?)\n\}/)?.[1] ?? "";
+
+    expect(navbarBlock).toContain("background: transparent;");
+    expect(navbarBlock).toContain("isolation: isolate;");
+    expect(blurBlock).toContain("backdrop-filter: blur(12px);");
+    expect(blurBlock).toContain("background: color-mix(");
+    expect(blurBlock).toContain("70%");
+    expect(blurBlock).toContain("border-bottom: 1px solid var(--border);");
+  });
+
+  it("caps and centers the shared desktop shell at 90rem", () => {
+    const css = read("base.scss");
+
+    expect(css).toContain("--theme-shell-max-width: 90rem;");
+    expect(css).toMatch(
+      /\.navbar__inner \{[\s\S]*max-width: calc\([\s\S]*var\(--theme-shell-max-width\)[\s\S]*var\(--spacing\) \* 12/
+    );
+    expect(css).toMatch(
+      /\.theme-doc-root-layout > main > \.container-wrapper \{[\s\S]*max-width: var\(--theme-shell-max-width\);[\s\S]*margin-inline: auto;/
+    );
+    expect(css).toMatch(
+      /\.footer > \.container \{[\s\S]*max-width: var\(--theme-shell-max-width\);/
+    );
+  });
+});

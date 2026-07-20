@@ -1,17 +1,7 @@
-/*
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * Swizzled from @docusaurus/theme-classic under the MIT License.
- */
-
-import React, { useEffect, type ComponentProps, type ReactNode } from "react";
+import React, { useEffect, useState, type ReactNode } from "react";
 
 import { translate } from "@docusaurus/Translate";
-import {
-  Collapsible,
-  isRegexpStringMatch,
-  useCollapsible,
-} from "@docusaurus/theme-common";
+import { isRegexpStringMatch } from "@docusaurus/theme-common";
 import {
   isSamePath,
   useLocalPathname,
@@ -19,10 +9,19 @@ import {
 import NavbarItem, { type LinkLikeNavbarItemProps } from "@theme/NavbarItem";
 import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
 import type { Props } from "@theme/NavbarItem/DropdownNavbarItem/Mobile";
-import clsx from "clsx";
 import { ChevronRight } from "lucide-react";
 
-import { Button } from "@theme/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@theme/components/ui/collapsible";
+import {
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+} from "@theme/components/ui/sidebar";
 
 function isItemActive(item: LinkLikeNavbarItemProps, pathname: string) {
   return (
@@ -32,47 +31,9 @@ function isItemActive(item: LinkLikeNavbarItemProps, pathname: string) {
   );
 }
 
-function CollapseButton({
-  collapsed,
-  onClick,
-}: {
-  collapsed: boolean;
-  onClick: ComponentProps<"button">["onClick"];
-}) {
-  return (
-    <Button
-      aria-label={
-        collapsed
-          ? translate({
-              id: "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel",
-              message: "Expand the dropdown",
-              description: "The label used to expand a mobile navbar dropdown.",
-            })
-          : translate({
-              id: "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel",
-              message: "Collapse the dropdown",
-              description:
-                "The label used to collapse a mobile navbar dropdown.",
-            })
-      }
-      aria-expanded={!collapsed}
-      type="button"
-      variant="ghost"
-      size="icon"
-      className="theme-mobile-dropdown-caret"
-      onClick={onClick}
-    >
-      <ChevronRight
-        aria-hidden="true"
-        className={clsx("transition-transform", !collapsed && "rotate-90")}
-      />
-    </Button>
-  );
-}
-
 export default function DropdownNavbarItemMobile({
   items,
-  className,
+  className: _className,
   position: _position,
   onClick,
   ...props
@@ -81,55 +42,70 @@ export default function DropdownNavbarItemMobile({
   const active =
     isSamePath(props.to, pathname) ||
     items.some((item) => isItemActive(item, pathname));
-  const { collapsed, toggleCollapsed, setCollapsed } = useCollapsible({
-    initialState: () => !active,
-  });
+  const [open, setOpen] = useState(active);
+  const hasLink = Boolean(props.to || props.href);
+  const label = props.children ?? props.label;
+  const accessibleLabel =
+    typeof label === "string" || typeof label === "number" ? label : "menu";
+  const toggleLabel = translate(
+    {
+      id: "theme.navbar.mobileDropdown.collapseButton.ariaLabel",
+      message: "Toggle the {label} dropdown",
+      description: "The label used to toggle a mobile navbar dropdown.",
+    },
+    { label: accessibleLabel }
+  );
 
   useEffect(() => {
-    if (active) setCollapsed(false);
-  }, [active, setCollapsed]);
-
-  const href = props.to ? undefined : "#";
+    if (active) setOpen(true);
+  }, [active]);
 
   return (
-    <li
-      className={clsx("menu__list-item", {
-        "menu__list-item--collapsed": collapsed,
-      })}
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      className="group/collapsible"
+      render={<SidebarMenuItem />}
     >
-      <div className="menu__list-item-collapsible">
-        <NavbarNavLink
-          role="button"
-          className={clsx("menu__link menu__link--sublist", className)}
-          href={href}
-          {...props}
-          onClick={(event) => {
-            if (href === "#") event.preventDefault();
-            toggleCollapsed();
-          }}
-        >
-          {props.children ?? props.label}
-        </NavbarNavLink>
-        <CollapseButton
-          collapsed={collapsed}
-          onClick={(event) => {
-            event.preventDefault();
-            toggleCollapsed();
-          }}
-        />
-      </div>
-      <Collapsible lazy as="ul" className="menu__list" collapsed={collapsed}>
-        {items.map((childItemProps, index) => (
-          <NavbarItem
-            mobile
-            isDropdownItem
-            onClick={onClick}
-            activeClassName="menu__link--active"
-            {...childItemProps}
-            key={index}
+      {hasLink ? (
+        <>
+          <SidebarMenuButton
+            render={<NavbarNavLink {...props} onClick={onClick} />}
+            isActive={active}
+          >
+            {label}
+          </SidebarMenuButton>
+          <CollapsibleTrigger
+            render={<SidebarMenuAction aria-label={toggleLabel} />}
+          >
+            <ChevronRight
+              aria-hidden="true"
+              className="transition-transform group-data-open/collapsible:rotate-90"
+            />
+          </CollapsibleTrigger>
+        </>
+      ) : (
+        <CollapsibleTrigger render={<SidebarMenuButton isActive={active} />}>
+          <span>{label}</span>
+          <ChevronRight
+            aria-hidden="true"
+            className="ml-auto transition-transform group-data-open/collapsible:rotate-90"
           />
-        ))}
-      </Collapsible>
-    </li>
+        </CollapsibleTrigger>
+      )}
+      <CollapsibleContent>
+        <SidebarMenuSub>
+          {items.map((childItemProps, index) => (
+            <NavbarItem
+              mobile
+              isDropdownItem
+              onClick={onClick}
+              {...childItemProps}
+              key={index}
+            />
+          ))}
+        </SidebarMenuSub>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

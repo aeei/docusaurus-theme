@@ -10,19 +10,27 @@ function listProductionFiles(directory: string): string[] {
   });
 }
 
-it("uses Lucide rather than inline or encoded icons", () => {
-  const source = listProductionFiles(__dirname)
+it("uses Lucide except for official shadcn code-language marks", () => {
+  const files = listProductionFiles(__dirname);
+  const source = files
+    .filter((file) => !file.endsWith("components/code-language-icon.tsx"))
     .map((file) => fs.readFileSync(file, "utf8"))
     .join("\n");
+  const codeLanguageIcon = fs.readFileSync(
+    path.join(__dirname, "components/code-language-icon.tsx"),
+    "utf8"
+  );
 
   expect(source).not.toContain("<svg");
+  expect(codeLanguageIcon).toContain("Adapted from shadcn/ui");
+  expect(codeLanguageIcon).toContain("function TypeScriptIcon");
+  expect(codeLanguageIcon).toContain("function CssIcon");
   expect(source).not.toMatch(/data:image\/svg|mask(?:-image)?:\s*url\(/);
   expect(source).not.toMatch(/content:\s*["'][^"']*[→←↑↓▶◀][^"']*["']/);
 
   for (const file of [
     "BackToTopButton/index.tsx",
     "CodeBlock/Buttons/CopyButton/index.tsx",
-    "CodeBlock/Buttons/WordWrapButton/index.tsx",
     "Navbar/MobileSidebar/Toggle/index.tsx",
     "EditThisPage/index.tsx",
   ]) {

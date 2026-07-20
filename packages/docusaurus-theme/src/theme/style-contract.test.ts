@@ -22,22 +22,42 @@ it("does not render nested borders around the DocSearch escape key", () => {
   );
 });
 
-it("keeps docs styles within the public semantic token contract", () => {
+it("separates official component CSS from docs-only adapters", () => {
   const stylesheet = listStyles(__dirname)
+    .filter((file) => !file.includes(`${path.sep}vendor${path.sep}`))
     .filter((file) => path.basename(file) !== "shadcn.css")
     .map((file) => fs.readFileSync(file, "utf8"))
     .join("\n");
 
   expect(stylesheet).not.toMatch(/--(?:openapi|opeanpi|docs|api)-/);
-  expect(stylesheet).not.toContain("Toss");
   expect(stylesheet).not.toMatch(
     /#[\da-f]{3,8}\b|\b(?:rgb|hsl)a?\(|:\s*(?:white|black)\b/i
   );
-  expect(stylesheet).not.toMatch(/\d+(?:\.\d+)?rem\b/);
-  expect(stylesheet).not.toMatch(
-    /^[ \t]*(?:padding|margin|gap|width|height|border(?:-(?:top|right|bottom|left))?|outline(?:-offset)?|backdrop-filter):[^;]*\d+(?:\.\d+)?(?:px|rem)\b/m
-  );
+  for (const slot of [
+    "button",
+    "accordion",
+    "tabs",
+    "card",
+    "alert",
+    "table",
+  ]) {
+    expect(stylesheet).not.toContain(`[data-slot="${slot}"] {`);
+  }
   expect(stylesheet).toContain("var(--spacing)");
+
+  const shadcn = fs.readFileSync(path.join(__dirname, "shadcn.css"), "utf8");
+  expect(shadcn).toContain("--background: lab(100% 0 0)");
+  expect(shadcn).toContain("--radius: 0.625rem");
+});
+
+it("normalizes the official scroll-fade fallback for consumer PostCSS", () => {
+  const normalizer = fs.readFileSync(
+    path.resolve(__dirname, "../../scripts/normalize-tailwind-css.mjs"),
+    "utf8"
+  );
+
+  expect(normalizer).toContain("scrollFadeFallback");
+  expect(normalizer).toContain('"var(--scroll-fade-reveal,6rem)"');
 });
 
 it("keeps the shared stylesheet docs-only", () => {

@@ -1,25 +1,25 @@
 import React, {
   isValidElement,
+  useId,
   type ComponentProps,
   type ReactElement,
   type ReactNode,
 } from "react";
 
 import useBrokenLinks from "@docusaurus/useBrokenLinks";
-import { Details as DetailsGeneric } from "@docusaurus/theme-common/Details";
-import { ChevronDown } from "lucide-react";
+import type { DetailsProps } from "@docusaurus/theme-common/lib/components/Details";
 
-import { Button } from "@theme/components/ui/button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@theme/components/ui/collapsible";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@theme/components/ui/accordion";
 
-import { cn } from "@theme/utils/cn";
-
-type Props = React.ComponentProps<typeof DetailsGeneric>;
-type SummaryProps = ComponentProps<"span"> & { children?: ReactNode };
+type Props = DetailsProps;
+type SummaryProps = ComponentProps<typeof AccordionTrigger> & {
+  children?: ReactNode;
+};
 
 function getSummary(summary: Props["summary"]): {
   content: ReactNode;
@@ -29,57 +29,38 @@ function getSummary(summary: Props["summary"]): {
     return { content: summary ?? "Details", props: {} };
   }
 
-  const { children, ...props } = (summary as ReactElement<SummaryProps>).props;
+  const {
+    children,
+    className: _className,
+    style: _style,
+    ...props
+  } = (summary as ReactElement<SummaryProps>).props;
   return { content: children, props };
 }
 
 export default function Details({
   summary,
   children,
-  className,
+  className: _className,
   id,
   open,
   ...props
 }: Props): ReactNode {
   useBrokenLinks().collectAnchor(id);
+  const generatedId = useId();
+  const value = id ?? generatedId;
   const { content: summaryContent, props: summaryProps } = getSummary(summary);
-  const { className: summaryClassName, ...summaryAttributes } = summaryProps;
 
   return (
-    <Collapsible
-      {...(props as ComponentProps<typeof Collapsible>)}
+    <Accordion
+      {...(props as ComponentProps<typeof Accordion>)}
       id={id}
-      defaultOpen={open}
-      className={cn(
-        "group/details overflow-hidden rounded-lg border border-border bg-card text-card-foreground",
-        className
-      )}
+      defaultValue={open ? [value] : []}
     >
-      <CollapsibleTrigger
-        render={
-          <Button
-            type="button"
-            variant="ghost"
-            className="w-full justify-between text-left group-data-open/details:rounded-b-none"
-          />
-        }
-      >
-        <span
-          {...summaryAttributes}
-          className={cn("min-w-0 flex-1", summaryClassName)}
-        >
-          {summaryContent}
-        </span>
-        <ChevronDown
-          aria-hidden="true"
-          className="transition-transform group-data-open/details:rotate-180"
-        />
-      </CollapsibleTrigger>
-      <CollapsibleContent keepMounted className="theme-details-content">
-        <div className="theme-content-flow border-t border-border p-4 text-sm">
-          {children}
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
+      <AccordionItem value={value}>
+        <AccordionTrigger {...summaryProps}>{summaryContent}</AccordionTrigger>
+        <AccordionContent>{children}</AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }

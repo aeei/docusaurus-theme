@@ -26,6 +26,11 @@ jobs:
           packages/docusaurus-theme/src/package-contract.test.ts
           packages/docusaurus-theme/src/theme/base-ui-contract.test.ts
           packages/docusaurus-theme/src/theme/icon-contract.test.ts
+          packages/docusaurus-theme/src/theme/navbar-shell-contract.test.ts
+          packages/docusaurus-theme/src/theme/paginator-contract.test.ts
+          packages/docusaurus-theme/src/theme/prose-contract.test.ts
+          packages/docusaurus-theme/src/theme/registry-source-contract.test.ts
+          packages/docusaurus-theme/src/theme/sidebar-contract.test.ts
           packages/docusaurus-theme/src/theme/style-contract.test.ts
           examples/docs-starter/config-contract.test.ts
           --runInBand
@@ -39,7 +44,7 @@ jobs:
           yarn start-server-and-test
           "yarn workspace @aeei/docs-starter serve --port 3001 --no-open"
           http://127.0.0.1:3001/docusaurus-theme/
-          "node scripts/audit-docs-starter.cjs"
+          "node scripts/audit-docs-starter.cjs && node scripts/audit-critical-ui-relations.cjs && PLAYWRIGHT_BASE_URL=http://127.0.0.1:3001/docusaurus-theme/ yarn test:e2e:theme"
       - name: Upload browser failures
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

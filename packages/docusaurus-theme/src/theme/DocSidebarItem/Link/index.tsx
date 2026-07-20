@@ -3,9 +3,7 @@ import React, { type ReactNode } from "react";
 import isInternalUrl from "@docusaurus/isInternalUrl";
 import Link from "@docusaurus/Link";
 import { isActiveSidebarItem } from "@docusaurus/plugin-content-docs/client";
-import { ThemeClassNames } from "@docusaurus/theme-common";
 import type { Props } from "@theme/DocSidebarItem/Link";
-import clsx from "clsx";
 import { ExternalLink } from "lucide-react";
 
 import {
@@ -15,14 +13,8 @@ import {
   SidebarMenuSubItem,
 } from "@theme/components/ui/sidebar";
 
-import styles from "./styles.module.css";
-
 function LinkLabel({ label }: { label: string }) {
-  return (
-    <span title={label} className={styles.linkLabel}>
-      {label}
-    </span>
-  );
+  return <span title={label}>{label}</span>;
 }
 
 export default function DocSidebarItemLink({
@@ -32,7 +24,7 @@ export default function DocSidebarItemLink({
   level,
   ...props
 }: Props): ReactNode {
-  const { href, label, className, autoAddBaseUrl } = item;
+  const { href, label, autoAddBaseUrl } = item;
   const isActive = isActiveSidebarItem(item, activePath);
   const isInternalLink = isInternalUrl(href);
   const link = (
@@ -49,25 +41,14 @@ export default function DocSidebarItemLink({
   const content = (
     <>
       <LinkLabel label={label} />
-      {!isInternalLink && (
-        <ExternalLink aria-hidden="true" className={styles.externalIcon} />
-      )}
+      {!isInternalLink && <ExternalLink aria-hidden="true" />}
     </>
-  );
-  const itemClassName = clsx(
-    ThemeClassNames.docs.docSidebarItemLink,
-    ThemeClassNames.docs.docSidebarItemLinkLevel(level),
-    className
   );
 
   if (level > 1) {
     return (
-      <SidebarMenuSubItem className={itemClassName}>
-        <SidebarMenuSubButton
-          render={link}
-          isActive={isActive}
-          className={!isInternalLink ? styles.menuExternalLink : undefined}
-        >
+      <SidebarMenuSubItem>
+        <SidebarMenuSubButton render={link} isActive={isActive}>
           {content}
         </SidebarMenuSubButton>
       </SidebarMenuSubItem>
@@ -75,13 +56,8 @@ export default function DocSidebarItemLink({
   }
 
   return (
-    <SidebarMenuItem className={itemClassName}>
-      <SidebarMenuButton
-        render={link}
-        isActive={isActive}
-        tooltip={label}
-        className={!isInternalLink ? styles.menuExternalLink : undefined}
-      >
+    <SidebarMenuItem>
+      <SidebarMenuButton render={link} isActive={isActive} tooltip={label}>
         {content}
       </SidebarMenuButton>
     </SidebarMenuItem>

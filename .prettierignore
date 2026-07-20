@@ -20,6 +20,11 @@ lib-next
 .docusaurus
 .cache-loader
 
+# Pinned/vendored Base Nova sources and binary assets
+packages/docusaurus-theme/src/theme/components/ui/**
+packages/docusaurus-theme/src/theme/vendor/**
+packages/docusaurus-theme/src/theme/fonts/**
+
 # Misc
 .DS_Store
 .env.local

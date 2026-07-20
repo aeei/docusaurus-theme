@@ -3,12 +3,10 @@ import React, { type ReactNode } from "react";
 import { translate } from "@docusaurus/Translate";
 import type { ColorMode } from "@docusaurus/theme-common";
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import clsx from "clsx";
 import { Monitor, Moon, Sun } from "lucide-react";
 
 import type { Props } from "@theme/ColorModeToggle";
-
-import styles from "./styles.module.css";
+import { Button } from "@theme/components/ui/button";
 
 function getNextColorMode(
   colorMode: ColorMode | null,
@@ -33,8 +31,8 @@ function getColorModeLabel(colorMode: ColorMode | null): string {
 }
 
 export default function ColorModeToggle({
-  className,
-  buttonClassName,
+  className: _className,
+  buttonClassName: _buttonClassName,
   respectPrefersColorScheme,
   value,
   onChange,
@@ -50,25 +48,24 @@ export default function ColorModeToggle({
   );
 
   return (
-    <div className={clsx(styles.root, className)}>
-      <button
-        type="button"
-        className={clsx(styles.button, buttonClassName)}
-        onClick={() =>
-          onChange(getNextColorMode(value, respectPrefersColorScheme))
-        }
-        disabled={!isBrowser}
-        title={label}
-        aria-label={label}
-      >
-        {value === "dark" ? (
-          <Moon aria-hidden="true" size={16} />
-        ) : value === null ? (
-          <Monitor aria-hidden="true" size={16} />
-        ) : (
-          <Sun aria-hidden="true" size={16} />
-        )}
-      </button>
-    </div>
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      onClick={() =>
+        onChange(getNextColorMode(value, respectPrefersColorScheme))
+      }
+      disabled={!isBrowser}
+      title={label}
+      aria-label={label}
+    >
+      {value === "dark" ? (
+        <Moon aria-hidden="true" />
+      ) : value === null ? (
+        <Monitor aria-hidden="true" />
+      ) : (
+        <Sun aria-hidden="true" />
+      )}
+    </Button>
   );
 }
