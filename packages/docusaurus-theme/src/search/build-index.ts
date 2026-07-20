@@ -24,7 +24,7 @@ const HEADING_TAGS = new Set(["H1", "H2", "H3", "H4", "H5", "H6"]);
 const clean = (value: string) =>
   value.normalize("NFKC").replace(/\s+/g, " ").trim();
 
-function routeFile(outDir: string, baseUrl: string, route: string) {
+function routeFiles(outDir: string, baseUrl: string, route: string) {
   const base =
     baseUrl === "/" ? "" : baseUrl.replace(/^\//, "").replace(/\/$/, "");
   let relative = route.replace(/^\//, "").replace(/\/$/, "");
@@ -32,8 +32,11 @@ function routeFile(outDir: string, baseUrl: string, route: string) {
     relative = relative.slice(base.length).replace(/^\//, "");
   }
   return relative
-    ? path.join(outDir, `${relative}.html`)
-    : path.join(outDir, "index.html");
+    ? [
+        path.join(outDir, `${relative}.html`),
+        path.join(outDir, relative, "index.html"),
+      ]
+    : [path.join(outDir, "index.html")];
 }
 
 function removeExcludedContent(article: HTMLElement) {
@@ -70,18 +73,22 @@ export async function buildSearchIndex({
   for (const route of [...routesPaths].sort()) {
     if (
       route.endsWith("/404") ||
+      route.endsWith("/404.html") ||
       route.includes("/base-nova-parity") ||
       noIndexRoutes.has(route)
     )
       continue;
 
-    let html: string;
-    try {
-      html = await fs.readFile(routeFile(outDir, baseUrl, route), "utf8");
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
-      throw error;
+    let html: string | undefined;
+    for (const file of routeFiles(outDir, baseUrl, route)) {
+      try {
+        html = await fs.readFile(file, "utf8");
+        break;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
     }
+    if (!html) continue;
 
     const root = parse(html);
     const sourceArticle = root.querySelector(".theme-doc-markdown");
