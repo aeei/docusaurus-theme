@@ -69,6 +69,38 @@ describe("local search index", () => {
     expect(JSON.stringify(first)).not.toContain("secret code");
   });
 
+  it("indexes routes emitted as directory index files", async () => {
+    await fs.mkdir(path.join(outDir, "guides", "trailing"), { recursive: true });
+    await fs.writeFile(
+      path.join(outDir, "guides", "trailing", "index.html"),
+      page("Trailing")
+    );
+
+    const index = await buildSearchIndex({
+      outDir,
+      baseUrl: "/docs/",
+      routesPaths: ["/docs/guides/trailing"],
+    });
+
+    expect(index.records.map(({ url }) => url)).toEqual([
+      "/docs/guides/trailing",
+      "/docs/guides/trailing#next",
+      "/docs/guides/trailing#setup",
+    ]);
+  });
+
+  it("skips the generated 404.html route", async () => {
+    await fs.writeFile(path.join(outDir, "404.html"), page("Not Found"));
+
+    const index = await buildSearchIndex({
+      outDir,
+      baseUrl: "/docs/",
+      routesPaths: ["/404.html"],
+    });
+
+    expect(index.records).toEqual([]);
+  });
+
   it("honors route noIndex metadata and overwrites stale output", async () => {
     const args = {
       outDir,
