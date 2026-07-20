@@ -6,7 +6,7 @@
 
 import React, { type ReactNode } from "react";
 
-import Translate from "@docusaurus/Translate";
+import { translate } from "@docusaurus/Translate";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import { useNavbarSecondaryMenu } from "@docusaurus/theme-common/internal";
 import { ArrowLeft } from "lucide-react";
@@ -22,6 +22,12 @@ import {
 export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
   const isPrimaryMenuEmpty = useThemeConfig().navbar.items.length === 0;
   const secondaryMenu = useNavbarSecondaryMenu();
+  const backButtonLabel = translate({
+    id: "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel",
+    message: "Back to main menu",
+    description:
+      "The label of the back button to return to the main mobile menu",
+  }).replace(/^←\s*/u, "");
 
   return (
     <SidebarContent className="scroll-fade">
@@ -34,12 +40,7 @@ export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
                 onClick={() => secondaryMenu.hide()}
               >
                 <ArrowLeft aria-hidden="true" />
-                <Translate
-                  id="theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel"
-                  description="The label of the back button to return to the main mobile menu"
-                >
-                  Back to main menu
-                </Translate>
+                {backButtonLabel}
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
