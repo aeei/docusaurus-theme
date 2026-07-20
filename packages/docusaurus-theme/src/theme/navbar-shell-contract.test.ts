@@ -33,13 +33,13 @@ describe("live shadcn navbar shell contract", () => {
     const themeMenu = read("components/sidebar-theme-menu.tsx");
 
     expect(themeMenu).toContain(
-      'import useIsBrowser from "@docusaurus/useIsBrowser"'
+      "const [mounted, setMounted] = React.useState(false);"
     );
-    expect(themeMenu).toContain("const isBrowser = useIsBrowser();");
+    expect(themeMenu).toContain("React.useEffect(() => setMounted(true), []);");
     expect(themeMenu).toContain(
-      'const value = isBrowser ? (colorModeChoice ?? "system") : "system";'
+      'const value = mounted ? (colorModeChoice ?? "system") : "system";'
     );
-    expect(themeMenu).toContain("disabled={!isBrowser}");
+    expect(themeMenu).toContain("disabled={!mounted}");
   });
 
   it("aligns mobile action glyphs to the content edge", () => {
