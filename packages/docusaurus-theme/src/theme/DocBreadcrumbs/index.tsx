@@ -49,7 +49,7 @@ export default function DocBreadcrumbs(): ReactNode {
                   Home
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator className="theme-breadcrumb-separator" />
             </>
           )}
           {breadcrumbs.map((item: any, index: number) => {
@@ -70,7 +70,9 @@ export default function DocBreadcrumbs(): ReactNode {
                     </BreadcrumbLink>
                   )}
                 </BreadcrumbItem>
-                {!isLast && <BreadcrumbSeparator />}
+                {!isLast && (
+                  <BreadcrumbSeparator className="theme-breadcrumb-separator" />
+                )}
               </React.Fragment>
             );
           })}

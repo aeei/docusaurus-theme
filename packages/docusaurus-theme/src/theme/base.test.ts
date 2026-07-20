@@ -56,6 +56,17 @@ it("keeps article prose size stable across responsive widths", () => {
   );
 });
 
+it("keeps single-class arbitrary selectors quoted during Docusaurus SSG", () => {
+  const breadcrumbs = fs.readFileSync(
+    path.join(__dirname, "DocBreadcrumbs/index.tsx"),
+    "utf8"
+  );
+
+  expect(breadcrumbs).toContain(
+    '<BreadcrumbSeparator className="theme-breadcrumb-separator" />'
+  );
+});
+
 it("gives official alerts an external prose-flow wrapper", () => {
   const admonition = fs.readFileSync(
     path.join(__dirname, "Admonition/Layout/index.tsx"),
