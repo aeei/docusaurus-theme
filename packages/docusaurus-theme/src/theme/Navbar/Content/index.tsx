@@ -19,7 +19,6 @@ import type { Props as NavbarItemConfig } from "@theme/NavbarItem";
 import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
 import { Search } from "lucide-react";
 
-import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu";
 import LocalSearch from "@theme/components/local-search";
 import { Button } from "@theme/components/ui/button";
 import { Kbd, KbdGroup } from "@theme/components/ui/kbd";
@@ -263,9 +262,6 @@ export default function NavbarContent(): ReactNode {
       >
         <NavbarNavigation items={rightItems} align="end" />
         <CommandSearch provider={searchProvider} />
-        <div className="theme-navbar-color-mode lg:hidden">
-          <SidebarThemeMenu compact side="bottom" align="end" />
-        </div>
       </div>
     </div>
   );

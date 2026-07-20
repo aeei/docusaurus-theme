@@ -16,8 +16,23 @@ npm install @aeei/docusaurus-theme \
 const config = {
   presets: ["classic"],
   themes: ["@aeei/docusaurus-theme"],
+  themeConfig: {
+    colorMode: {
+      defaultMode: "light",
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: false,
+      },
+    },
+  },
 };
 ```
+
+Docusaurus defaults `hideable` and `respectPrefersColorScheme` to `false`. Set the values above for the complete Base Nova/Nextra shell behavior.
 
 ## Options
 

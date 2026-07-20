@@ -13,22 +13,33 @@ describe("live shadcn navbar shell contract", () => {
     expect(navbar).toContain("className={navigationMenuTriggerStyle()}");
   });
 
-  it("keeps the mobile theme action in the navbar and moves desktop control to the LNB footer", () => {
+  it("keeps theme controls in the Nextra-style desktop and mobile sidebar footers", () => {
     const navbar = read("Navbar/Content/index.tsx");
-    const sidebar = read("DocSidebar/Desktop/index.tsx");
+    const desktopSidebar = read("DocSidebar/Desktop/index.tsx");
+    const mobileLayout = read("Navbar/MobileSidebar/Layout/index.tsx");
 
-    expect(navbar).toContain(
-      'import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu"'
+    expect(navbar).not.toContain("SidebarThemeMenu");
+    expect(navbar).not.toContain("theme-navbar-color-mode");
+    expect(desktopSidebar).toContain("SidebarThemeMenu");
+    expect(desktopSidebar).toContain("compact={collapsed}");
+    expect(desktopSidebar).toContain("<SidebarTrigger");
+    expect(mobileLayout).toContain("SidebarFooter");
+    expect(mobileLayout).toContain(
+      '<SidebarThemeMenu side="top" align="start" />'
     );
-    expect(navbar).toContain(
-      '<div className="theme-navbar-color-mode lg:hidden">'
+  });
+
+  it("hydrates the theme control with a stable system icon", () => {
+    const themeMenu = read("components/sidebar-theme-menu.tsx");
+
+    expect(themeMenu).toContain(
+      'import useIsBrowser from "@docusaurus/useIsBrowser"'
     );
-    expect(navbar).toContain(
-      '<SidebarThemeMenu compact side="bottom" align="end" />'
+    expect(themeMenu).toContain("const isBrowser = useIsBrowser();");
+    expect(themeMenu).toContain(
+      'const value = isBrowser ? (colorModeChoice ?? "system") : "system";'
     );
-    expect(sidebar).toContain("SidebarThemeMenu");
-    expect(sidebar).toContain("compact={collapsed}");
-    expect(sidebar).toContain("<SidebarTrigger");
+    expect(themeMenu).toContain("disabled={!isBrowser}");
   });
 
   it("aligns mobile action glyphs to the content edge", () => {

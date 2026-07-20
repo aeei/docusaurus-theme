@@ -51,13 +51,15 @@ export default function AdmonitionLayout({
   const Icon = iconByType[type] ?? CircleAlert;
 
   return (
-    <Alert
-      id={id}
-      variant={destructiveTypes.has(type) ? "destructive" : "default"}
-    >
-      <Icon aria-hidden="true" />
-      {title && <AlertTitle>{title}</AlertTitle>}
-      {children && <AlertDescription>{children}</AlertDescription>}
-    </Alert>
+    <div className="theme-admonition-flow">
+      <Alert
+        id={id}
+        variant={destructiveTypes.has(type) ? "destructive" : "default"}
+      >
+        <Icon aria-hidden="true" />
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {children && <AlertDescription>{children}</AlertDescription>}
+      </Alert>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useColorMode, useThemeConfig } from "@docusaurus/theme-common";
+import useIsBrowser from "@docusaurus/useIsBrowser";
 import { Check, Monitor, Moon, Sun } from "lucide-react";
 
 import { Button } from "@theme/components/ui/button";
@@ -30,10 +31,11 @@ export function SidebarThemeMenu({
   const { disableSwitch, respectPrefersColorScheme } =
     useThemeConfig().colorMode;
   const { colorModeChoice, setColorMode } = useColorMode();
+  const isBrowser = useIsBrowser();
 
   if (disableSwitch) return null;
 
-  const value = colorModeChoice ?? "system";
+  const value = isBrowser ? (colorModeChoice ?? "system") : "system";
   const choices = respectPrefersColorScheme ? modes : modes.slice(0, 2);
   const current =
     choices.find((choice) => choice.value === value) ?? choices[0];
@@ -47,6 +49,7 @@ export function SidebarThemeMenu({
             type="button"
             variant="ghost"
             size={compact ? "icon" : "default"}
+            disabled={!isBrowser}
             title={`Color theme: ${current.label}`}
             aria-label={`Color theme: ${current.label}`}
           />
