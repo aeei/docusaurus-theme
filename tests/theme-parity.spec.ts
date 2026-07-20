@@ -530,17 +530,11 @@ test("mobile Sheet exposes secondary and primary navigation with focus restorati
     const inner = document.querySelector(".navbar__inner");
     const trigger = document.querySelector("[data-mobile-navigation-trigger]");
     const triggerIcon = trigger?.querySelector("svg");
-    const themeButton = document.querySelector(
-      '.theme-navbar-color-mode [data-slot="dropdown-menu-trigger"]'
-    );
-    const themeIcon = themeButton?.querySelector("svg");
     const content = document.querySelector(".theme-doc-page__content");
     const rect = (element) => element?.getBoundingClientRect();
     const innerRect = rect(inner);
     const triggerRect = rect(trigger);
     const triggerIconRect = rect(triggerIcon);
-    const themeButtonRect = rect(themeButton);
-    const themeIconRect = rect(themeIcon);
     const contentRect = rect(content);
     return {
       inner: innerRect ? { x: innerRect.x, width: innerRect.width } : null,
@@ -548,10 +542,6 @@ test("mobile Sheet exposes secondary and primary navigation with focus restorati
         ? { x: triggerRect.x, width: triggerRect.width }
         : null,
       triggerIconLeft: triggerIconRect?.x,
-      themeButton: themeButtonRect
-        ? { x: themeButtonRect.x, width: themeButtonRect.width }
-        : null,
-      themeIconRight: themeIconRect?.right,
       content: contentRect
         ? { x: contentRect.x, right: contentRect.right }
         : null,
@@ -561,8 +551,6 @@ test("mobile Sheet exposes secondary and primary navigation with focus restorati
     inner: { x: 16, width: 358 },
     trigger: { x: 16, width: 32 },
     triggerIconLeft: 24,
-    themeButton: { x: 342, width: 32 },
-    themeIconRight: 366,
     content: { x: 24, right: 366 },
   });
   await trigger.click();
@@ -575,11 +563,15 @@ test("mobile Sheet exposes secondary and primary navigation with focus restorati
     name: "Docs sidebar",
   });
   const backButton = sheet.getByRole("button", { name: "Back to main menu" });
+  const mobileThemeButton = sheet.getByRole("button", {
+    name: /Color theme:/,
+  });
   const firstDocsItem = docsNavigation
     .locator('[data-slot="sidebar-menu-button"]')
     .first();
 
   await expect(docsNavigation).toBeVisible();
+  await expect(mobileThemeButton).toBeVisible();
   await expect
     .poll(async () => {
       const [sheetBox, headerBox, backBox, navigationBox, itemBox] =
@@ -926,7 +918,13 @@ test("CodeBlock matches the official shadcn docs surface", async ({ page }) => {
     ],
   ] as const) {
     if ((await page.locator("html").getAttribute("data-theme")) !== theme) {
-      await page.getByRole("button", { name: /^Color theme:/ }).click();
+      const themeButton = page.getByRole("button", { name: /^Color theme:/ });
+      if (!(await themeButton.isVisible())) {
+        await page
+          .getByRole("button", { name: "Toggle navigation bar" })
+          .click();
+      }
+      await themeButton.click();
       await page
         .getByRole("menuitem", { name: theme === "dark" ? "Dark" : "Light" })
         .click();

@@ -5,8 +5,9 @@ import {
   useNavbarSecondaryMenu,
 } from "@docusaurus/theme-common/internal";
 
+import { SidebarThemeMenu } from "@theme/components/sidebar-theme-menu";
 import { Sheet, SheetContent } from "@theme/components/ui/sheet";
-import { SidebarProvider } from "@theme/components/ui/sidebar";
+import { SidebarFooter, SidebarProvider } from "@theme/components/ui/sidebar";
 
 type Props = {
   header: ReactNode;
@@ -65,6 +66,9 @@ export default function NavbarMobileSidebarLayout({
               {secondaryMenu}
             </div>
           </div>
+          <SidebarFooter className="theme-mobile-sheet__footer">
+            <SidebarThemeMenu side="top" align="start" />
+          </SidebarFooter>
         </SidebarProvider>
       </SheetContent>
     </Sheet>

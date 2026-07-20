@@ -251,10 +251,6 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
       "[data-mobile-navigation-trigger]"
     );
     const mobileTriggerIcon = mobileTrigger?.querySelector("svg");
-    const themeButton = document.querySelector(
-      '.theme-navbar-color-mode [data-slot="dropdown-menu-trigger"]'
-    );
-    const themeIcon = themeButton?.querySelector("svg");
     const content = document.querySelector(".theme-doc-page__content");
     const sidebarContent = sheet?.querySelector(
       '[data-slot="sidebar-content"]'
@@ -285,11 +281,6 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
           return value ? { x: value.x, width: value.width } : null;
         })(),
         triggerIconLeft: rect(mobileTriggerIcon)?.x,
-        themeButton: (() => {
-          const value = rect(themeButton);
-          return value ? { x: value.x, width: value.width } : null;
-        })(),
-        themeIconRight: rect(themeIcon)?.right,
         content: (() => {
           const value = rect(content);
           return value ? { x: value.x, right: value.right } : null;
@@ -366,8 +357,6 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
         inner: { x: 16, width: 358 },
         trigger: { x: 16, width: 32 },
         triggerIconLeft: 24,
-        themeButton: { x: 342, width: 32 },
-        themeIconRight: 366,
         content: { x: 24, right: 366 },
       }),
     "Mobile GNB icons must align with the content edges",

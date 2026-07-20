@@ -30,9 +30,8 @@ it("uses official Sheet, Button, and Sidebar composition", () => {
   expect(toggle).toContain('size="icon"');
   expect(toggle).not.toContain('className="navbar__toggle"');
   expect(navbarContent).toContain("theme-navbar-mobile-trigger");
-  expect(navbarContent).toContain(
-    '<SidebarThemeMenu compact side="bottom" align="end" />'
-  );
+  expect(navbarContent).not.toContain("SidebarThemeMenu");
+  expect(layout).toContain('<SidebarThemeMenu side="top" align="start" />');
 });
 
 it("restores focus to the official mobile navigation Button", () => {

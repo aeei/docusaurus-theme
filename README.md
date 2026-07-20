@@ -41,6 +41,19 @@ import type { Config } from "@docusaurus/types";
 const config: Config = {
   presets: ["classic"],
   themes: ["@aeei/docusaurus-theme"],
+  themeConfig: {
+    colorMode: {
+      defaultMode: "light",
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: false,
+      },
+    },
+  },
 };
 
 export default config;
@@ -159,7 +172,7 @@ Requirements:
 Consumers then install a pinned release:
 
 ```bash
-npm install @aeei/docusaurus-theme@0.1.0
+npm install @aeei/docusaurus-theme@0.1.1
 ```
 
 This repository does not publish automatically from an unapproved working tree.

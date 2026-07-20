@@ -496,17 +496,10 @@ async function inspectWidth(page, route, width) {
       if (!desktop && width <= 640) {
         const navbarInnerRect = rect(document.querySelector(".navbar__inner"));
         const triggerIconRect = rect(mobileTrigger?.querySelector("svg"));
-        const themeButton = document.querySelector(
-          '.theme-navbar-color-mode [data-slot="dropdown-menu-trigger"]'
-        );
-        const themeButtonRect = rect(themeButton);
-        const themeIconRect = rect(themeButton?.querySelector("svg"));
         const expectedMobileHeader = {
           inner: { x: 16, width: width - 32 },
           trigger: { x: 16, width: 32 },
           triggerIconLeft: 24,
-          themeButton: { x: width - 48, width: 32 },
-          themeIconRight: width - 24,
           content: { x: 24, right: width - 24 },
         };
         const actualMobileHeader = {
@@ -517,10 +510,6 @@ async function inspectWidth(page, route, width) {
             ? { x: triggerRect.x, width: triggerRect.width }
             : null,
           triggerIconLeft: triggerIconRect?.x,
-          themeButton: themeButtonRect
-            ? { x: themeButtonRect.x, width: themeButtonRect.width }
-            : null,
-          themeIconRight: themeIconRect?.right,
           content: contentRect
             ? { x: contentRect.x, right: contentRect.right }
             : null,

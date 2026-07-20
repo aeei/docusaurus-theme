@@ -56,6 +56,21 @@ it("keeps article prose size stable across responsive widths", () => {
   );
 });
 
+it("gives official alerts an external prose-flow wrapper", () => {
+  const admonition = fs.readFileSync(
+    path.join(__dirname, "Admonition/Layout/index.tsx"),
+    "utf8"
+  );
+
+  expect(admonition).toContain('<div className="theme-admonition-flow">');
+  expect(stylesheet).toMatch(
+    /\.theme-admonition-flow \{[\s\S]*margin-block-start: var\(--typeset-flow\);/
+  );
+  expect(stylesheet).not.toMatch(
+    /\[data-slot=["']alert["']\][^{]*\{[^}]*margin/i
+  );
+});
+
 it("keeps prose ownership outside official UI interiors", () => {
   expect(canonicalStylesheet).toContain(
     ":not(:where(.theme-doc-markdown [data-slot],.theme-doc-markdown [data-slot] *,.theme-doc-markdown .theme-code-block,.theme-doc-markdown .theme-code-block *,.theme-doc-markdown .docusaurus-mermaid-container,.theme-doc-markdown .docusaurus-mermaid-container *))"

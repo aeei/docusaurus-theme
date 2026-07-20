@@ -552,6 +552,10 @@ a[class*="skipToContent"]:focus {
   margin-block-end: 0 !important;
 }
 
+.theme-admonition-flow {
+  margin-block-start: var(--typeset-flow);
+}
+
 .theme-doc-markdown
   :not(
     :where(
