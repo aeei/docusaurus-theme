@@ -74,8 +74,12 @@ function NavbarNavigationMenuDocItem({
 }: {
   item: NavigationItemConfig;
 }): ReactNode {
-  const { activeDoc } = useActiveDocContext(item.docsPluginId);
-  const doc = useLayoutDoc(item.docId!, item.docsPluginId);
+  const { docId, docsPluginId, label, ...navLinkProps } = item;
+  delete navLinkProps.type;
+  delete navLinkProps.items;
+
+  const { activeDoc } = useActiveDocContext(docsPluginId);
+  const doc = useLayoutDoc(docId!, docsPluginId);
   const pageActive = activeDoc?.path === doc?.path;
 
   if (doc === null || (doc.unlisted && !pageActive)) return null;
@@ -86,10 +90,10 @@ function NavbarNavigationMenuDocItem({
         className={navigationMenuTriggerStyle()}
         render={
           <NavbarNavLink
-            {...item}
+            {...navLinkProps}
             exact
             to={doc.path}
-            label={item.label ?? doc.id}
+            label={label ?? doc.id}
             isActive={() =>
               pageActive ||
               (!!activeDoc?.sidebar && activeDoc.sidebar === doc.sidebar)
