@@ -193,9 +193,7 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
         backgroundColor: navbarBlur.backgroundColor,
       },
       toc: {
-        headerOutsideScroll: Boolean(
-          tocHeader && tocScroll && !tocScroll.contains(tocHeader)
-        ),
+        headerAbsent: !tocHeader,
         scrollFade: fadeActive(tocScroll),
       },
     };
@@ -203,7 +201,7 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
   await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
   await page.waitForTimeout(50);
   const sidebarFooterBoundary = await page.evaluate(() => {
-    const sidebar = document.querySelector(".theme-doc-sidebar-container");
+    const sidebar = document.querySelector(".theme-doc-sidebar-desktop");
     const sidebarFooter = sidebar?.querySelector(
       '[data-slot="sidebar-footer"]'
     );
@@ -335,10 +333,10 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
   );
   expect(
     desktopSurface.sidebarScrollFade === true &&
-      desktopSurface.toc.headerOutsideScroll === true &&
+      desktopSurface.toc.headerAbsent === true &&
       desktopSurface.toc.scrollFade === true &&
       mobileSurface.sidebarScrollFade === true,
-    "LNB and TOC scroll viewports must use scroll-fade while the TOC header remains fixed",
+    "LNB and TOC scroll viewports must use scroll-fade without restoring the removed TOC header",
     { desktopSurface, mobileSurface }
   );
   expect(

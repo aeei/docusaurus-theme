@@ -155,7 +155,7 @@ async function auditRoute(page, viewport, theme, route) {
       });
 
       const desktopSidebar = document.querySelector(
-        '[data-slot="sidebar-container"]'
+        ".theme-doc-sidebar-desktop"
       );
       const mobileTrigger = document.querySelector(
         "[data-mobile-navigation-trigger]"
@@ -163,7 +163,7 @@ async function auditRoute(page, viewport, theme, route) {
       const responsiveFailure =
         viewportName === "desktop"
           ? !desktopSidebar ||
-            getComputedStyle(desktopSidebar).position !== "fixed" ||
+            getComputedStyle(desktopSidebar).position !== "sticky" ||
             mobileTrigger?.getBoundingClientRect().width
           : !!desktopSidebar?.getBoundingClientRect().width ||
             !mobileTrigger?.getBoundingClientRect().width;
@@ -252,20 +252,21 @@ async function auditDesktopInteractions(page, theme) {
     window.scrollTo(0, document.documentElement.scrollHeight)
   );
   await page.waitForTimeout(100);
-  const sidebarContainer = await visible(
-    page,
-    '[data-slot="sidebar-container"]'
-  );
-  const sidebarRect = await sidebarContainer.boundingBox();
+  const desktopSidebar = await visible(page, ".theme-doc-sidebar-desktop");
+  const sidebarRect = await desktopSidebar.boundingBox();
   const sidebarFooter = await visible(page, '[data-slot="sidebar-footer"]');
-  const footerRect = await sidebarFooter.boundingBox();
+  const sidebarFooterRect = await sidebarFooter.boundingBox();
+  const pageFooter = await visible(page, ".theme-layout-footer");
+  const pageFooterRect = await pageFooter.boundingBox();
   if (
     !sidebarRect ||
-    !footerRect ||
-    sidebarRect.y < 40 ||
-    footerRect.y + footerRect.height > 901
+    !sidebarFooterRect ||
+    !pageFooterRect ||
+    sidebarRect.y < -1 ||
+    sidebarRect.y + sidebarRect.height > pageFooterRect.y + 1 ||
+    sidebarFooterRect.y + sidebarFooterRect.height > pageFooterRect.y + 1
   ) {
-    throw new Error("fixed Sidebar/footer scroll state failed");
+    throw new Error("sticky Sidebar/footer boundary failed");
   }
 
   const themeTrigger = page.getByRole("button", { name: /^Color theme:/ });
