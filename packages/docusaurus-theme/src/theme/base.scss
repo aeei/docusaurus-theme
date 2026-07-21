@@ -1717,6 +1717,7 @@ a[class*="skipToContent"]:focus {
 }
 
 .theme-doc-markdown .docusaurus-mermaid-container {
+  margin-block-start: var(--typeset-flow);
   display: flex;
   justify-content: safe center;
   overflow-x: auto;
