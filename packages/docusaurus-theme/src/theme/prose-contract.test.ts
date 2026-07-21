@@ -49,6 +49,27 @@ describe("prose ownership contract", () => {
     expect(stylesheet).not.toContain(":where(:not(pre) > code)");
   });
 
+  it("reuses canonical inline code styling in table-of-contents labels", () => {
+    const tocTree = fs.readFileSync(
+      path.join(__dirname, "TOCItems/Tree.tsx"),
+      "utf8"
+    );
+
+    expect(tocTree).toContain('className="theme-code-inline"');
+    expect(stylesheet).not.toContain(".table-of-contents__link code {");
+    expect(stylesheet).toContain("--theme-prose-body-size: 0.9375rem;");
+    expect(stylesheet).toContain("--theme-prose-leading: 1.75;");
+    expect(stylesheet).toContain(
+      "var(--typeset-font-mono, var(--ifm-font-family-monospace))"
+    );
+    expect(stylesheet).toContain(
+      "var(--typeset-body-size, var(--theme-prose-body-size))"
+    );
+    expect(stylesheet).toContain(
+      "var(--typeset-leading, var(--theme-prose-leading))"
+    );
+  });
+
   it("keeps heading hash links on the official inherit contract", () => {
     expect(canonicalStylesheet).toContain(
       canonicalize(`${localBoundary}:where(:is(h1, h2, h3, h4, h5, h6) :is(a))`)

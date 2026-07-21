@@ -13,7 +13,11 @@ function HeadingLabel({ html }: { html: string }): React.JSX.Element {
         const code = part.match(codeContentPattern);
         if (code) {
           return (
-            <code key={index} dangerouslySetInnerHTML={{ __html: code[1] }} />
+            <code
+              key={index}
+              className="theme-code-inline"
+              dangerouslySetInnerHTML={{ __html: code[1] }}
+            />
           );
         }
 

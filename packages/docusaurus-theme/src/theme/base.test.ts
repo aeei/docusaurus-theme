@@ -22,7 +22,9 @@ it("leaves component focus visuals to official primitives", () => {
 });
 
 it("keeps article prose size stable across responsive widths", () => {
-  expect(stylesheet).toContain("--typeset-size: 0.9375rem;");
+  expect(stylesheet).toContain("--theme-prose-body-size: 0.9375rem;");
+  expect(stylesheet).toContain("--theme-prose-leading: 1.75;");
+  expect(stylesheet).toContain("--typeset-size: var(--theme-prose-body-size);");
   expect(stylesheet).toContain("--typeset-flow: 1.25em;");
   expect(stylesheet).toContain("--typeset-body-size: var(--typeset-size);");
   expect(stylesheet).toContain("font-size: var(--typeset-body-size);");
