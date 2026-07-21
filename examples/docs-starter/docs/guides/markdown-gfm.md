@@ -10,6 +10,10 @@ This page exercises standard Markdown, GFM, and Docusaurus docs conventions.
 
 ## Table of contents depth
 
+### Inline code heading `provider-id`
+
+This heading verifies that table-of-contents code uses the canonical inline code surface.
+
 ### Link targets
 
 Jump to [paragraph flow](#paragraph-flow-and-emphasis), [lists](#lists-and-tasks), [tables](#tables), or [details](#details-and-admonitions).

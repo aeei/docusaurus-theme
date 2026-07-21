@@ -69,6 +69,8 @@
   --theme-leading-sm: 1.25rem;
   --theme-text-xs: 0.75rem;
   --theme-leading-xs: 1rem;
+  --theme-prose-body-size: 0.9375rem;
+  --theme-prose-leading: 1.75;
   --theme-backdrop-blur: 12px;
 }
 
@@ -508,9 +510,9 @@ a[class*="skipToContent"]:focus {
   --typeset-font-body: inherit;
   --typeset-font-heading: var(--ifm-heading-font-family);
   --typeset-font-mono: var(--ifm-font-family-monospace);
-  --typeset-size: 0.9375rem;
+  --typeset-size: var(--theme-prose-body-size);
   --typeset-body-size: var(--typeset-size);
-  --typeset-leading: 1.75;
+  --typeset-leading: var(--theme-prose-leading);
   --typeset-flow: 1.25em;
   --typeset-muted: var(--muted-foreground);
   --typeset-rule: var(--border);
@@ -1147,9 +1149,11 @@ a[class*="skipToContent"]:focus {
   border-radius: min(calc(var(--radius) * 0.6), 0.35em);
   background-color: var(--muted);
   color: inherit;
-  font-family: var(--typeset-font-mono);
-  font-size: calc(var(--typeset-body-size) * 0.85);
-  line-height: var(--typeset-leading);
+  font-family: var(--typeset-font-mono, var(--ifm-font-family-monospace));
+  font-size: calc(
+    var(--typeset-body-size, var(--theme-prose-body-size)) * 0.85
+  );
+  line-height: var(--typeset-leading, var(--theme-prose-leading));
   padding: 0.125em 0.3em;
 }
 
@@ -1776,11 +1780,6 @@ a[class*="skipToContent"]:focus {
   font-weight: 400;
   text-decoration: none;
   transition: color 150ms ease;
-}
-
-.table-of-contents__link code {
-  font-size: inherit;
-  line-height: inherit;
 }
 
 .table-of-contents__link[data-depth="3"] {
