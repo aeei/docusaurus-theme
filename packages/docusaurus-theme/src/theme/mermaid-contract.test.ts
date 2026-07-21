@@ -23,6 +23,12 @@ describe("Mermaid ownership contract", () => {
     );
   });
 
+  it("keeps Mermaid diagrams in the article flow rhythm", () => {
+    expect(stylesheet).toMatch(
+      /\.theme-doc-markdown \.docusaurus-mermaid-container\s*\{[^}]*margin-block-start: var\(--typeset-flow\);[^}]*\}/
+    );
+  });
+
   it("keeps wide actual-route diagrams readable in a horizontal scroll surface", () => {
     expect(stylesheet).toMatch(
       /\.docusaurus-mermaid-container\s*\{[\s\S]*justify-content: safe center;[\s\S]*overflow-x: auto;/

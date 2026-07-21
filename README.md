@@ -172,7 +172,7 @@ Requirements:
 Consumers then install a pinned release:
 
 ```bash
-npm install @aeei/docusaurus-theme@0.1.5
+npm install @aeei/docusaurus-theme@0.1.6
 ```
 
 This repository does not publish automatically from an unapproved working tree.

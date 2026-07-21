@@ -19,13 +19,13 @@ it("uses the public docs-only package identity and metadata", () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 
   expect(packageJson.name).toBe("@aeei/docusaurus-theme");
-  expect(packageJson.version).toBe("0.1.5");
+  expect(packageJson.version).toBe("0.1.6");
   expect(packageJson.description).toBe(
     "A shadcn Base Nova theme for Docusaurus docs."
   );
   expect(packageJson.repository).toEqual({
     type: "git",
-    url: "https://github.com/aeei/docusaurus-theme.git",
+    url: "git+https://github.com/aeei/docusaurus-theme.git",
     directory: "packages/docusaurus-theme",
   });
   expect(packageJson.bugs).toEqual({
