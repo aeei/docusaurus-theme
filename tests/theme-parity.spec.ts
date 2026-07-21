@@ -804,6 +804,40 @@ test("inline code keeps one component-owned surface inside Details", async ({
   }
 });
 
+test("table-of-contents code reuses the canonical inline code surface", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(markdownRoute);
+
+  const metrics = await page.evaluate(() => {
+    const content = Array.from(
+      document.querySelectorAll(".theme-doc-markdown h3 code")
+    ).find((element) => element.textContent === "provider-id");
+    const toc = Array.from(
+      document.querySelectorAll(".table-of-contents__link code")
+    ).find((element) => element.textContent === "provider-id");
+    const read = (element?: Element) => {
+      if (!element) return null;
+      const style = getComputedStyle(element);
+      return {
+        className: element.className,
+        fontFamily: style.fontFamily,
+        fontSize: style.fontSize,
+        lineHeight: style.lineHeight,
+        padding: style.padding,
+        borderRadius: style.borderRadius,
+        backgroundColor: style.backgroundColor,
+      };
+    };
+    return { content: read(content), toc: read(toc) };
+  });
+
+  expect(metrics.content).not.toBeNull();
+  expect(metrics.toc).toEqual(metrics.content);
+  expect(metrics.toc?.className).toContain("theme-code-inline");
+});
+
 test("CodeBlock matches the official shadcn docs surface", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto(markdownRoute);
