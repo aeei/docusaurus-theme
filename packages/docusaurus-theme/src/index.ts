@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
+import fs from "fs";
 import path from "path";
 
 import type { LoadContext, Plugin } from "@docusaurus/types";
@@ -15,6 +16,28 @@ import type { DocusaurusThemeOptions, SearchProvider } from "./search/types";
 export type { DocusaurusThemeOptions, SearchProvider } from "./search/types";
 
 const PLUGIN_NAME = "@aeei/docusaurus-theme";
+
+export function copyThemeLegalNotices(
+  outDir: string,
+  packageRoot = path.resolve(__dirname, "..")
+) {
+  const targetDir = path.join(outDir, "licenses");
+  fs.mkdirSync(targetDir, { recursive: true });
+  fs.copyFileSync(
+    path.join(packageRoot, "LICENSE"),
+    path.join(targetDir, "THEME-MIT.txt")
+  );
+  fs.copyFileSync(
+    path.join(packageRoot, "THIRD_PARTY_NOTICES.md"),
+    path.join(targetDir, "THIRD_PARTY_NOTICES.md")
+  );
+  for (const filename of fs.readdirSync(path.join(packageRoot, "LICENSES"))) {
+    fs.copyFileSync(
+      path.join(packageRoot, "LICENSES", filename),
+      path.join(targetDir, filename)
+    );
+  }
+}
 
 export function resolveSearchProvider(
   options: DocusaurusThemeOptions = {}
@@ -72,6 +95,7 @@ export default function docusaurusTheme(
     },
 
     async postBuild({ outDir, baseUrl, routesPaths, routesBuildMetadata }) {
+      copyThemeLegalNotices(outDir);
       if (provider !== "local") return;
       const noIndexRoutes = new Set(
         Object.entries(routesBuildMetadata)

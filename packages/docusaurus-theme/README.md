@@ -1,6 +1,6 @@
 # @aeei/docusaurus-theme
 
-Compiled shadcn `4.12.0` Base Nova theme for Docusaurus docs: Base UI primitives, Neutral tokens, Geist, Lucide, local/Algolia search, Markdown copy, GFM, MDX, and Mermaid support.
+Compiled shadcn `4.12.0` Base Nova theme for Docusaurus docs: Base UI primitives, Neutral tokens, Geist with a bundled Pretendard Korean fallback, Lucide, local/Algolia search, Markdown copy, GFM, MDX, and Mermaid support.
 
 Consumers need no Tailwind or Sass configuration.
 

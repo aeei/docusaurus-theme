@@ -10,6 +10,7 @@
 | Lucide                  | https://github.com/lucide-icons/lucide                      | `lucide-react@0.468.0`                     | Visible UI icons                                        | `LICENSES/Lucide-ISC.txt`           |
 | Docusaurus              | https://github.com/facebook/docusaurus                      | `3.10.1`                                   | Theme interfaces and selected classic override patterns | `LICENSES/Docusaurus-MIT.txt`       |
 | Geist                   | https://github.com/vercel/geist-font                        | Snapshot 2026-07-18                        | Bundled Sans and Mono variable fonts                    | `LICENSES/Geist-OFL.txt`            |
+| Pretendard              | https://github.com/orioncactus/pretendard                   | `v1.3.9`                                   | Unmodified bundled Korean variable webfont              | `LICENSES/Pretendard-OFL-1.1.txt`   |
 | tw-animate-css          | https://github.com/Wombosvideo/tw-animate-css               | Snapshot 2026-07-18                        | Base Nova animation utilities                           | `LICENSES/tw-animate-css-MIT.txt`   |
 
 The exact copied-path mapping is in `VENDORED_SOURCES.md`. Nextra was a visual reference only; no Nextra source or runtime dependency is included.

@@ -136,7 +136,7 @@
 }
 
 @theme inline {
-  --font-sans: Geist, "Geist Fallback";
+  --font-sans: Geist, "Pretendard Variable", "Geist Fallback", sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --text-xs--line-height: calc(var(--spacing) * 4);
   --text-sm--line-height: calc(var(--spacing) * 5);
