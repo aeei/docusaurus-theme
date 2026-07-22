@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
@@ -19,7 +20,7 @@ it("uses the public docs-only package identity and metadata", () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 
   expect(packageJson.name).toBe("@aeei/docusaurus-theme");
-  expect(packageJson.version).toBe("0.1.7");
+  expect(packageJson.version).toBe("0.1.8");
   expect(packageJson.description).toBe(
     "A shadcn Base Nova theme for Docusaurus docs."
   );
@@ -110,7 +111,26 @@ it("packs required license and provenance files", () => {
   }
 
   const licenses = fs.readdirSync(path.join(packageRoot, "LICENSES"));
-  expect(licenses.length).toBeGreaterThanOrEqual(4);
+  expect(licenses).toContain("Pretendard-OFL-1.1.txt");
+
+  const pretendardPath = path.join(
+    packageRoot,
+    "src/theme/fonts/PretendardVariable.woff2"
+  );
+  expect(fs.existsSync(pretendardPath)).toBe(true);
+  expect(
+    crypto
+      .createHash("sha256")
+      .update(fs.readFileSync(pretendardPath))
+      .digest("hex")
+  ).toBe("9599f12fd42fc0bce1cd50b47a0c022e108d7aa64dd0d1bb0ed44f3282d900b4");
+
+  const notices = fs.readFileSync(
+    path.join(packageRoot, "THIRD_PARTY_NOTICES.md"),
+    "utf8"
+  );
+  expect(notices).toContain("orioncactus/pretendard");
+  expect(notices).toContain("Pretendard-OFL-1.1.txt");
 });
 
 it("contains only docs theme production source", () => {

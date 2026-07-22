@@ -137,9 +137,13 @@ it("keeps structural Docusaurus integration separate from component visuals", ()
   expect(stylesheet).not.toContain(".theme-mobile-toc-content");
 });
 
-it("uses Geist and live shell geometry tokens", () => {
+it("uses Geist with a bundled Pretendard fallback and live shell geometry tokens", () => {
+  expect(stylesheet).toContain('font-family: "Pretendard Variable";');
   expect(stylesheet).toContain(
-    '--ifm-font-family-base: Geist, "Geist Fallback";'
+    'src: url("./fonts/PretendardVariable.woff2") format("woff2-variations");'
+  );
+  expect(canonicalStylesheet).toContain(
+    '--ifm-font-family-base: Geist,"Pretendard Variable","Geist Fallback",sans-serif;'
   );
   expect(stylesheet).toContain(
     "--ifm-navbar-height: calc(var(--spacing) * 14);"

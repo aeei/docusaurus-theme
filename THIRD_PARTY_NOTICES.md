@@ -12,6 +12,7 @@ This repository is a modified fork of [PaloAltoNetworks/docusaurus-openapi-docs]
 | Mermaid                 | https://github.com/mermaid-js/mermaid                               | Docusaurus-compatible Mermaid 11.x         | Starter diagrams                                         | `LICENSES/Mermaid-MIT.txt`          |
 | Copy Page Button        | https://github.com/portdeveloper/docusaurus-plugin-copy-page-button | `0.8.4`                                    | Optional starter Markdown-route generation               | Package metadata: MIT               |
 | Geist                   | https://github.com/vercel/geist-font                                | Snapshot 2026-07-18                        | Bundled Sans and Mono variable fonts                     | `LICENSES/Geist-OFL.txt`            |
+| Pretendard              | https://github.com/orioncactus/pretendard                           | `v1.3.9`                                   | Unmodified bundled Korean variable webfont               | `LICENSES/Pretendard-OFL-1.1.txt`   |
 | tw-animate-css          | https://github.com/Wombosvideo/tw-animate-css                       | Snapshot 2026-07-18                        | Base Nova animation utilities                            | `LICENSES/tw-animate-css-MIT.txt`   |
 
 ## Design references

@@ -107,13 +107,15 @@ async function auditRoute(page, viewport, theme, route) {
       };
 
       check('[data-slot="button"]', {
-        fontFamily: 'Geist, "Geist Fallback"',
+        fontFamily:
+          'Geist, "Pretendard Variable", "Geist Fallback", sans-serif',
         fontSize: "14px",
         lineHeight: "20px",
         borderTopLeftRadius: "10px",
       });
       check('[data-slot="accordion-trigger"]', {
-        fontFamily: 'Geist, "Geist Fallback"',
+        fontFamily:
+          'Geist, "Pretendard Variable", "Geist Fallback", sans-serif',
         fontSize: "14px",
         lineHeight: "20px",
         paddingTop: "10px",

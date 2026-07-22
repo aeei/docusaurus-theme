@@ -16,7 +16,7 @@
 ## Features
 
 - shadcn `4.12.0` Base Nova components backed by [Base UI](https://base-ui.com/)
-- official Neutral light/dark tokens, Geist, Geist Mono, and Lucide
+- official Neutral light/dark tokens, Geist, Pretendard Korean fallback, Geist Mono, and Lucide
 - responsive GNB, sticky/collapsible LNB, TOC, paginator, and footer
 - Markdown, GFM, MDX, admonitions, tabs, code blocks, and [Mermaid](https://mermaid.js.org/)
 - optional build-time local search or Algolia DocSearch
@@ -172,7 +172,7 @@ Requirements:
 Consumers then install a pinned release:
 
 ```bash
-npm install @aeei/docusaurus-theme@0.1.7
+npm install @aeei/docusaurus-theme@0.1.8
 ```
 
 This repository does not publish automatically from an unapproved working tree.
@@ -181,7 +181,7 @@ This repository does not publish automatically from an unapproved working tree.
 
 This repository is a modified fork of [PaloAltoNetworks/docusaurus-openapi-docs](https://github.com/PaloAltoNetworks/docusaurus-openapi-docs). It is maintained independently and is not an official Palo Alto Networks project.
 
-See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) and package `LICENSES/` for Docusaurus, shadcn/ui, Base UI, Lucide, Mermaid, Geist, animation, and upstream notices.
+See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) and package `LICENSES/` for Docusaurus, shadcn/ui, Base UI, Lucide, Mermaid, Geist, Pretendard, animation, and upstream notices.
 
 ## License
 
