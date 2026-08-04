@@ -193,7 +193,13 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
         backgroundColor: navbarBlur.backgroundColor,
       },
       toc: {
-        headerAbsent: !tocHeader,
+        header: tocHeader && {
+          text: tocHeader.textContent?.trim(),
+          height: tocHeader.getBoundingClientRect().height,
+          fontSize: getComputedStyle(tocHeader).fontSize,
+          lineHeight: getComputedStyle(tocHeader).lineHeight,
+          fontWeight: getComputedStyle(tocHeader).fontWeight,
+        },
         scrollFade: fadeActive(tocScroll),
       },
     };
@@ -333,10 +339,14 @@ async function openPage(browser, width, route = "showcase/mdx-playground") {
   );
   expect(
     desktopSurface.sidebarScrollFade === true &&
-      desktopSurface.toc.headerAbsent === true &&
+      desktopSurface.toc.header?.text === "On this page" &&
+      desktopSurface.toc.header?.height === 24 &&
+      desktopSurface.toc.header?.fontSize === "12px" &&
+      desktopSurface.toc.header?.lineHeight === "16px" &&
+      desktopSurface.toc.header?.fontWeight === "500" &&
       desktopSurface.toc.scrollFade === true &&
       mobileSurface.sidebarScrollFade === true,
-    "LNB and TOC scroll viewports must use scroll-fade without restoring the removed TOC header",
+    "LNB and TOC scroll viewports must keep scroll-fade and the official desktop TOC title metrics",
     { desktopSurface, mobileSurface }
   );
   expect(
