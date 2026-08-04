@@ -2,16 +2,19 @@ import React, { type ComponentProps } from "react";
 
 import Head from "@docusaurus/Head";
 import Admonition from "@theme/Admonition";
-import MDXA from "@theme/MDXComponents/A";
 import MDXCode from "@theme/MDXComponents/Code";
 import MDXDetails from "@theme/MDXComponents/Details";
 import MDXHeading from "@theme/MDXComponents/Heading";
-import MDXImg from "@theme/MDXComponents/Img";
 import MDXLi from "@theme/MDXComponents/Li";
 import MDXPre from "@theme/MDXComponents/Pre";
 import MDXUl from "@theme/MDXComponents/Ul";
-import Mermaid from "@theme/Mermaid";
 import type { MDXComponentsObject } from "@theme/MDXComponents";
+
+import {
+  MediaAwareLink,
+  ZoomableImage,
+  ZoomableMermaid,
+} from "@theme/components/media-viewer/mdx-media";
 
 import {
   Table,
@@ -27,11 +30,11 @@ const MDXComponents: MDXComponentsObject = {
   details: MDXDetails,
   Details: MDXDetails,
   code: MDXCode,
-  a: MDXA,
+  a: MediaAwareLink,
   pre: MDXPre,
   ul: MDXUl,
   li: MDXLi,
-  img: MDXImg,
+  img: ZoomableImage,
   table: Table,
   thead: TableHeader,
   tbody: TableBody,
@@ -45,7 +48,7 @@ const MDXComponents: MDXComponentsObject = {
   h5: (props: ComponentProps<"h5">) => <MDXHeading as="h5" {...props} />,
   h6: (props: ComponentProps<"h6">) => <MDXHeading as="h6" {...props} />,
   admonition: Admonition,
-  mermaid: Mermaid,
+  mermaid: ZoomableMermaid,
 };
 
 export default MDXComponents;

@@ -709,7 +709,8 @@ a[class*="skipToContent"]:focus {
       .theme-doc-markdown .theme-code-block,
       .theme-doc-markdown .theme-code-block *,
       .theme-doc-markdown .docusaurus-mermaid-container,
-      .theme-doc-markdown .docusaurus-mermaid-container *
+      .theme-doc-markdown .docusaurus-mermaid-container *,
+      .theme-doc-markdown .theme-media-viewer
     )
   ):where(h1 + *, h2 + *, h3 + *, h4 + *, h5 + *, h6 + *) {
   margin-block-start: 1em !important;
@@ -1730,6 +1731,32 @@ a[class*="skipToContent"]:focus {
   line-height: inherit;
 }
 
+.theme-media-viewer {
+  position: relative;
+  margin-block: var(--typeset-flow);
+}
+
+.theme-media-viewer__action {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-media-viewer__action:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-media-viewer:hover > .theme-media-viewer__action {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.theme-doc-markdown :where(h1, h2, h3, h4, h5, h6) + .theme-media-viewer {
+  margin-block-start: calc(var(--spacing) * 4) !important;
+}
+
 .theme-doc-markdown .docusaurus-mermaid-container {
   margin-block-start: var(--typeset-flow);
   display: flex;
@@ -1742,7 +1769,48 @@ a[class*="skipToContent"]:focus {
   max-width: 100%;
 }
 
-.theme-doc-markdown
+span.theme-media-viewer {
+  display: block;
+}
+
+.theme-media-viewer > .docusaurus-mermaid-container {
+  margin-block-start: 0;
+}
+
+.theme-media-viewer__viewport {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-height: calc(100dvh - 4rem);
+  align-items: center;
+  overflow: auto;
+}
+
+.theme-media-viewer__expanded-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 4rem);
+  object-fit: contain;
+  justify-self: center;
+}
+
+.theme-media-viewer__viewport .docusaurus-mermaid-container {
+  display: flex;
+  max-width: 100%;
+  justify-content: safe center;
+  margin: 0;
+}
+
+.theme-media-viewer__viewport .docusaurus-mermaid-container > svg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 4rem);
+}
+
+:is(.theme-doc-markdown, .theme-media-viewer__viewport)
   .docusaurus-mermaid-container
   > svg:is(.flowchart, [aria-roledescription="sequence"]) {
   min-width: 40rem;

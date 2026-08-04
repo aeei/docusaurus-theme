@@ -21,7 +21,7 @@
 }
 
 .cn-command-input {
-  @apply w-full text-sm;
+  @apply w-full text-sm placeholder:text-muted-foreground;
 }
 
 .cn-command-list {

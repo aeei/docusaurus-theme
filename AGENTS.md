@@ -33,6 +33,10 @@ yarn watch:demo
 
 See `CONTRIBUTING.md` for the full guide. Use clear commit messages so reviewers can understand what each commit does.
 
+## Approved Base Nova Visual Exceptions
+
+- The shared media-viewer adapter may manage prose flow spacing, responsive action visibility and placement, Dialog viewport bounds, media containment, and overflow. It must reuse the existing `CodeBlockButton` and official Dialog primitive without changing their visual metrics or states.
+
 ## Required Checks
 
 Run the following before committing any code changes (except documentation or comment-only updates):

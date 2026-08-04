@@ -2,7 +2,7 @@
 
 ## Goal
 
-Markdown images and Mermaid diagrams in every consumer manual can open in a larger modal viewer. The interaction is discoverable through a CodeBlock-style action button and convenient through direct media click.
+Markdown images and Mermaid diagrams in every consumer manual can open in a larger modal viewer through media click/tap or the same action button used by CodeBlock.
 
 ## Scope
 
@@ -22,11 +22,11 @@ Excluded from the first release:
 
 ## Constraints
 
-- Use the pinned Base Nova `Button`, `Dialog`, and `Tooltip` registry sources unchanged.
+- Use the pinned Base Nova `Button` and `Dialog` registry sources unchanged.
 - Do not add consumer CSS, `[data-slot]` overrides, duplicate primitives, or service-specific implementations.
 - Do not change official component typography, color, border, radius, shadow, animation, or state styles.
-- The approved visual exception is limited to semantic media-viewer layout: trigger placement, dialog viewport size, media containment, and overflow. Record this exception in `AGENTS.md` before implementation.
-- Keep the existing CodeBlock action unchanged. The media action uses official `Button variant="ghost" size="icon-sm"` directly and must not import, copy, or reuse `CodeBlockButton` visual classes.
+- The approved visual exception is limited to semantic media-viewer layout: prose flow spacing, responsive action visibility and placement, dialog viewport size, media containment, and overflow. Keep this exception recorded in `AGENTS.md`.
+- Keep the existing CodeBlock action unchanged. The media action reuses `CodeBlockButton` itself so action visuals remain one SSOT without copied classes.
 
 ## Chosen Approach
 
@@ -53,12 +53,11 @@ It renders:
 
 - a semantic relative media root
 - the inline media
-- one official `Button` using `variant="ghost"` and `size="icon-sm"`; only its top-right placement follows the learned CodeBlock action mapping
-- an official `Tooltip` for the expand action
+- the existing `CodeBlockButton`, including its official callsite placement and state style
 - an official `Dialog` containing the expanded media
 - an `sr-only` official `DialogHeader`, `DialogTitle`, and `DialogDescription`
 
-The adapter may define only structural classes needed for relative/absolute placement, viewport bounds, containment, and overflow. It does not style primitive surfaces or states.
+The adapter may define only structural classes needed for prose flow spacing, relative/absolute placement, responsive action visibility, viewport bounds, containment, and overflow. Media block rhythm uses the existing `--typeset-flow` token. It does not change primitive surfaces or visual state metrics.
 
 ### `ZoomableImage`
 
@@ -85,17 +84,17 @@ No document callsite changes are required.
 
 ### Open
 
-- Pointer/touch click anywhere on a viewable image or Mermaid diagram opens the viewer.
-- The visible expand action opens the same viewer.
-- Keyboard users open it through the action button with Enter or Space.
-- The action uses a Lucide expand icon and the localized accessible label/tooltip `View larger`.
-
-The inline media click is a pointer convenience, not a second keyboard stop. The official action button is the canonical accessible trigger.
+- Clicking or tapping a viewable image or diagram opens the viewer.
+- On fine-pointer desktop, the expand action is hidden at rest and appears when the media is hovered or the action receives keyboard focus.
+- On coarse touch, the action remains visually hidden so it does not cover media; tapping the media opens the viewer.
+- The action stays in the accessibility tree and is the canonical keyboard trigger with Enter or Space.
+- The action uses a Lucide expand icon and the localized accessible label `View larger`.
+- No Tooltip is rendered.
 
 ### Dialog
 
 - The official Dialog traps focus, makes background content inert, and provides overlay/transition behavior.
-- Content uses the approved media viewport layout up to the browser viewport minus the official outer inset. This viewport sizing is the sole Dialog metric excluded from official parity; Dialog chrome and every primitive state remain unchanged.
+- Content uses the approved media viewport layout up to the browser viewport minus the official outer inset, capped by the shared `--theme-shell-max-width` token. This viewport sizing is the sole Dialog metric excluded from official parity; Dialog chrome and every primitive state remain unchanged.
 - Images preserve aspect ratio with `object-fit: contain`.
 - Mermaid SVGs scale into the available viewport; oversized content remains scrollable rather than clipped.
 - No upscale beyond intrinsic raster resolution is required.
@@ -103,7 +102,7 @@ The inline media click is a pointer convenience, not a second keyboard stop. The
 ### Close
 
 - Escape, backdrop click, or the official close button closes the viewer.
-- Focus returns to the source media's expand action, including when pointer click on the media opened the dialog.
+- Focus returns to the source media's expand action.
 - Route state and URL do not change.
 
 ## Responsive Behavior
@@ -125,10 +124,10 @@ The inline media click is a pointer convenience, not a second keyboard stop. The
 ### Unit and contract tests
 
 - MDX image and Mermaid mappings use the shared viewer adapters.
-- Viewer uses official Base Nova Button, Dialog, Tooltip, and Lucide imports.
+- Viewer reuses the existing CodeBlock action component and official Base Nova Dialog.
 - No consumer CSS or `[data-slot]` visual override is added.
 - Dialog title/description and action accessible name exist.
-- Clicking media or action opens; Escape/backdrop/close closes; focus returns.
+- Clicking/tapping media or activating the action opens; Escape/backdrop/close closes; focus returns.
 - Mermaid preview and expanded SVG IDs do not conflict.
 - Linked images render as links without nested viewer controls.
 - Consumer image inventory contains no missing non-decorative alt text before release.
@@ -142,7 +141,8 @@ Use actual docs-starter routes and authored fixtures for the full interaction ma
 - one linked image
 - one Mermaid diagram
 - desktop/mobile × light/dark
-- pointer media click
+- desktop pointer media click and hover-revealed action
+- touch media tap with visually hidden action
 - keyboard action open/close
 - focus trap and focus restoration
 - dialog geometry larger than constrained inline media
@@ -153,7 +153,7 @@ Then run one App, LinkPie, and DeskPie actual-route smoke each: open through poi
 
 ### Visual acceptance
 
-Compare official Base Nova Button, Tooltip, and Dialog states against `ui.shadcn.com` at identical viewport/state. Primitive chrome and state metrics must remain identical; the explicitly approved media viewport dimensions are excluded. Manually review original-resolution screenshots before implementation commit or push.
+Compare official Base Nova Button and Dialog states against `ui.shadcn.com` at identical viewport/state. Primitive chrome and state metrics must remain identical; the explicitly approved media viewport dimensions are excluded. Manually review original-resolution screenshots before implementation commit or push.
 
 ## Delivery
 

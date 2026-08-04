@@ -2,19 +2,23 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a shared Base Nova modal viewer for Markdown images and Mermaid diagrams, opened by direct media click or an official expand action.
+**Goal:** Add a shared Base Nova modal viewer for Markdown images and Mermaid diagrams, opened through media click/tap or the existing CodeBlock action button.
 
-**Architecture:** Add one controlled `MediaViewer` adapter composed from the existing official Button, Tooltip, and Dialog primitives. Add MDX image, Mermaid, and link adapters that preserve Docusaurus rendering while routing viewable media through the shared adapter. Keep all visual primitive sources unchanged; only semantic placement, viewport, containment, and overflow layout are new.
+**Architecture:** Add one controlled `MediaViewer` adapter composed from the existing `CodeBlockButton` SSOT and official Dialog primitive. Add MDX image, Mermaid, and link adapters that preserve Docusaurus rendering while routing viewable media through the shared adapter. Keep all visual primitive sources unchanged; only semantic prose flow spacing, responsive action visibility, viewport, containment, and overflow layout are new.
+
+> **User-approved revision 1 (2026-07-22):** No Tooltip is rendered, the media action reuses `CodeBlockButton` exactly, and Dialog width is capped by `--theme-shell-max-width`.
+>
+> **User-approved revision 2 (2026-07-22):** Media click/tap opens the viewer. Fine-pointer desktop reveals the action only on hover/focus. Coarse touch keeps the visual action hidden while retaining the Button in the accessibility tree. This revision supersedes conflicting initial snippets below.
 
 **Tech Stack:** React 19, TypeScript 6, Docusaurus 3.10, Base UI 1.6, shadcn 4.12 Base Nova, Lucide, Jest source contracts, Playwright.
 
 ## Global Constraints
 
 - Pinned visual oracle: shadcn 4.12 Base Nova, Base UI, Neutral, Lucide.
-- Do not modify official `Button`, `Dialog`, or `Tooltip` source or visual state classes.
+- Do not modify official `Button` or `Dialog` source or visual state classes.
 - Do not add consumer CSS, `[data-slot]` overrides, duplicate primitives, or service-specific viewer implementations.
-- Approved layout exception only: media action placement, Dialog media viewport dimensions, media containment, and overflow.
-- Use `Button variant="ghost" size="icon-sm"`; do not reuse `CodeBlockButton` custom classes.
+- Approved layout exception only: media block rhythm through `--typeset-flow`, responsive media action visibility, Dialog media viewport dimensions, media containment, and overflow.
+- Reuse `CodeBlockButton` itself; do not copy its visual classes.
 - Viewer targets global Markdown images and Mermaid diagrams. Linked images retain link behavior and receive no viewer controls.
 - No zoom, pan, rotate, download, video, iframe, chart, table, or per-document opt-in support.
 - TDD: run each focused test red before implementation and green afterward.
@@ -25,7 +29,7 @@
 ## File Map
 
 - Modify: `AGENTS.md` — record the approved media-viewer layout exception.
-- Create: `packages/docusaurus-theme/src/theme/components/media-viewer/index.tsx` — controlled Dialog behavior, action, tooltip, focus restoration, pointer handling.
+- Create: `packages/docusaurus-theme/src/theme/components/media-viewer/index.tsx` — controlled Dialog behavior, shared action, and focus restoration.
 - Create: `packages/docusaurus-theme/src/theme/components/media-viewer/mdx-media.tsx` — image, Mermaid, and link adapters plus linked-media context.
 - Modify: `packages/docusaurus-theme/src/theme/MDXComponents/index.tsx` — global adapter registration.
 - Modify: `packages/docusaurus-theme/src/theme/base.scss` — semantic placement, containment, and overflow only.
@@ -39,10 +43,12 @@
 ### Task 1: Lock the ownership and no-override contract
 
 **Files:**
+
 - Modify: `AGENTS.md`
 - Create: `packages/docusaurus-theme/src/theme/media-viewer-contract.test.ts`
 
 **Interfaces:**
+
 - Consumes: project Base Nova parity contract.
 - Produces: source contracts for `MediaViewer`, `ZoomableImage`, `ZoomableMermaid`, and `MediaAwareLink`.
 
@@ -118,6 +124,7 @@ Expected: FAIL because viewer files and MDX mappings do not exist.
 ### Task 2: Implement the shared viewer and MDX adapters
 
 **Files:**
+
 - Create: `packages/docusaurus-theme/src/theme/components/media-viewer/index.tsx`
 - Create: `packages/docusaurus-theme/src/theme/components/media-viewer/mdx-media.tsx`
 - Modify: `packages/docusaurus-theme/src/theme/MDXComponents/index.tsx`
@@ -125,6 +132,7 @@ Expected: FAIL because viewer files and MDX mappings do not exist.
 - Test: `packages/docusaurus-theme/src/theme/media-viewer-contract.test.ts`
 
 **Interfaces:**
+
 - Produces:
   - `MediaViewer(props: MediaViewerProps): ReactNode`
   - `ZoomableImage(props: ImgProps): ReactNode`
@@ -274,9 +282,7 @@ import MediaViewer from "@theme/components/media-viewer";
 
 const LinkedMediaContext = createContext(false);
 
-export function MediaAwareLink(
-  props: ComponentProps<typeof MDXA>
-): ReactNode {
+export function MediaAwareLink(props: ComponentProps<typeof MDXA>): ReactNode {
   return (
     <LinkedMediaContext.Provider value>
       <MDXA {...props} />
@@ -428,10 +434,12 @@ Expected: focused test PASS and package build PASS. Fix only type/API mismatches
 ### Task 3: Add actual browser fixtures and interaction tests
 
 **Files:**
+
 - Modify: `examples/docs-starter/docs/guides/markdown-gfm.md`
 - Create: `tests/media-viewer.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `data-media-kind`, `.theme-media-viewer__action`, `.theme-media-viewer__viewport`, official `[data-slot="dialog-content"]`.
 - Produces: reproducible pointer/keyboard/focus/geometry/light-dark/mobile evidence.
 
@@ -501,7 +509,11 @@ test("media pointer click opens while linked image keeps navigation", async ({
   page,
 }) => {
   await page.goto(markdownRoute);
-  await page.locator('[data-media-kind="image"]').first().locator("img").click();
+  await page
+    .locator('[data-media-kind="image"]')
+    .first()
+    .locator("img")
+    .click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
 
@@ -569,11 +581,13 @@ Expected: all commands PASS. Use LSP diagnostics on changed TS/TSX files and req
 ### Task 4: Build a local tar and validate actual Deck routes
 
 **Files:**
+
 - No upstream source changes.
 - Local-only downstream preview worktree: `/Users/kelly/w/deck-worktrees/260722-media-viewer-preview`
 - Local-only archive replacement: `docs/manual/vendor/docusaurus-theme.tgz`
 
 **Interfaces:**
+
 - Consumes: built upstream package with media viewer.
 - Produces: local App, LinkPie, DeskPie route evidence without committing downstream files.
 
