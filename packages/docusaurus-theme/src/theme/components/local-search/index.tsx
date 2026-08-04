@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { Kbd, KbdGroup } from "../ui/kbd";
 import { Spinner } from "../ui/spinner";
 import { searchRecords } from "./search";
 
@@ -84,8 +85,16 @@ export default function LocalSearch() {
         }
       >
         <SearchIcon className="size-4 lg:hidden" />
-        <span className="hidden xl:inline-flex">Search documentation...</span>
-        <span className="hidden lg:inline-flex xl:hidden">Search...</span>
+        <span className="hidden text-muted-foreground xl:inline-flex">
+          Search documentation...
+        </span>
+        <span className="hidden text-muted-foreground lg:inline-flex xl:hidden">
+          Search...
+        </span>
+        <KbdGroup className="ml-auto mr-2 hidden lg:inline-flex">
+          <Kbd>⌘</Kbd>
+          <Kbd>K</Kbd>
+        </KbdGroup>
       </DialogTrigger>
       <DialogContent
         className="theme-search-dialog top-[15%]! max-w-[min(32rem,calc(100%-2rem))]! translate-y-0! rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800"

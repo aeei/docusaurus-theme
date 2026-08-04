@@ -8,6 +8,7 @@ describe("desktop TOC parity contract", () => {
   it("renders the live shadcn right-rail structure in the desktop adapter", () => {
     const source = read("DocItem/TOC/Desktop/index.tsx");
 
+    expect(source).toContain('from "@docusaurus/Translate"');
     expect(source).toContain('from "@theme/TOCItems"');
     expect(source).not.toContain('from "@theme/TOC"');
     expect(source).toContain(
@@ -21,10 +22,12 @@ describe("desktop TOC parity contract", () => {
       'className="theme-doc-toc-desktop__scroll flex min-h-0 flex-1 scroll-fade scrollbar-none flex-col overflow-y-auto"'
     );
     expect(source).toContain(
-      'className="theme-doc-toc-desktop__list flex flex-col p-4 pt-0 text-sm"'
+      'className="theme-doc-toc-desktop__list flex flex-col gap-2 p-4 pt-0 text-sm"'
     );
-    expect(source).not.toContain("theme-doc-toc-desktop__header");
-    expect(source).not.toContain("On This Page");
+    expect(source).toContain(
+      'className="theme-doc-toc-desktop__header h-6 bg-background text-xs font-medium text-muted-foreground"'
+    );
+    expect(source).toContain("On this page");
     expect(source).toContain("linkClassName={LINK_CLASS_NAME}");
     expect(source).toContain("linkActiveClassName={LINK_ACTIVE_CLASS_NAME}");
   });

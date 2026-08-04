@@ -363,7 +363,15 @@ test("desktop columns share one text start and TOC scroll-fades links", async ({
     const firstTocLink = document.querySelector(
       ".theme-doc-toc-desktop__list .table-of-contents__link"
     );
-    if (!navbar || !rail || !scroll || !lnbItem || !breadcrumb || !firstTocLink)
+    if (
+      !navbar ||
+      !rail ||
+      !header ||
+      !scroll ||
+      !lnbItem ||
+      !breadcrumb ||
+      !firstTocLink
+    )
       return null;
 
     const lineTop = (element: Element) => {
@@ -380,7 +388,7 @@ test("desktop columns share one text start and TOC scroll-fades links", async ({
     const textTops = {
       lnb: lineTop(lnbItem),
       content: breadcrumb.getBoundingClientRect().top,
-      toc: firstTocLink.getBoundingClientRect().top,
+      toc: header.getBoundingClientRect().top,
     };
     scrollElement.style.flex = "none";
     scrollElement.style.height = "64px";
@@ -402,7 +410,7 @@ test("desktop columns share one text start and TOC scroll-fades links", async ({
   expect(result?.railPosition).toBe("sticky");
   expect(result?.railTop).toBeGreaterThanOrEqual(result?.navbarBottom ?? 0);
   expect(result?.scrollOverflow).toBe(true);
-  expect(result?.headerPresent).toBe(false);
+  expect(result?.headerPresent).toBe(true);
   expect(result?.textTops).toEqual({ lnb: 88, content: 88, toc: 88 });
   expect(result?.maskImage).not.toBe("none");
   expect(result?.animationTimeline).toContain("scroll");
@@ -526,6 +534,7 @@ test("mobile Sheet exposes secondary and primary navigation with focus restorati
   await page.goto(markdownRoute);
 
   const trigger = page.getByRole("button", { name: "Toggle navigation bar" });
+  await expect(trigger).toBeVisible();
   const mobileHeaderAlignment = await page.evaluate(() => {
     const inner = document.querySelector(".navbar__inner");
     const trigger = document.querySelector("[data-mobile-navigation-trigger]");

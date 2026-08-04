@@ -26,6 +26,10 @@ Jump to [paragraph flow](#paragraph-flow-and-emphasis), [lists](#lists-and-tasks
 
 ![Hero art](/img/docs-hero.svg)
 
+- Linked image keeps navigation and receives no viewer control:
+
+[![Linked hero art](/img/docs-hero.svg)](../showcase/mdx-playground)
+
 <figure>
 
 ![Figure fixture](/img/docs-hero.svg)
