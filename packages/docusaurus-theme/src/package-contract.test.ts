@@ -20,7 +20,7 @@ it("uses the public docs-only package identity and metadata", () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 
   expect(packageJson.name).toBe("@aeei/docusaurus-theme");
-  expect(packageJson.version).toBe("0.1.8");
+  expect(packageJson.version).toBe("0.1.9");
   expect(packageJson.description).toBe(
     "A shadcn Base Nova theme for Docusaurus docs."
   );
