@@ -24,6 +24,13 @@ This repository is a maintained fork of [`PaloAltoNetworks/docusaurus-openapi-do
 6. Compare the packed `@aeei/docusaurus-theme` artifact with the current release. If its bytes change, bump the package version and update every vendored consumer artifact; never reuse a version for a different archive.
 7. Merge only after independent review and green CI.
 
+## Theme release
+
+- Deck consumes a repository-owned tarball; npm is a secondary distribution channel.
+- npm publication is manual through `.github/workflows/theme-release.yml` and the protected `theme-release` environment.
+- npm trusted publishing must bind `@aeei/docusaurus-theme` to repository `aeei/docusaurus-theme`, workflow `theme-release.yml`, and environment `theme-release`.
+- The workflow requires the exact package version and confirmation text, publishes only `@aeei/docusaurus-theme`, then tags the source as `theme-vX.Y.Z`.
+
 ## Baseline
 
 - Last integrated upstream release: `v5.1.3`
