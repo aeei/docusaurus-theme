@@ -29,7 +29,8 @@ This repository is a maintained fork of [`PaloAltoNetworks/docusaurus-openapi-do
 - Deck consumes a repository-owned tarball; npm is a secondary distribution channel.
 - npm publication is manual through `.github/workflows/theme-release.yml` and the protected `theme-release` environment.
 - npm trusted publishing must bind `@aeei/docusaurus-theme` to repository `aeei/docusaurus-theme`, workflow `theme-release.yml`, and environment `theme-release`.
-- The workflow requires the exact package version and confirmation text, publishes only `@aeei/docusaurus-theme`, then tags the source as `theme-vX.Y.Z`.
+- A new publish requires `publish @aeei/docusaurus-theme@X.Y.Z`. If npm succeeds but tag creation fails, rerun with `recover-tag` and `recover theme-vX.Y.Z for @aeei/docusaurus-theme@X.Y.Z`; recovery creates a tag only when a clean rebuild exactly matches npm `dist.integrity`.
+- The privileged release job receives only the prebuilt tarball, verifies its SHA-512 integrity, publishes only that file, verifies registry integrity, then creates `theme-vX.Y.Z` through the GitHub API.
 
 ## Baseline
 
