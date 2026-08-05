@@ -3,7 +3,7 @@ name: Theme CI
 on:
   pull_request:
   push:
-    branches: [shadcn-theme]
+    branches: [main]
 
 permissions:
   contents: read
