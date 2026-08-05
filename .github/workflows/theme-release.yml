@@ -20,7 +20,7 @@ on:
         required: true
         type: string
       source_sha:
-        description: Original 40-character publish commit; required only for recover-tag
+        description: Original 40-character source commit for retry or recover-tag
         required: false
         type: string
 
@@ -48,7 +48,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          ref: ${{ inputs.operation == 'recover-tag' && inputs.source_sha || github.sha }}
+          ref: ${{ inputs.source_sha || github.sha }}
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24.18.0
@@ -68,8 +68,11 @@ jobs:
           case "$OPERATION" in
             publish)
               expected="publish @aeei/docusaurus-theme@${VERSION}"
-              source_sha="$GITHUB_SHA"
-              test -z "$INPUT_SOURCE_SHA" || test "$INPUT_SOURCE_SHA" = "$source_sha"
+              source_sha="${INPUT_SOURCE_SHA:-$GITHUB_SHA}"
+              printf '%s' "$source_sha" | grep -Eq '^[0-9a-f]{40}$'
+              git fetch origin main --no-tags
+              git merge-base --is-ancestor "$source_sha" origin/main
+              test "$(git rev-parse HEAD)" = "$source_sha"
               ;;
             recover-tag)
               expected="recover theme-v${VERSION} for @aeei/docusaurus-theme@${VERSION}"
@@ -82,9 +85,11 @@ jobs:
             *) echo "Unsupported operation: $OPERATION" >&2; exit 1 ;;
           esac
           test "$CONFIRMATION" = "$expected"
-          if git ls-remote --exit-code --tags origin "refs/tags/theme-v${VERSION}" >/dev/null 2>&1; then
-            echo "theme-v${VERSION} already exists" >&2
-            exit 1
+          tag_ref=$(git ls-remote --tags origin "refs/tags/theme-v${VERSION}" | awk '{print $1}')
+          tag_commit=$(git ls-remote --tags origin "refs/tags/theme-v${VERSION}^{}" | awk '{print $1}')
+          if [ -n "$tag_ref" ]; then
+            test -n "$tag_commit"
+            test "$tag_commit" = "$source_sha"
           fi
           published=$(npm view "@aeei/docusaurus-theme@${VERSION}" dist.integrity 2>/dev/null || true)
           if [ "$OPERATION" = publish ]; then
@@ -165,19 +170,39 @@ jobs:
           actual=$(node -e "const fs=require('fs'),crypto=require('crypto'); const bytes=fs.readFileSync(process.argv[1]); process.stdout.write('sha512-'+crypto.createHash('sha512').update(bytes).digest('base64'))" "$FILE")
           test "$actual" = "$INTEGRITY"
 
+      - name: Reserve or verify immutable source tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          REPOSITORY: ${{ github.repository }}
+          TARGET_SHA: ${{ needs.prepare.outputs.source_sha }}
+        run: |
+          if ref=$(gh api "repos/${REPOSITORY}/git/ref/tags/theme-v${VERSION}" 2>/dev/null); then
+            tag_object=$(printf '%s' "$ref" | node -e "let s=''; process.stdin.on('data',d=>s+=d).on('end',()=>process.stdout.write(JSON.parse(s).object.sha))")
+            existing_target=$(gh api "repos/${REPOSITORY}/git/tags/${tag_object}" --jq .object.sha)
+            test "$existing_target" = "$TARGET_SHA"
+          else
+            tag_object=$(gh api --method POST "repos/${REPOSITORY}/git/tags" \
+              -f tag="theme-v${VERSION}" \
+              -f message="@aeei/docusaurus-theme ${VERSION}" \
+              -f object="$TARGET_SHA" \
+              -f type=commit \
+              --jq .sha)
+            gh api --method POST "repos/${REPOSITORY}/git/refs" \
+              -f ref="refs/tags/theme-v${VERSION}" \
+              -f sha="$tag_object"
+          fi
+
       - name: Publish theme through npm trusted publishing
         if: ${{ inputs.operation == 'publish' }}
         env:
           FILE: ${{ needs.prepare.outputs.file }}
         run: npm publish "$FILE" --access public
 
-      - name: Verify registry and create immutable source tag
+      - name: Verify registry integrity
         env:
-          GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.prepare.outputs.version }}
           INTEGRITY: ${{ needs.prepare.outputs.integrity }}
-          REPOSITORY: ${{ github.repository }}
-          TARGET_SHA: ${{ needs.prepare.outputs.source_sha }}
         run: |
           registry_integrity=""
           for _ in $(seq 1 12); do
@@ -186,16 +211,3 @@ jobs:
             sleep 5
           done
           test "$registry_integrity" = "$INTEGRITY"
-          if gh api "repos/${REPOSITORY}/git/ref/tags/theme-v${VERSION}" >/dev/null 2>&1; then
-            echo "theme-v${VERSION} already exists" >&2
-            exit 1
-          fi
-          tag_sha=$(gh api --method POST "repos/${REPOSITORY}/git/tags" \
-            -f tag="theme-v${VERSION}" \
-            -f message="@aeei/docusaurus-theme ${VERSION}" \
-            -f object="$TARGET_SHA" \
-            -f type=commit \
-            --jq .sha)
-          gh api --method POST "repos/${REPOSITORY}/git/refs" \
-            -f ref="refs/tags/theme-v${VERSION}" \
-            -f sha="$tag_sha"

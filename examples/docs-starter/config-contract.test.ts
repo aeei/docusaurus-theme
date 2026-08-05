@@ -64,7 +64,14 @@ it("publishes only one immutable AEEI theme artifact after explicit approval", (
   expect(themeReleaseWorkflow).toContain("node-version: 24.18.0");
   expect(themeReleaseWorkflow).toContain("npm@11.16.0");
   expect(themeReleaseWorkflow).toContain("source_sha:");
+  expect(themeReleaseWorkflow).toContain("fetch-depth: 0");
+  expect(themeReleaseWorkflow).toContain(
+    "ref: ${{ inputs.source_sha || github.sha }}"
+  );
   expect(themeReleaseWorkflow).toContain("git merge-base --is-ancestor");
+  expect(themeReleaseWorkflow).toContain(
+    'test "$(git rev-parse HEAD)" = "$source_sha"'
+  );
   expect(themeReleaseWorkflow).toContain(
     "TARGET_SHA: ${{ needs.prepare.outputs.source_sha }}"
   );
@@ -89,6 +96,9 @@ it("publishes only one immutable AEEI theme artifact after explicit approval", (
   expect(releaseJob).toContain("id-token: write");
   expect(releaseJob).toContain("actions/download-artifact@");
   expect(releaseJob).toContain('npm publish "$FILE" --access public');
+  expect(
+    releaseJob.indexOf("Reserve or verify immutable source tag")
+  ).toBeLessThan(releaseJob.indexOf("npm publish"));
   expect(releaseJob).toContain("dist.integrity");
   expect(releaseJob).toContain("repos/${REPOSITORY}/git/tags");
   expect(themeReleaseWorkflow).not.toContain("NPM_TOKEN");
