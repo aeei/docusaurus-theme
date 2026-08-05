@@ -13,6 +13,12 @@ const themeStyles = fs.readFileSync(
   path.join(__dirname, "../../packages/docusaurus-theme/src/theme/shadcn.css"),
   "utf8"
 );
+const packageJson = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "package.json"), "utf8")
+);
+const demoPackageJson = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../../demo/package.json"), "utf8")
+);
 
 it("uses the Pages project URL and official Mermaid integration", () => {
   expect(config).toContain('url: "https://aeei.github.io"');
@@ -25,6 +31,19 @@ it("uses the Pages project URL and official Mermaid integration", () => {
   );
   expect(fs.existsSync(path.join(__dirname, "static/img/favicon.svg"))).toBe(
     false
+  );
+});
+
+it("keeps one Docusaurus runtime version across the starter and workspace", () => {
+  const docusaurusVersions = Object.entries({
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  })
+    .filter(([name]) => name.startsWith("@docusaurus/"))
+    .map(([, version]) => version);
+
+  expect(new Set(docusaurusVersions)).toEqual(
+    new Set([demoPackageJson.dependencies["@docusaurus/core"]])
   );
 });
 

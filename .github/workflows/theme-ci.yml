@@ -42,7 +42,7 @@ jobs:
       - name: Browser matrix
         run: >-
           yarn start-server-and-test
-          "yarn workspace @aeei/docs-starter serve --port 3001 --no-open"
+          "yarn workspace @aeei/docs-starter serve --host 127.0.0.1 --port 3001 --no-open"
           http://127.0.0.1:3001/docusaurus-theme/
           "node scripts/audit-docs-starter.cjs && node scripts/audit-critical-ui-relations.cjs && PLAYWRIGHT_BASE_URL=http://127.0.0.1:3001/docusaurus-theme/ yarn test:e2e:theme"
       - name: Upload browser failures

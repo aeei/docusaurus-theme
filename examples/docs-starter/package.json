@@ -10,15 +10,15 @@
     "clear": "docusaurus clear"
   },
   "devDependencies": {
-    "@docusaurus/tsconfig": "3.10.1"
+    "@docusaurus/tsconfig": "3.10.2"
   },
   "dependencies": {
     "@aeei/docusaurus-theme": "*",
-    "@docusaurus/core": "3.10.1",
-    "@docusaurus/plugin-content-docs": "3.10.1",
-    "@docusaurus/preset-classic": "3.10.1",
-    "@docusaurus/theme-common": "3.10.1",
-    "@docusaurus/theme-mermaid": "3.10.1",
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/plugin-content-docs": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
+    "@docusaurus/theme-common": "3.10.2",
+    "@docusaurus/theme-mermaid": "3.10.2",
     "@mermaid-js/layout-elk": "^0.1.9",
     "docusaurus-plugin-copy-page-button": "0.8.4",
     "prism-react-renderer": "^2.4.1",

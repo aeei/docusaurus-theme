@@ -18,7 +18,7 @@ This repository is a maintained fork of [`PaloAltoNetworks/docusaurus-openapi-do
 
 1. Fetch upstream branches and tags.
 2. Create `sync/upstream-vX.Y.Z` from current `origin/main`.
-3. Merge the signed upstream release tag with `--no-ff`.
+3. Verify the upstream repository and annotated release tag, then merge it with `--no-ff`.
 4. Resolve source conflicts according to ownership. Regenerate `yarn.lock` from the combined manifests instead of choosing either side.
 5. Run upstream tests plus the complete AEEI theme, docs-starter, package, and browser validation.
 6. Compare the packed `@aeei/docusaurus-theme` artifact with the current release. If its bytes change, bump the package version and update every vendored consumer artifact; never reuse a version for a different archive.
@@ -26,6 +26,6 @@ This repository is a maintained fork of [`PaloAltoNetworks/docusaurus-openapi-do
 
 ## Baseline
 
-- Last integrated upstream release: `v5.1.2`
-- Upstream baseline commit: `9f33f16352eaa0cad62bf54668de702ce2ce1a8a`
-- Current AEEI theme release: `0.1.9`
+- Last integrated upstream release: `v5.1.3`
+- Upstream baseline commit: `d5af4f22e951712e084df8b7c513a1708e56d372`
+- Current AEEI theme release: `0.1.10`
