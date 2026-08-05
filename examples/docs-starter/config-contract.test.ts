@@ -19,6 +19,10 @@ const packageJson = JSON.parse(
 const demoPackageJson = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../../demo/package.json"), "utf8")
 );
+const themeReleaseWorkflow = fs.readFileSync(
+  path.join(__dirname, "../../.github/workflows/theme-release.yml"),
+  "utf8"
+);
 
 it("uses the Pages project URL and official Mermaid integration", () => {
   expect(config).toContain('url: "https://aeei.github.io"');
@@ -45,6 +49,23 @@ it("keeps one Docusaurus runtime version across the starter and workspace", () =
   expect(new Set(docusaurusVersions)).toEqual(
     new Set([demoPackageJson.dependencies["@docusaurus/core"]])
   );
+});
+
+it("publishes only the AEEI theme through an explicitly confirmed manual release", () => {
+  expect(themeReleaseWorkflow).toContain("workflow_dispatch:");
+  expect(themeReleaseWorkflow).not.toMatch(/^\s*push:/m);
+  expect(themeReleaseWorkflow).toContain("github.ref == 'refs/heads/main'");
+  expect(themeReleaseWorkflow).toContain("environment: theme-release");
+  expect(themeReleaseWorkflow).toContain("packages/docusaurus-theme");
+  expect(themeReleaseWorkflow).toContain(
+    'expected="publish @aeei/docusaurus-theme@${VERSION}"'
+  );
+  expect(themeReleaseWorkflow).toContain("id-token: write");
+  expect(themeReleaseWorkflow).toContain("npm publish --access public");
+  expect(themeReleaseWorkflow).not.toContain("NPM_TOKEN");
+  expect(themeReleaseWorkflow).not.toContain("NODE_AUTH_TOKEN");
+  expect(themeReleaseWorkflow).not.toContain("lerna publish");
+  expect(themeReleaseWorkflow).not.toContain("yarn release:publish");
 });
 
 it("enables local search and the theme-native Copy Page control", () => {
