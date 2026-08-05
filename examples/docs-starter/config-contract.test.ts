@@ -63,6 +63,11 @@ it("publishes only one immutable AEEI theme artifact after explicit approval", (
   expect(themeReleaseWorkflow).toContain("environment: theme-release");
   expect(themeReleaseWorkflow).toContain("node-version: 24.18.0");
   expect(themeReleaseWorkflow).toContain("npm@11.16.0");
+  expect(themeReleaseWorkflow).toContain("source_sha:");
+  expect(themeReleaseWorkflow).toContain("git merge-base --is-ancestor");
+  expect(themeReleaseWorkflow).toContain(
+    "TARGET_SHA: ${{ needs.prepare.outputs.source_sha }}"
+  );
   expect(themeReleaseWorkflow).toContain(
     'expected="publish @aeei/docusaurus-theme@${VERSION}"'
   );
@@ -72,7 +77,12 @@ it("publishes only one immutable AEEI theme artifact after explicit approval", (
   expect(prepareJob).toContain("contents: read");
   expect(prepareJob).toContain("persist-credentials: false");
   expect(prepareJob).not.toContain("id-token: write");
-  expect(prepareJob).toContain("npm pack --silent");
+  expect(prepareJob).toContain("npm pack --json");
+  expect(prepareJob).toContain("package/package.json");
+  expect(prepareJob).toContain(
+    'test "$packed_name" = "@aeei/docusaurus-theme"'
+  );
+  expect(prepareJob).toContain('test "$packed_version" = "$VERSION"');
   expect(prepareJob).toContain("actions/upload-artifact@");
   expect(releaseJob).not.toContain("actions/checkout@");
   expect(releaseJob).toContain("contents: write");
