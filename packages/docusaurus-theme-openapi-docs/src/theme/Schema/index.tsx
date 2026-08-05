@@ -236,6 +236,7 @@ const AnyOneOf: React.FC<SchemaProps> = ({
               {/* Handle empty object as a primitive type */}
               {anyOneSchema.type === "object" &&
                 !anyOneSchema.properties &&
+                !anyOneSchema.additionalProperties &&
                 !anyOneSchema.allOf &&
                 !anyOneSchema.oneOf &&
                 !anyOneSchema.anyOf && (
@@ -265,6 +266,17 @@ const AnyOneOf: React.FC<SchemaProps> = ({
                     schema={anyOneSchema}
                     schemaType={schemaType}
                     schemaPath={childSchemaPath}
+                  />
+                )}
+              {/* Render a map variant's `additionalProperties` */}
+              {(anyOneSchema.type === "object" || !anyOneSchema.type) &&
+                anyOneSchema.additionalProperties &&
+                !anyOneSchema.oneOf &&
+                !anyOneSchema.anyOf &&
+                !anyOneSchema.allOf && (
+                  <AdditionalProperties
+                    schema={anyOneSchema}
+                    schemaType={schemaType}
                   />
                 )}
               {anyOneSchema.allOf && (
@@ -1108,7 +1120,11 @@ const SchemaNode: React.FC<SchemaProps> = ({
     workingSchema = mergeAllOf(schema) as SchemaObject;
   }
   if (!workingSchema.discriminator && resolvedDiscriminator) {
-    workingSchema.discriminator = resolvedDiscriminator;
+    // Clone: getDiscriminator returns a nested branch's discriminator by
+    // reference, and DiscriminatorNode mutates `.mapping` when inferring
+    // variants. Without cloning, a branch that declares its own discriminator
+    // gets a mapping pointing back to itself and recurses forever.
+    workingSchema.discriminator = { ...resolvedDiscriminator };
   }
 
   if (workingSchema.discriminator) {
@@ -1265,8 +1281,7 @@ const SchemaNode: React.FC<SchemaProps> = ({
 export default SchemaNode;
 
 type PrimitiveSchemaType =
-  | Exclude<NonNullable<SchemaObject["type"]>, "object" | "array">
-  | "null";
+  Exclude<NonNullable<SchemaObject["type"]>, "object" | "array"> | "null";
 
 const PRIMITIVE_TYPES: Record<PrimitiveSchemaType, true> = {
   string: true,
