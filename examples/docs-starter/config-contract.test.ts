@@ -51,17 +51,36 @@ it("keeps one Docusaurus runtime version across the starter and workspace", () =
   );
 });
 
-it("publishes only the AEEI theme through an explicitly confirmed manual release", () => {
+it("publishes only one immutable AEEI theme artifact after explicit approval", () => {
+  const prepareJob = themeReleaseWorkflow
+    .split("\n  prepare:")[1]
+    .split("\n  release:")[0];
+  const releaseJob = themeReleaseWorkflow.split("\n  release:")[1];
+
   expect(themeReleaseWorkflow).toContain("workflow_dispatch:");
   expect(themeReleaseWorkflow).not.toMatch(/^\s*push:/m);
   expect(themeReleaseWorkflow).toContain("github.ref == 'refs/heads/main'");
   expect(themeReleaseWorkflow).toContain("environment: theme-release");
-  expect(themeReleaseWorkflow).toContain("packages/docusaurus-theme");
+  expect(themeReleaseWorkflow).toContain("node-version: 24.18.0");
+  expect(themeReleaseWorkflow).toContain("npm@11.16.0");
   expect(themeReleaseWorkflow).toContain(
     'expected="publish @aeei/docusaurus-theme@${VERSION}"'
   );
-  expect(themeReleaseWorkflow).toContain("id-token: write");
-  expect(themeReleaseWorkflow).toContain("npm publish --access public");
+  expect(themeReleaseWorkflow).toContain(
+    'expected="recover theme-v${VERSION} for @aeei/docusaurus-theme@${VERSION}"'
+  );
+  expect(prepareJob).toContain("contents: read");
+  expect(prepareJob).toContain("persist-credentials: false");
+  expect(prepareJob).not.toContain("id-token: write");
+  expect(prepareJob).toContain("npm pack --silent");
+  expect(prepareJob).toContain("actions/upload-artifact@");
+  expect(releaseJob).not.toContain("actions/checkout@");
+  expect(releaseJob).toContain("contents: write");
+  expect(releaseJob).toContain("id-token: write");
+  expect(releaseJob).toContain("actions/download-artifact@");
+  expect(releaseJob).toContain('npm publish "$FILE" --access public');
+  expect(releaseJob).toContain("dist.integrity");
+  expect(releaseJob).toContain("repos/${REPOSITORY}/git/tags");
   expect(themeReleaseWorkflow).not.toContain("NPM_TOKEN");
   expect(themeReleaseWorkflow).not.toContain("NODE_AUTH_TOKEN");
   expect(themeReleaseWorkflow).not.toContain("lerna publish");
